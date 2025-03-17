@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             TrackCircuit_DataGridView_TrackCircuitData = new System.Windows.Forms.DataGridView();
+            TrackCircuit_BindingSource = new System.Windows.Forms.BindingSource(components);
             TrackCircuit_Button_SendServer = new System.Windows.Forms.Button();
             TrackCircuit_TextBox_TrainNumber = new System.Windows.Forms.TextBox();
             TrackCircuit_RadioButton_ShortCircuit_ON = new System.Windows.Forms.RadioButton();
@@ -42,7 +44,12 @@
             TrackCircuit_RadioButton_Locking_ON = new System.Windows.Forms.RadioButton();
             TrackCircuit_GroupBox_Title_ShortCircuit = new System.Windows.Forms.GroupBox();
             TrackCircuit_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
+            trackCircuit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            trainNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            shortCircuitStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            lockingStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_DataGridView_TrackCircuitData).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TrackCircuit_BindingSource).BeginInit();
             TrackCircuit_GroupBox_Setting.SuspendLayout();
             TrackCircuit_GroupBox_Title_Loking.SuspendLayout();
             TrackCircuit_GroupBox_Title_ShortCircuit.SuspendLayout();
@@ -54,7 +61,10 @@
             TrackCircuit_DataGridView_TrackCircuitData.AllowUserToDeleteRows = false;
             TrackCircuit_DataGridView_TrackCircuitData.AllowUserToResizeColumns = false;
             TrackCircuit_DataGridView_TrackCircuitData.AllowUserToResizeRows = false;
+            TrackCircuit_DataGridView_TrackCircuitData.AutoGenerateColumns = false;
             TrackCircuit_DataGridView_TrackCircuitData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            TrackCircuit_DataGridView_TrackCircuitData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { trackCircuit, trainNumber, shortCircuitStatus, lockingStatus });
+            TrackCircuit_DataGridView_TrackCircuitData.DataSource = TrackCircuit_BindingSource;
             TrackCircuit_DataGridView_TrackCircuitData.Location = new System.Drawing.Point(12, 12);
             TrackCircuit_DataGridView_TrackCircuitData.Name = "TrackCircuit_DataGridView_TrackCircuitData";
             TrackCircuit_DataGridView_TrackCircuitData.RowHeadersVisible = false;
@@ -233,6 +243,39 @@
             TrackCircuit_CheckBox_TopMost.UseVisualStyleBackColor = true;
             TrackCircuit_CheckBox_TopMost.CheckedChanged += TrackCircuit_CheckBox_TopMost_CheckedChanged;
             // 
+            // trackCircuit
+            // 
+            trackCircuit.DataPropertyName = "trackCircuit";
+            trackCircuit.HeaderText = "軌道回路";
+            trackCircuit.MaxInputLength = 20;
+            trackCircuit.Name = "trackCircuit";
+            trackCircuit.ReadOnly = true;
+            trackCircuit.Width = 200;
+            // 
+            // trainNumber
+            // 
+            trainNumber.DataPropertyName = "trainNumber";
+            trainNumber.HeaderText = "列車番号";
+            trainNumber.MaxInputLength = 6;
+            trainNumber.Name = "trainNumber";
+            trainNumber.ReadOnly = true;
+            // 
+            // shortCircuitStatus
+            // 
+            shortCircuitStatus.DataPropertyName = "shortCircuitStatus";
+            shortCircuitStatus.HeaderText = "短絡状態";
+            shortCircuitStatus.MaxInputLength = 5;
+            shortCircuitStatus.Name = "shortCircuitStatus";
+            shortCircuitStatus.ReadOnly = true;
+            // 
+            // lockingStatus
+            // 
+            lockingStatus.DataPropertyName = "lockingStatus";
+            lockingStatus.HeaderText = "鎖錠状態";
+            lockingStatus.MaxInputLength = 5;
+            lockingStatus.Name = "lockingStatus";
+            lockingStatus.ReadOnly = true;
+            // 
             // TrackCircuitForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -250,6 +293,7 @@
             Name = "TrackCircuitForm";
             Text = "任意軌道回路情報設定 | 司令卓 - ダイヤ運転会";
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_DataGridView_TrackCircuitData).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TrackCircuit_BindingSource).EndInit();
             TrackCircuit_GroupBox_Setting.ResumeLayout(false);
             TrackCircuit_GroupBox_Setting.PerformLayout();
             TrackCircuit_GroupBox_Title_Loking.ResumeLayout(false);
@@ -276,5 +320,10 @@
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_Locking_OFF;
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_Locking_ON;
         private System.Windows.Forms.GroupBox TrackCircuit_GroupBox_Title_ShortCircuit;
+        private System.Windows.Forms.BindingSource TrackCircuit_BindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn trackCircuit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn trainNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn shortCircuitStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lockingStatus;
     }
 }

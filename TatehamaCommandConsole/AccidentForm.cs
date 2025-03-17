@@ -4,6 +4,9 @@ namespace TatehamaCommandConsole
 {
     public partial class AccidentForm : Form
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public AccidentForm()
         {
             InitializeComponent();

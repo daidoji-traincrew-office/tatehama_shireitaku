@@ -24,18 +24,18 @@ namespace TatehamaCommandConsole
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public MainForm(OpenIddictClientService openIddictClientService)
+        public MainForm(OpenIddictClientService openIddictClientService, ServerCommunication serverCommunication)
         {
             InitializeComponent();
 
             // インスタンス生成
-            _serverCommunication = new ServerCommunication(openIddictClientService);
+            _serverCommunication = serverCommunication;
             _trainCrewCommunication = new TrainCrewCommunication();
             _dataManager = DataManager.Instance;
             // Form生成
             _kokuchiForm = new KokuchiForm();
             _accidentForm = new AccidentForm();
-            _trackCircuitForm = new TrackCircuitForm();
+            _trackCircuitForm = new TrackCircuitForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -167,7 +167,7 @@ namespace TatehamaCommandConsole
                         {
                             if (_trackCircuitForm.IsDisposed)
                             {
-                                _trackCircuitForm = new TrackCircuitForm();
+                                _trackCircuitForm = new TrackCircuitForm(_serverCommunication);
                             }
                             _trackCircuitForm.Show();
                         }

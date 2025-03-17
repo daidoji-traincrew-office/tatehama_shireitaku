@@ -1,4 +1,6 @@
-﻿namespace TatehamaCommandConsole.Models
+﻿using System.ComponentModel;
+
+namespace TatehamaCommandConsole.Models
 {
     /// <summary>
     /// DataGridView設定クラス
@@ -8,18 +10,22 @@
         /// <summary>
         /// 軌道回路
         /// </summary>
+        [DisplayName("軌道回路")]
         public string trackCircuit { get; set; } = "";
         /// <summary>
         /// 列車番号
         /// </summary>
-        public string trainNumber { get; set; } = null;
+        [DisplayName("列車番号")]
+        public string trainNumber { get; set; } = "";
         /// <summary>
         /// 短絡状態    
         /// </summary>
-        public bool shortCircuitStatus { get; set; } = false;
+        [DisplayName("短絡状態")]
+        public string shortCircuitStatus { get; set; } = "";
         /// <summary>
         /// 鎖錠状態
         /// </summary>
-        public bool lockingStatus { get; set; } = false;
+        [DisplayName("鎖錠状態")]
+        public string lockingStatus { get; set; } = "";
     }
 }

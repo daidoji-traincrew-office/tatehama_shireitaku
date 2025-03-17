@@ -7,6 +7,7 @@ using OpenIddict.Client;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using TatehamaCommandConsole.Communications;
 using TatehamaCommandConsole.Manager;
 using TatehamaCommandConsole.Services;
 
@@ -64,6 +65,7 @@ namespace TatehamaCommandConsole
                         });
                     // 必要なサービスの登録
                     services.AddSingleton(DataManager.Instance);
+                    services.AddSingleton<ServerCommunication>();
                     // Workerサービスを登録
                     services.AddHostedService<Worker>();
                 })

@@ -45,6 +45,7 @@ namespace TatehamaCommandConsole.Manager
         private DataManager()
         {
             ServerConnected = false;
+            DataFromServer = new();
             StationSettingList = new();
             DataGridViewSettingList = new();
         }

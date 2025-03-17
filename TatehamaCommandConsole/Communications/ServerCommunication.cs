@@ -24,9 +24,9 @@ namespace TatehamaCommandConsole.Communications
         private static bool _isUpdateLoopRunning = false;
         private const string HubConnectionName = "train"; // Todo: サーバーhubが構築されたら名称を変更する
         /// <summary>
-        /// 軌道回路データ変更イベント
+        /// DataGridView更新通知イベント
         /// </summary>
-        public event Action<SortableBindingList<DataGridViewSetting>> TrackCircuitDataChanged;
+        public event Action<SortableBindingList<DataGridViewSetting>> DataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -211,12 +211,15 @@ namespace TatehamaCommandConsole.Communications
                             {
                                 trackCircuit = trackCircuit.Name,
                                 trainNumber = trackCircuit.Last,
-                                shortCircuitStatus = trackCircuit.On,
-                                lockingStatus = trackCircuit.Lock
+                                shortCircuitStatus = trackCircuit.On ? "〇" : "",
+                                lockingStatus = trackCircuit.Lock ? "〇" : ""
                             });
                         }
                         // DataGridView設定リストデータを更新
                         _dataManager.DataGridViewSettingList = list;
+
+                        // 変更通知イベントを発火
+                        OnDataGridViewUpdated(list);
                     }
                     else
                     {
@@ -268,6 +271,15 @@ namespace TatehamaCommandConsole.Communications
             {
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
+        }
+
+        /// <summary>
+        /// DataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnDataGridViewUpdated(SortableBindingList<DataGridViewSetting> list)
+        {
+            DataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>

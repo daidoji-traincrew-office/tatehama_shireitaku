@@ -5,6 +5,9 @@ namespace TatehamaCommandConsole
 {
     public partial class KokuchiForm : Form
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public KokuchiForm()
         {
             InitializeComponent();
