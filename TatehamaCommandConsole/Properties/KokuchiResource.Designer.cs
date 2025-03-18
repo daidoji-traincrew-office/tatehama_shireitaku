@@ -22,14 +22,14 @@ namespace TatehamaCommandConsole.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class KokuchiResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal KokuchiResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace TatehamaCommandConsole.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TatehamaCommandConsole.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TatehamaCommandConsole.Properties.KokuchiResource", typeof(KokuchiResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,36 @@ namespace TatehamaCommandConsole.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Kokuchi_None {
+            get {
+                object obj = ResourceManager.GetObject("Kokuchi_None", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap KokuchiLED {
+            get {
+                object obj = ResourceManager.GetObject("KokuchiLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap RouteImage {
+            get {
+                object obj = ResourceManager.GetObject("RouteImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

@@ -115,6 +115,8 @@ namespace TatehamaCommandConsole
         /// <param name="e"></param>
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _mainTimer.Stop();
+
             // サーバー切断
             await _serverCommunication.DisconnectAsync();
             // 終了処理
