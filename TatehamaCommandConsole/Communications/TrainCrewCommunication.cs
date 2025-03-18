@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.WebSockets;
@@ -245,7 +246,7 @@ namespace TatehamaCommandConsole.Communications
         private async Task ReceiveMessages()
         {
             var buffer = new byte[2048];
-            StringBuilder messageBuilder = null;
+            List<byte> messageBytes = new List<byte>();
 
             while (_webSocket.State == WebSocketState.Open)
             {
@@ -268,18 +269,14 @@ namespace TatehamaCommandConsole.Communications
                     }
                     else
                     {
-                        if (messageBuilder == null)
-                        {
-                            messageBuilder = new StringBuilder();
-                        }
-                        string partMessage = _encoding.GetString(buffer, 0, result.Count);
-                        messageBuilder.Append(partMessage);
+                        messageBytes.AddRange(buffer.Take(result.Count));
                     }
 
                 } while (!result.EndOfMessage);
 
-                string jsonResponse = messageBuilder.ToString();
-                messageBuilder = null;
+                // データが揃ったら文字列へエンコード
+                string jsonResponse = _encoding.GetString(messageBytes.ToArray());
+                messageBytes.Clear();
 
                 // 一旦Data_Base型でデシリアライズ
                 var baseData = JsonConvert.DeserializeObject<Data_Base>(jsonResponse, JsonSerializerSettings);
