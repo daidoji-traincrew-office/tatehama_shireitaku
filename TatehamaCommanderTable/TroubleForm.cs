@@ -2,12 +2,12 @@
 
 namespace TatehamaCommanderTable
 {
-    public partial class AccidentForm : Form
+    public partial class TroubleForm : Form
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public AccidentForm()
+        public TroubleForm()
         {
             InitializeComponent();
         }
@@ -17,9 +17,9 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Accident_CheckBox_TopMost_CheckedChanged(object sender, System.EventArgs e)
+        private void Trouble_CheckBox_TopMost_CheckedChanged(object sender, System.EventArgs e)
         {
-            this.TopMost = Accident_CheckBox_TopMost.Checked;
+            this.TopMost = Trouble_CheckBox_TopMost.Checked;
         }
     }
 }
