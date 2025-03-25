@@ -48,105 +48,105 @@
             Kokuchi_ListBox_SettingList = new System.Windows.Forms.ListBox();
             Kokuchi_Label_SettingList = new System.Windows.Forms.Label();
             Kokuchi_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
-            Kokuchi_Station_TH76_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH76_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH76_4 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH76_5 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH75_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH75_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH71_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH71_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH71_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH71_4 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH74_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH74_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH73_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH73_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH72_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH72_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH70_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH70_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH68_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH68_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH69_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH69_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH66_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH66_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH67_4 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH67_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH67_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH67_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH65_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH65_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH65_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH65_4 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH64_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH64_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH63_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH63_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH62_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH62_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH61_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH61_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH60_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH60_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH59_2 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH59_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH58_3 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH58_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH61_1 = new System.Windows.Forms.PictureBox();
-            Kokuchi_Station_TH75_1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH76_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH76_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH76_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH76_Kokuchi4 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH75_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH75_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH71_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH71_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH71_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH71_Kokuchi4 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH74_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH74_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH73_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH73_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH72_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH72_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH70_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH70_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH68_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH68_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH69_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH69_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH66_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH66_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH67_Kokuchi4 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH67_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH67_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH67_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH65_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH65_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH65_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH65_Kokuchi4 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH64_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH64_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH63_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH63_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH62_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH62_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH61_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH61_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH60_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH60_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH59_Kokuchi2 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH59_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH58_Kokuchi3 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH58_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH61_Kokuchi1 = new System.Windows.Forms.PictureBox();
+            Kokuchi_Station_TH75_Kokuchi1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)Kokuchi_BackImage).BeginInit();
             Kokuchi_GroupBox_Setting.SuspendLayout();
             Kokuchi_GroupBox_Tenmatsusho.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_5).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_Kokuchi2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_Kokuchi3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi1).BeginInit();
             SuspendLayout();
             // 
             // Kokuchi_BackImage
@@ -461,389 +461,389 @@
             Kokuchi_CheckBox_TopMost.UseVisualStyleBackColor = true;
             Kokuchi_CheckBox_TopMost.CheckedChanged += Kokuchi_CheckBox_TopMost_CheckedChanged;
             // 
-            // Kokuchi_Station_TH76_1
-            // 
-            Kokuchi_Station_TH76_1.Location = new System.Drawing.Point(27, 28);
-            Kokuchi_Station_TH76_1.Name = "Kokuchi_Station_TH76_1";
-            Kokuchi_Station_TH76_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH76_1.TabIndex = 15;
-            Kokuchi_Station_TH76_1.TabStop = false;
+            // Kokuchi_Station_TH76_Kokuchi1
+            // 
+            Kokuchi_Station_TH76_Kokuchi1.Location = new System.Drawing.Point(27, 28);
+            Kokuchi_Station_TH76_Kokuchi1.Name = "Kokuchi_Station_TH76_Kokuchi1";
+            Kokuchi_Station_TH76_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH76_Kokuchi1.TabIndex = 15;
+            Kokuchi_Station_TH76_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH76_3
-            // 
-            Kokuchi_Station_TH76_3.Location = new System.Drawing.Point(27, 66);
-            Kokuchi_Station_TH76_3.Name = "Kokuchi_Station_TH76_3";
-            Kokuchi_Station_TH76_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH76_3.TabIndex = 16;
-            Kokuchi_Station_TH76_3.TabStop = false;
+            // Kokuchi_Station_TH76_Kokuchi2
+            // 
+            Kokuchi_Station_TH76_Kokuchi2.Location = new System.Drawing.Point(27, 66);
+            Kokuchi_Station_TH76_Kokuchi2.Name = "Kokuchi_Station_TH76_Kokuchi2";
+            Kokuchi_Station_TH76_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH76_Kokuchi2.TabIndex = 16;
+            Kokuchi_Station_TH76_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH76_4
-            // 
-            Kokuchi_Station_TH76_4.Location = new System.Drawing.Point(27, 87);
-            Kokuchi_Station_TH76_4.Name = "Kokuchi_Station_TH76_4";
-            Kokuchi_Station_TH76_4.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH76_4.TabIndex = 17;
-            Kokuchi_Station_TH76_4.TabStop = false;
+            // Kokuchi_Station_TH76_Kokuchi3
+            // 
+            Kokuchi_Station_TH76_Kokuchi3.Location = new System.Drawing.Point(27, 87);
+            Kokuchi_Station_TH76_Kokuchi3.Name = "Kokuchi_Station_TH76_Kokuchi3";
+            Kokuchi_Station_TH76_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH76_Kokuchi3.TabIndex = 17;
+            Kokuchi_Station_TH76_Kokuchi3.TabStop = false;
             // 
-            // Kokuchi_Station_TH76_5
-            // 
-            Kokuchi_Station_TH76_5.Location = new System.Drawing.Point(27, 105);
-            Kokuchi_Station_TH76_5.Name = "Kokuchi_Station_TH76_5";
-            Kokuchi_Station_TH76_5.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH76_5.TabIndex = 18;
-            Kokuchi_Station_TH76_5.TabStop = false;
+            // Kokuchi_Station_TH76_Kokuchi4
+            // 
+            Kokuchi_Station_TH76_Kokuchi4.Location = new System.Drawing.Point(27, 105);
+            Kokuchi_Station_TH76_Kokuchi4.Name = "Kokuchi_Station_TH76_Kokuchi4";
+            Kokuchi_Station_TH76_Kokuchi4.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH76_Kokuchi4.TabIndex = 18;
+            Kokuchi_Station_TH76_Kokuchi4.TabStop = false;
             // 
-            // Kokuchi_Station_TH75_2
-            // 
-            Kokuchi_Station_TH75_2.Location = new System.Drawing.Point(524, 60);
-            Kokuchi_Station_TH75_2.Name = "Kokuchi_Station_TH75_2";
-            Kokuchi_Station_TH75_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH75_2.TabIndex = 19;
-            Kokuchi_Station_TH75_2.TabStop = false;
+            // Kokuchi_Station_TH75_Kokuchi2
+            // 
+            Kokuchi_Station_TH75_Kokuchi2.Location = new System.Drawing.Point(524, 60);
+            Kokuchi_Station_TH75_Kokuchi2.Name = "Kokuchi_Station_TH75_Kokuchi2";
+            Kokuchi_Station_TH75_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH75_Kokuchi2.TabIndex = 19;
+            Kokuchi_Station_TH75_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH75_3
-            // 
-            Kokuchi_Station_TH75_3.Location = new System.Drawing.Point(524, 78);
-            Kokuchi_Station_TH75_3.Name = "Kokuchi_Station_TH75_3";
-            Kokuchi_Station_TH75_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH75_3.TabIndex = 20;
-            Kokuchi_Station_TH75_3.TabStop = false;
+            // Kokuchi_Station_TH75_Kokuchi3
+            // 
+            Kokuchi_Station_TH75_Kokuchi3.Location = new System.Drawing.Point(524, 78);
+            Kokuchi_Station_TH75_Kokuchi3.Name = "Kokuchi_Station_TH75_Kokuchi3";
+            Kokuchi_Station_TH75_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH75_Kokuchi3.TabIndex = 20;
+            Kokuchi_Station_TH75_Kokuchi3.TabStop = false;
             // 
-            // Kokuchi_Station_TH71_3
-            // 
-            Kokuchi_Station_TH71_3.Location = new System.Drawing.Point(938, 78);
-            Kokuchi_Station_TH71_3.Name = "Kokuchi_Station_TH71_3";
-            Kokuchi_Station_TH71_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH71_3.TabIndex = 22;
-            Kokuchi_Station_TH71_3.TabStop = false;
+            // Kokuchi_Station_TH71_Kokuchi3
+            // 
+            Kokuchi_Station_TH71_Kokuchi3.Location = new System.Drawing.Point(938, 78);
+            Kokuchi_Station_TH71_Kokuchi3.Name = "Kokuchi_Station_TH71_Kokuchi3";
+            Kokuchi_Station_TH71_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH71_Kokuchi3.TabIndex = 22;
+            Kokuchi_Station_TH71_Kokuchi3.TabStop = false;
             // 
-            // Kokuchi_Station_TH71_2
-            // 
-            Kokuchi_Station_TH71_2.Location = new System.Drawing.Point(938, 60);
-            Kokuchi_Station_TH71_2.Name = "Kokuchi_Station_TH71_2";
-            Kokuchi_Station_TH71_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH71_2.TabIndex = 21;
-            Kokuchi_Station_TH71_2.TabStop = false;
+            // Kokuchi_Station_TH71_Kokuchi2
+            // 
+            Kokuchi_Station_TH71_Kokuchi2.Location = new System.Drawing.Point(938, 60);
+            Kokuchi_Station_TH71_Kokuchi2.Name = "Kokuchi_Station_TH71_Kokuchi2";
+            Kokuchi_Station_TH71_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH71_Kokuchi2.TabIndex = 21;
+            Kokuchi_Station_TH71_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH71_1
-            // 
-            Kokuchi_Station_TH71_1.Location = new System.Drawing.Point(938, 29);
-            Kokuchi_Station_TH71_1.Name = "Kokuchi_Station_TH71_1";
-            Kokuchi_Station_TH71_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH71_1.TabIndex = 23;
-            Kokuchi_Station_TH71_1.TabStop = false;
+            // Kokuchi_Station_TH71_Kokuchi1
+            // 
+            Kokuchi_Station_TH71_Kokuchi1.Location = new System.Drawing.Point(938, 29);
+            Kokuchi_Station_TH71_Kokuchi1.Name = "Kokuchi_Station_TH71_Kokuchi1";
+            Kokuchi_Station_TH71_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH71_Kokuchi1.TabIndex = 23;
+            Kokuchi_Station_TH71_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH71_4
-            // 
-            Kokuchi_Station_TH71_4.Location = new System.Drawing.Point(938, 111);
-            Kokuchi_Station_TH71_4.Name = "Kokuchi_Station_TH71_4";
-            Kokuchi_Station_TH71_4.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH71_4.TabIndex = 24;
-            Kokuchi_Station_TH71_4.TabStop = false;
+            // Kokuchi_Station_TH71_Kokuchi4
+            // 
+            Kokuchi_Station_TH71_Kokuchi4.Location = new System.Drawing.Point(938, 111);
+            Kokuchi_Station_TH71_Kokuchi4.Name = "Kokuchi_Station_TH71_Kokuchi4";
+            Kokuchi_Station_TH71_Kokuchi4.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH71_Kokuchi4.TabIndex = 24;
+            Kokuchi_Station_TH71_Kokuchi4.TabStop = false;
             // 
-            // Kokuchi_Station_TH74_2
-            // 
-            Kokuchi_Station_TH74_2.Location = new System.Drawing.Point(683, 78);
-            Kokuchi_Station_TH74_2.Name = "Kokuchi_Station_TH74_2";
-            Kokuchi_Station_TH74_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH74_2.TabIndex = 26;
-            Kokuchi_Station_TH74_2.TabStop = false;
+            // Kokuchi_Station_TH74_Kokuchi2
+            // 
+            Kokuchi_Station_TH74_Kokuchi2.Location = new System.Drawing.Point(683, 78);
+            Kokuchi_Station_TH74_Kokuchi2.Name = "Kokuchi_Station_TH74_Kokuchi2";
+            Kokuchi_Station_TH74_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH74_Kokuchi2.TabIndex = 26;
+            Kokuchi_Station_TH74_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH74_1
-            // 
-            Kokuchi_Station_TH74_1.Location = new System.Drawing.Point(683, 60);
-            Kokuchi_Station_TH74_1.Name = "Kokuchi_Station_TH74_1";
-            Kokuchi_Station_TH74_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH74_1.TabIndex = 25;
-            Kokuchi_Station_TH74_1.TabStop = false;
+            // Kokuchi_Station_TH74_Kokuchi1
+            // 
+            Kokuchi_Station_TH74_Kokuchi1.Location = new System.Drawing.Point(683, 60);
+            Kokuchi_Station_TH74_Kokuchi1.Name = "Kokuchi_Station_TH74_Kokuchi1";
+            Kokuchi_Station_TH74_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH74_Kokuchi1.TabIndex = 25;
+            Kokuchi_Station_TH74_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH73_2
-            // 
-            Kokuchi_Station_TH73_2.Location = new System.Drawing.Point(751, 78);
-            Kokuchi_Station_TH73_2.Name = "Kokuchi_Station_TH73_2";
-            Kokuchi_Station_TH73_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH73_2.TabIndex = 28;
-            Kokuchi_Station_TH73_2.TabStop = false;
+            // Kokuchi_Station_TH73_Kokuchi2
+            // 
+            Kokuchi_Station_TH73_Kokuchi2.Location = new System.Drawing.Point(751, 78);
+            Kokuchi_Station_TH73_Kokuchi2.Name = "Kokuchi_Station_TH73_Kokuchi2";
+            Kokuchi_Station_TH73_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH73_Kokuchi2.TabIndex = 28;
+            Kokuchi_Station_TH73_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH73_1
-            // 
-            Kokuchi_Station_TH73_1.Location = new System.Drawing.Point(751, 60);
-            Kokuchi_Station_TH73_1.Name = "Kokuchi_Station_TH73_1";
-            Kokuchi_Station_TH73_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH73_1.TabIndex = 27;
-            Kokuchi_Station_TH73_1.TabStop = false;
+            // Kokuchi_Station_TH73_Kokuchi1
+            // 
+            Kokuchi_Station_TH73_Kokuchi1.Location = new System.Drawing.Point(751, 60);
+            Kokuchi_Station_TH73_Kokuchi1.Name = "Kokuchi_Station_TH73_Kokuchi1";
+            Kokuchi_Station_TH73_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH73_Kokuchi1.TabIndex = 27;
+            Kokuchi_Station_TH73_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH72_2
-            // 
-            Kokuchi_Station_TH72_2.Location = new System.Drawing.Point(827, 78);
-            Kokuchi_Station_TH72_2.Name = "Kokuchi_Station_TH72_2";
-            Kokuchi_Station_TH72_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH72_2.TabIndex = 30;
-            Kokuchi_Station_TH72_2.TabStop = false;
+            // Kokuchi_Station_TH72_Kokuchi2
+            // 
+            Kokuchi_Station_TH72_Kokuchi2.Location = new System.Drawing.Point(827, 78);
+            Kokuchi_Station_TH72_Kokuchi2.Name = "Kokuchi_Station_TH72_Kokuchi2";
+            Kokuchi_Station_TH72_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH72_Kokuchi2.TabIndex = 30;
+            Kokuchi_Station_TH72_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH72_1
-            // 
-            Kokuchi_Station_TH72_1.Location = new System.Drawing.Point(827, 60);
-            Kokuchi_Station_TH72_1.Name = "Kokuchi_Station_TH72_1";
-            Kokuchi_Station_TH72_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH72_1.TabIndex = 29;
-            Kokuchi_Station_TH72_1.TabStop = false;
+            // Kokuchi_Station_TH72_Kokuchi1
+            // 
+            Kokuchi_Station_TH72_Kokuchi1.Location = new System.Drawing.Point(827, 60);
+            Kokuchi_Station_TH72_Kokuchi1.Name = "Kokuchi_Station_TH72_Kokuchi1";
+            Kokuchi_Station_TH72_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH72_Kokuchi1.TabIndex = 29;
+            Kokuchi_Station_TH72_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH70_2
-            // 
-            Kokuchi_Station_TH70_2.Location = new System.Drawing.Point(1079, 78);
-            Kokuchi_Station_TH70_2.Name = "Kokuchi_Station_TH70_2";
-            Kokuchi_Station_TH70_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH70_2.TabIndex = 32;
-            Kokuchi_Station_TH70_2.TabStop = false;
+            // Kokuchi_Station_TH70_Kokuchi2
+            // 
+            Kokuchi_Station_TH70_Kokuchi2.Location = new System.Drawing.Point(1079, 78);
+            Kokuchi_Station_TH70_Kokuchi2.Name = "Kokuchi_Station_TH70_Kokuchi2";
+            Kokuchi_Station_TH70_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH70_Kokuchi2.TabIndex = 32;
+            Kokuchi_Station_TH70_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH70_1
-            // 
-            Kokuchi_Station_TH70_1.Location = new System.Drawing.Point(1079, 60);
-            Kokuchi_Station_TH70_1.Name = "Kokuchi_Station_TH70_1";
-            Kokuchi_Station_TH70_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH70_1.TabIndex = 31;
-            Kokuchi_Station_TH70_1.TabStop = false;
+            // Kokuchi_Station_TH70_Kokuchi1
+            // 
+            Kokuchi_Station_TH70_Kokuchi1.Location = new System.Drawing.Point(1079, 60);
+            Kokuchi_Station_TH70_Kokuchi1.Name = "Kokuchi_Station_TH70_Kokuchi1";
+            Kokuchi_Station_TH70_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH70_Kokuchi1.TabIndex = 31;
+            Kokuchi_Station_TH70_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH68_2
-            // 
-            Kokuchi_Station_TH68_2.Location = new System.Drawing.Point(1216, 78);
-            Kokuchi_Station_TH68_2.Name = "Kokuchi_Station_TH68_2";
-            Kokuchi_Station_TH68_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH68_2.TabIndex = 34;
-            Kokuchi_Station_TH68_2.TabStop = false;
+            // Kokuchi_Station_TH68_Kokuchi2
+            // 
+            Kokuchi_Station_TH68_Kokuchi2.Location = new System.Drawing.Point(1216, 78);
+            Kokuchi_Station_TH68_Kokuchi2.Name = "Kokuchi_Station_TH68_Kokuchi2";
+            Kokuchi_Station_TH68_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH68_Kokuchi2.TabIndex = 34;
+            Kokuchi_Station_TH68_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH68_1
-            // 
-            Kokuchi_Station_TH68_1.Location = new System.Drawing.Point(1216, 60);
-            Kokuchi_Station_TH68_1.Name = "Kokuchi_Station_TH68_1";
-            Kokuchi_Station_TH68_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH68_1.TabIndex = 33;
-            Kokuchi_Station_TH68_1.TabStop = false;
+            // Kokuchi_Station_TH68_Kokuchi1
+            // 
+            Kokuchi_Station_TH68_Kokuchi1.Location = new System.Drawing.Point(1216, 60);
+            Kokuchi_Station_TH68_Kokuchi1.Name = "Kokuchi_Station_TH68_Kokuchi1";
+            Kokuchi_Station_TH68_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH68_Kokuchi1.TabIndex = 33;
+            Kokuchi_Station_TH68_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH69_2
-            // 
-            Kokuchi_Station_TH69_2.Location = new System.Drawing.Point(1164, 78);
-            Kokuchi_Station_TH69_2.Name = "Kokuchi_Station_TH69_2";
-            Kokuchi_Station_TH69_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH69_2.TabIndex = 36;
-            Kokuchi_Station_TH69_2.TabStop = false;
+            // Kokuchi_Station_TH69_Kokuchi2
+            // 
+            Kokuchi_Station_TH69_Kokuchi2.Location = new System.Drawing.Point(1164, 78);
+            Kokuchi_Station_TH69_Kokuchi2.Name = "Kokuchi_Station_TH69_Kokuchi2";
+            Kokuchi_Station_TH69_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH69_Kokuchi2.TabIndex = 36;
+            Kokuchi_Station_TH69_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH69_1
-            // 
-            Kokuchi_Station_TH69_1.Location = new System.Drawing.Point(1164, 60);
-            Kokuchi_Station_TH69_1.Name = "Kokuchi_Station_TH69_1";
-            Kokuchi_Station_TH69_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH69_1.TabIndex = 35;
-            Kokuchi_Station_TH69_1.TabStop = false;
+            // Kokuchi_Station_TH69_Kokuchi1
+            // 
+            Kokuchi_Station_TH69_Kokuchi1.Location = new System.Drawing.Point(1164, 60);
+            Kokuchi_Station_TH69_Kokuchi1.Name = "Kokuchi_Station_TH69_Kokuchi1";
+            Kokuchi_Station_TH69_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH69_Kokuchi1.TabIndex = 35;
+            Kokuchi_Station_TH69_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH66_2
-            // 
-            Kokuchi_Station_TH66_2.Location = new System.Drawing.Point(252, 220);
-            Kokuchi_Station_TH66_2.Name = "Kokuchi_Station_TH66_2";
-            Kokuchi_Station_TH66_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH66_2.TabIndex = 38;
-            Kokuchi_Station_TH66_2.TabStop = false;
+            // Kokuchi_Station_TH66_Kokuchi2
+            // 
+            Kokuchi_Station_TH66_Kokuchi2.Location = new System.Drawing.Point(252, 220);
+            Kokuchi_Station_TH66_Kokuchi2.Name = "Kokuchi_Station_TH66_Kokuchi2";
+            Kokuchi_Station_TH66_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH66_Kokuchi2.TabIndex = 38;
+            Kokuchi_Station_TH66_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH66_1
-            // 
-            Kokuchi_Station_TH66_1.Location = new System.Drawing.Point(252, 202);
-            Kokuchi_Station_TH66_1.Name = "Kokuchi_Station_TH66_1";
-            Kokuchi_Station_TH66_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH66_1.TabIndex = 37;
-            Kokuchi_Station_TH66_1.TabStop = false;
+            // Kokuchi_Station_TH66_Kokuchi1
+            // 
+            Kokuchi_Station_TH66_Kokuchi1.Location = new System.Drawing.Point(252, 202);
+            Kokuchi_Station_TH66_Kokuchi1.Name = "Kokuchi_Station_TH66_Kokuchi1";
+            Kokuchi_Station_TH66_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH66_Kokuchi1.TabIndex = 37;
+            Kokuchi_Station_TH66_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH67_4
-            // 
-            Kokuchi_Station_TH67_4.Location = new System.Drawing.Point(58, 253);
-            Kokuchi_Station_TH67_4.Name = "Kokuchi_Station_TH67_4";
-            Kokuchi_Station_TH67_4.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH67_4.TabIndex = 42;
-            Kokuchi_Station_TH67_4.TabStop = false;
+            // Kokuchi_Station_TH67_Kokuchi4
+            // 
+            Kokuchi_Station_TH67_Kokuchi4.Location = new System.Drawing.Point(58, 253);
+            Kokuchi_Station_TH67_Kokuchi4.Name = "Kokuchi_Station_TH67_Kokuchi4";
+            Kokuchi_Station_TH67_Kokuchi4.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH67_Kokuchi4.TabIndex = 42;
+            Kokuchi_Station_TH67_Kokuchi4.TabStop = false;
             // 
-            // Kokuchi_Station_TH67_1
-            // 
-            Kokuchi_Station_TH67_1.Location = new System.Drawing.Point(58, 171);
-            Kokuchi_Station_TH67_1.Name = "Kokuchi_Station_TH67_1";
-            Kokuchi_Station_TH67_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH67_1.TabIndex = 41;
-            Kokuchi_Station_TH67_1.TabStop = false;
+            // Kokuchi_Station_TH67_Kokuchi1
+            // 
+            Kokuchi_Station_TH67_Kokuchi1.Location = new System.Drawing.Point(58, 171);
+            Kokuchi_Station_TH67_Kokuchi1.Name = "Kokuchi_Station_TH67_Kokuchi1";
+            Kokuchi_Station_TH67_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH67_Kokuchi1.TabIndex = 41;
+            Kokuchi_Station_TH67_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH67_3
-            // 
-            Kokuchi_Station_TH67_3.Location = new System.Drawing.Point(58, 220);
-            Kokuchi_Station_TH67_3.Name = "Kokuchi_Station_TH67_3";
-            Kokuchi_Station_TH67_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH67_3.TabIndex = 40;
-            Kokuchi_Station_TH67_3.TabStop = false;
+            // Kokuchi_Station_TH67_Kokuchi3
+            // 
+            Kokuchi_Station_TH67_Kokuchi3.Location = new System.Drawing.Point(58, 220);
+            Kokuchi_Station_TH67_Kokuchi3.Name = "Kokuchi_Station_TH67_Kokuchi3";
+            Kokuchi_Station_TH67_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH67_Kokuchi3.TabIndex = 40;
+            Kokuchi_Station_TH67_Kokuchi3.TabStop = false;
             // 
-            // Kokuchi_Station_TH67_2
-            // 
-            Kokuchi_Station_TH67_2.Location = new System.Drawing.Point(58, 202);
-            Kokuchi_Station_TH67_2.Name = "Kokuchi_Station_TH67_2";
-            Kokuchi_Station_TH67_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH67_2.TabIndex = 39;
-            Kokuchi_Station_TH67_2.TabStop = false;
+            // Kokuchi_Station_TH67_Kokuchi2
+            // 
+            Kokuchi_Station_TH67_Kokuchi2.Location = new System.Drawing.Point(58, 202);
+            Kokuchi_Station_TH67_Kokuchi2.Name = "Kokuchi_Station_TH67_Kokuchi2";
+            Kokuchi_Station_TH67_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH67_Kokuchi2.TabIndex = 39;
+            Kokuchi_Station_TH67_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH65_3
-            // 
-            Kokuchi_Station_TH65_3.Location = new System.Drawing.Point(617, 211);
-            Kokuchi_Station_TH65_3.Name = "Kokuchi_Station_TH65_3";
-            Kokuchi_Station_TH65_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH65_3.TabIndex = 44;
-            Kokuchi_Station_TH65_3.TabStop = false;
+            // Kokuchi_Station_TH65_Kokuchi3
+            // 
+            Kokuchi_Station_TH65_Kokuchi3.Location = new System.Drawing.Point(617, 211);
+            Kokuchi_Station_TH65_Kokuchi3.Name = "Kokuchi_Station_TH65_Kokuchi3";
+            Kokuchi_Station_TH65_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH65_Kokuchi3.TabIndex = 44;
+            Kokuchi_Station_TH65_Kokuchi3.TabStop = false;
             // 
-            // Kokuchi_Station_TH65_2
-            // 
-            Kokuchi_Station_TH65_2.Location = new System.Drawing.Point(617, 193);
-            Kokuchi_Station_TH65_2.Name = "Kokuchi_Station_TH65_2";
-            Kokuchi_Station_TH65_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH65_2.TabIndex = 43;
-            Kokuchi_Station_TH65_2.TabStop = false;
+            // Kokuchi_Station_TH65_Kokuchi2
+            // 
+            Kokuchi_Station_TH65_Kokuchi2.Location = new System.Drawing.Point(617, 193);
+            Kokuchi_Station_TH65_Kokuchi2.Name = "Kokuchi_Station_TH65_Kokuchi2";
+            Kokuchi_Station_TH65_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH65_Kokuchi2.TabIndex = 43;
+            Kokuchi_Station_TH65_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH65_1
-            // 
-            Kokuchi_Station_TH65_1.Location = new System.Drawing.Point(617, 171);
-            Kokuchi_Station_TH65_1.Name = "Kokuchi_Station_TH65_1";
-            Kokuchi_Station_TH65_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH65_1.TabIndex = 45;
-            Kokuchi_Station_TH65_1.TabStop = false;
+            // Kokuchi_Station_TH65_Kokuchi1
+            // 
+            Kokuchi_Station_TH65_Kokuchi1.Location = new System.Drawing.Point(617, 171);
+            Kokuchi_Station_TH65_Kokuchi1.Name = "Kokuchi_Station_TH65_Kokuchi1";
+            Kokuchi_Station_TH65_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH65_Kokuchi1.TabIndex = 45;
+            Kokuchi_Station_TH65_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH65_4
-            // 
-            Kokuchi_Station_TH65_4.Location = new System.Drawing.Point(617, 237);
-            Kokuchi_Station_TH65_4.Name = "Kokuchi_Station_TH65_4";
-            Kokuchi_Station_TH65_4.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH65_4.TabIndex = 46;
-            Kokuchi_Station_TH65_4.TabStop = false;
+            // Kokuchi_Station_TH65_Kokuchi4
+            // 
+            Kokuchi_Station_TH65_Kokuchi4.Location = new System.Drawing.Point(617, 237);
+            Kokuchi_Station_TH65_Kokuchi4.Name = "Kokuchi_Station_TH65_Kokuchi4";
+            Kokuchi_Station_TH65_Kokuchi4.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH65_Kokuchi4.TabIndex = 46;
+            Kokuchi_Station_TH65_Kokuchi4.TabStop = false;
             // 
-            // Kokuchi_Station_TH64_2
-            // 
-            Kokuchi_Station_TH64_2.Location = new System.Drawing.Point(915, 201);
-            Kokuchi_Station_TH64_2.Name = "Kokuchi_Station_TH64_2";
-            Kokuchi_Station_TH64_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH64_2.TabIndex = 48;
-            Kokuchi_Station_TH64_2.TabStop = false;
+            // Kokuchi_Station_TH64_Kokuchi2
+            // 
+            Kokuchi_Station_TH64_Kokuchi2.Location = new System.Drawing.Point(915, 201);
+            Kokuchi_Station_TH64_Kokuchi2.Name = "Kokuchi_Station_TH64_Kokuchi2";
+            Kokuchi_Station_TH64_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH64_Kokuchi2.TabIndex = 48;
+            Kokuchi_Station_TH64_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH64_1
-            // 
-            Kokuchi_Station_TH64_1.Location = new System.Drawing.Point(915, 183);
-            Kokuchi_Station_TH64_1.Name = "Kokuchi_Station_TH64_1";
-            Kokuchi_Station_TH64_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH64_1.TabIndex = 47;
-            Kokuchi_Station_TH64_1.TabStop = false;
+            // Kokuchi_Station_TH64_Kokuchi1
+            // 
+            Kokuchi_Station_TH64_Kokuchi1.Location = new System.Drawing.Point(915, 183);
+            Kokuchi_Station_TH64_Kokuchi1.Name = "Kokuchi_Station_TH64_Kokuchi1";
+            Kokuchi_Station_TH64_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH64_Kokuchi1.TabIndex = 47;
+            Kokuchi_Station_TH64_Kokuchi1.TabStop = false;
             // 
-            // Kokuchi_Station_TH63_2
-            // 
-            Kokuchi_Station_TH63_2.Location = new System.Drawing.Point(1037, 201);
-            Kokuchi_Station_TH63_2.Name = "Kokuchi_Station_TH63_2";
-            Kokuchi_Station_TH63_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH63_2.TabIndex = 50;
-            Kokuchi_Station_TH63_2.TabStop = false;
+            // Kokuchi_Station_TH63_Kokuchi2
+            // 
+            Kokuchi_Station_TH63_Kokuchi2.Location = new System.Drawing.Point(1037, 201);
+            Kokuchi_Station_TH63_Kokuchi2.Name = "Kokuchi_Station_TH63_Kokuchi2";
+            Kokuchi_Station_TH63_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH63_Kokuchi2.TabIndex = 50;
+            Kokuchi_Station_TH63_Kokuchi2.TabStop = false;
             // 
-            // Kokuchi_Station_TH63_1
-            // 
-            Kokuchi_Station_TH63_1.Location = new System.Drawing.Point(1037, 183);
-            Kokuchi_Station_TH63_1.Name = "Kokuchi_Station_TH63_1";
-            Kokuchi_Station_TH63_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH63_1.TabIndex = 49;
-            Kokuchi_Station_TH63_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH62_2
-            // 
-            Kokuchi_Station_TH62_2.Location = new System.Drawing.Point(1157, 211);
-            Kokuchi_Station_TH62_2.Name = "Kokuchi_Station_TH62_2";
-            Kokuchi_Station_TH62_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH62_2.TabIndex = 52;
-            Kokuchi_Station_TH62_2.TabStop = false;
-            // 
-            // Kokuchi_Station_TH62_1
-            // 
-            Kokuchi_Station_TH62_1.Location = new System.Drawing.Point(1157, 193);
-            Kokuchi_Station_TH62_1.Name = "Kokuchi_Station_TH62_1";
-            Kokuchi_Station_TH62_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH62_1.TabIndex = 51;
-            Kokuchi_Station_TH62_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH61_3
-            // 
-            Kokuchi_Station_TH61_3.Location = new System.Drawing.Point(44, 358);
-            Kokuchi_Station_TH61_3.Name = "Kokuchi_Station_TH61_3";
-            Kokuchi_Station_TH61_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH61_3.TabIndex = 54;
-            Kokuchi_Station_TH61_3.TabStop = false;
-            // 
-            // Kokuchi_Station_TH61_2
-            // 
-            Kokuchi_Station_TH61_2.Location = new System.Drawing.Point(44, 340);
-            Kokuchi_Station_TH61_2.Name = "Kokuchi_Station_TH61_2";
-            Kokuchi_Station_TH61_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH61_2.TabIndex = 53;
-            Kokuchi_Station_TH61_2.TabStop = false;
-            // 
-            // Kokuchi_Station_TH60_2
-            // 
-            Kokuchi_Station_TH60_2.Location = new System.Drawing.Point(117, 358);
-            Kokuchi_Station_TH60_2.Name = "Kokuchi_Station_TH60_2";
-            Kokuchi_Station_TH60_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH60_2.TabIndex = 56;
-            Kokuchi_Station_TH60_2.TabStop = false;
-            // 
-            // Kokuchi_Station_TH60_1
-            // 
-            Kokuchi_Station_TH60_1.Location = new System.Drawing.Point(117, 340);
-            Kokuchi_Station_TH60_1.Name = "Kokuchi_Station_TH60_1";
-            Kokuchi_Station_TH60_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH60_1.TabIndex = 55;
-            Kokuchi_Station_TH60_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH59_2
-            // 
-            Kokuchi_Station_TH59_2.Location = new System.Drawing.Point(177, 358);
-            Kokuchi_Station_TH59_2.Name = "Kokuchi_Station_TH59_2";
-            Kokuchi_Station_TH59_2.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH59_2.TabIndex = 58;
-            Kokuchi_Station_TH59_2.TabStop = false;
-            // 
-            // Kokuchi_Station_TH59_1
-            // 
-            Kokuchi_Station_TH59_1.Location = new System.Drawing.Point(177, 340);
-            Kokuchi_Station_TH59_1.Name = "Kokuchi_Station_TH59_1";
-            Kokuchi_Station_TH59_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH59_1.TabIndex = 57;
-            Kokuchi_Station_TH59_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH58_3
-            // 
-            Kokuchi_Station_TH58_3.Location = new System.Drawing.Point(298, 373);
-            Kokuchi_Station_TH58_3.Name = "Kokuchi_Station_TH58_3";
-            Kokuchi_Station_TH58_3.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH58_3.TabIndex = 60;
-            Kokuchi_Station_TH58_3.TabStop = false;
-            // 
-            // Kokuchi_Station_TH58_1
-            // 
-            Kokuchi_Station_TH58_1.Location = new System.Drawing.Point(286, 340);
-            Kokuchi_Station_TH58_1.Name = "Kokuchi_Station_TH58_1";
-            Kokuchi_Station_TH58_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH58_1.TabIndex = 59;
-            Kokuchi_Station_TH58_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH61_1
-            // 
-            Kokuchi_Station_TH61_1.Location = new System.Drawing.Point(62, 320);
-            Kokuchi_Station_TH61_1.Name = "Kokuchi_Station_TH61_1";
-            Kokuchi_Station_TH61_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH61_1.TabIndex = 61;
-            Kokuchi_Station_TH61_1.TabStop = false;
-            // 
-            // Kokuchi_Station_TH75_1
-            // 
-            Kokuchi_Station_TH75_1.Location = new System.Drawing.Point(524, 25);
-            Kokuchi_Station_TH75_1.Name = "Kokuchi_Station_TH75_1";
-            Kokuchi_Station_TH75_1.Size = new System.Drawing.Size(48, 16);
-            Kokuchi_Station_TH75_1.TabIndex = 63;
-            Kokuchi_Station_TH75_1.TabStop = false;
+            // Kokuchi_Station_TH63_Kokuchi1
+            // 
+            Kokuchi_Station_TH63_Kokuchi1.Location = new System.Drawing.Point(1037, 183);
+            Kokuchi_Station_TH63_Kokuchi1.Name = "Kokuchi_Station_TH63_Kokuchi1";
+            Kokuchi_Station_TH63_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH63_Kokuchi1.TabIndex = 49;
+            Kokuchi_Station_TH63_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH62_Kokuchi2
+            // 
+            Kokuchi_Station_TH62_Kokuchi2.Location = new System.Drawing.Point(1157, 211);
+            Kokuchi_Station_TH62_Kokuchi2.Name = "Kokuchi_Station_TH62_Kokuchi2";
+            Kokuchi_Station_TH62_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH62_Kokuchi2.TabIndex = 52;
+            Kokuchi_Station_TH62_Kokuchi2.TabStop = false;
+            // 
+            // Kokuchi_Station_TH62_Kokuchi1
+            // 
+            Kokuchi_Station_TH62_Kokuchi1.Location = new System.Drawing.Point(1157, 193);
+            Kokuchi_Station_TH62_Kokuchi1.Name = "Kokuchi_Station_TH62_Kokuchi1";
+            Kokuchi_Station_TH62_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH62_Kokuchi1.TabIndex = 51;
+            Kokuchi_Station_TH62_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH61_Kokuchi3
+            // 
+            Kokuchi_Station_TH61_Kokuchi3.Location = new System.Drawing.Point(44, 358);
+            Kokuchi_Station_TH61_Kokuchi3.Name = "Kokuchi_Station_TH61_Kokuchi3";
+            Kokuchi_Station_TH61_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH61_Kokuchi3.TabIndex = 54;
+            Kokuchi_Station_TH61_Kokuchi3.TabStop = false;
+            // 
+            // Kokuchi_Station_TH61_Kokuchi2
+            // 
+            Kokuchi_Station_TH61_Kokuchi2.Location = new System.Drawing.Point(44, 340);
+            Kokuchi_Station_TH61_Kokuchi2.Name = "Kokuchi_Station_TH61_Kokuchi2";
+            Kokuchi_Station_TH61_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH61_Kokuchi2.TabIndex = 53;
+            Kokuchi_Station_TH61_Kokuchi2.TabStop = false;
+            // 
+            // Kokuchi_Station_TH60_Kokuchi2
+            // 
+            Kokuchi_Station_TH60_Kokuchi2.Location = new System.Drawing.Point(117, 358);
+            Kokuchi_Station_TH60_Kokuchi2.Name = "Kokuchi_Station_TH60_Kokuchi2";
+            Kokuchi_Station_TH60_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH60_Kokuchi2.TabIndex = 56;
+            Kokuchi_Station_TH60_Kokuchi2.TabStop = false;
+            // 
+            // Kokuchi_Station_TH60_Kokuchi1
+            // 
+            Kokuchi_Station_TH60_Kokuchi1.Location = new System.Drawing.Point(117, 340);
+            Kokuchi_Station_TH60_Kokuchi1.Name = "Kokuchi_Station_TH60_Kokuchi1";
+            Kokuchi_Station_TH60_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH60_Kokuchi1.TabIndex = 55;
+            Kokuchi_Station_TH60_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH59_Kokuchi2
+            // 
+            Kokuchi_Station_TH59_Kokuchi2.Location = new System.Drawing.Point(177, 358);
+            Kokuchi_Station_TH59_Kokuchi2.Name = "Kokuchi_Station_TH59_Kokuchi2";
+            Kokuchi_Station_TH59_Kokuchi2.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH59_Kokuchi2.TabIndex = 58;
+            Kokuchi_Station_TH59_Kokuchi2.TabStop = false;
+            // 
+            // Kokuchi_Station_TH59_Kokuchi1
+            // 
+            Kokuchi_Station_TH59_Kokuchi1.Location = new System.Drawing.Point(177, 340);
+            Kokuchi_Station_TH59_Kokuchi1.Name = "Kokuchi_Station_TH59_Kokuchi1";
+            Kokuchi_Station_TH59_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH59_Kokuchi1.TabIndex = 57;
+            Kokuchi_Station_TH59_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH58_Kokuchi3
+            // 
+            Kokuchi_Station_TH58_Kokuchi3.Location = new System.Drawing.Point(298, 373);
+            Kokuchi_Station_TH58_Kokuchi3.Name = "Kokuchi_Station_TH58_Kokuchi3";
+            Kokuchi_Station_TH58_Kokuchi3.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH58_Kokuchi3.TabIndex = 60;
+            Kokuchi_Station_TH58_Kokuchi3.TabStop = false;
+            // 
+            // Kokuchi_Station_TH58_Kokuchi1
+            // 
+            Kokuchi_Station_TH58_Kokuchi1.Location = new System.Drawing.Point(286, 340);
+            Kokuchi_Station_TH58_Kokuchi1.Name = "Kokuchi_Station_TH58_Kokuchi1";
+            Kokuchi_Station_TH58_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH58_Kokuchi1.TabIndex = 59;
+            Kokuchi_Station_TH58_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH61_Kokuchi1
+            // 
+            Kokuchi_Station_TH61_Kokuchi1.Location = new System.Drawing.Point(62, 320);
+            Kokuchi_Station_TH61_Kokuchi1.Name = "Kokuchi_Station_TH61_Kokuchi1";
+            Kokuchi_Station_TH61_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH61_Kokuchi1.TabIndex = 61;
+            Kokuchi_Station_TH61_Kokuchi1.TabStop = false;
+            // 
+            // Kokuchi_Station_TH75_Kokuchi1
+            // 
+            Kokuchi_Station_TH75_Kokuchi1.Location = new System.Drawing.Point(524, 25);
+            Kokuchi_Station_TH75_Kokuchi1.Name = "Kokuchi_Station_TH75_Kokuchi1";
+            Kokuchi_Station_TH75_Kokuchi1.Size = new System.Drawing.Size(48, 16);
+            Kokuchi_Station_TH75_Kokuchi1.TabIndex = 63;
+            Kokuchi_Station_TH75_Kokuchi1.TabStop = false;
             // 
             // KokuchiForm
             // 
@@ -851,54 +851,54 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(1264, 681);
-            Controls.Add(Kokuchi_Station_TH75_1);
-            Controls.Add(Kokuchi_Station_TH61_1);
-            Controls.Add(Kokuchi_Station_TH58_3);
-            Controls.Add(Kokuchi_Station_TH58_1);
-            Controls.Add(Kokuchi_Station_TH59_2);
-            Controls.Add(Kokuchi_Station_TH59_1);
-            Controls.Add(Kokuchi_Station_TH60_2);
-            Controls.Add(Kokuchi_Station_TH60_1);
-            Controls.Add(Kokuchi_Station_TH61_3);
-            Controls.Add(Kokuchi_Station_TH61_2);
-            Controls.Add(Kokuchi_Station_TH62_2);
-            Controls.Add(Kokuchi_Station_TH62_1);
-            Controls.Add(Kokuchi_Station_TH63_2);
-            Controls.Add(Kokuchi_Station_TH63_1);
-            Controls.Add(Kokuchi_Station_TH64_2);
-            Controls.Add(Kokuchi_Station_TH64_1);
-            Controls.Add(Kokuchi_Station_TH65_4);
-            Controls.Add(Kokuchi_Station_TH65_1);
-            Controls.Add(Kokuchi_Station_TH65_3);
-            Controls.Add(Kokuchi_Station_TH65_2);
-            Controls.Add(Kokuchi_Station_TH67_4);
-            Controls.Add(Kokuchi_Station_TH67_1);
-            Controls.Add(Kokuchi_Station_TH67_3);
-            Controls.Add(Kokuchi_Station_TH67_2);
-            Controls.Add(Kokuchi_Station_TH66_2);
-            Controls.Add(Kokuchi_Station_TH66_1);
-            Controls.Add(Kokuchi_Station_TH69_2);
-            Controls.Add(Kokuchi_Station_TH69_1);
-            Controls.Add(Kokuchi_Station_TH68_2);
-            Controls.Add(Kokuchi_Station_TH68_1);
-            Controls.Add(Kokuchi_Station_TH70_2);
-            Controls.Add(Kokuchi_Station_TH70_1);
-            Controls.Add(Kokuchi_Station_TH72_2);
-            Controls.Add(Kokuchi_Station_TH72_1);
-            Controls.Add(Kokuchi_Station_TH73_2);
-            Controls.Add(Kokuchi_Station_TH73_1);
-            Controls.Add(Kokuchi_Station_TH74_2);
-            Controls.Add(Kokuchi_Station_TH74_1);
-            Controls.Add(Kokuchi_Station_TH71_4);
-            Controls.Add(Kokuchi_Station_TH71_1);
-            Controls.Add(Kokuchi_Station_TH71_3);
-            Controls.Add(Kokuchi_Station_TH71_2);
-            Controls.Add(Kokuchi_Station_TH75_3);
-            Controls.Add(Kokuchi_Station_TH75_2);
-            Controls.Add(Kokuchi_Station_TH76_5);
-            Controls.Add(Kokuchi_Station_TH76_4);
-            Controls.Add(Kokuchi_Station_TH76_3);
-            Controls.Add(Kokuchi_Station_TH76_1);
+            Controls.Add(Kokuchi_Station_TH75_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH61_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH58_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH58_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH59_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH59_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH60_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH60_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH61_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH61_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH62_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH62_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH63_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH63_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH64_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH64_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH65_Kokuchi4);
+            Controls.Add(Kokuchi_Station_TH65_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH65_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH65_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH67_Kokuchi4);
+            Controls.Add(Kokuchi_Station_TH67_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH67_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH67_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH66_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH66_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH69_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH69_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH68_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH68_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH70_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH70_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH72_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH72_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH73_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH73_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH74_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH74_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH71_Kokuchi4);
+            Controls.Add(Kokuchi_Station_TH71_Kokuchi1);
+            Controls.Add(Kokuchi_Station_TH71_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH71_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH75_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH75_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH76_Kokuchi4);
+            Controls.Add(Kokuchi_Station_TH76_Kokuchi3);
+            Controls.Add(Kokuchi_Station_TH76_Kokuchi2);
+            Controls.Add(Kokuchi_Station_TH76_Kokuchi1);
             Controls.Add(Kokuchi_CheckBox_TopMost);
             Controls.Add(Kokuchi_Label_SettingList);
             Controls.Add(Kokuchi_ListBox_SettingList);
@@ -918,54 +918,54 @@
             Kokuchi_GroupBox_Setting.ResumeLayout(false);
             Kokuchi_GroupBox_Setting.PerformLayout();
             Kokuchi_GroupBox_Tenmatsusho.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_5).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH76_Kokuchi4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH71_Kokuchi4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH74_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH73_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH72_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH70_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH68_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH69_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH66_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH67_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH65_Kokuchi4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH64_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH63_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH62_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH60_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_Kokuchi2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH59_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_Kokuchi3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH58_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH61_Kokuchi1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Kokuchi_Station_TH75_Kokuchi1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -992,53 +992,53 @@
         private System.Windows.Forms.Label Kokuchi_Label_SettingList;
         private System.Windows.Forms.CheckBox Kokuchi_CheckBox_TopMost;
         private System.Windows.Forms.GroupBox Kokuchi_GroupBox_Tenmatsusho;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_4;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_5;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_4;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH74_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH74_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH73_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH73_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH72_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH72_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH70_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH70_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH68_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH68_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH69_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH69_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH66_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH66_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_4;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_4;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH64_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH64_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH63_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH63_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH62_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH62_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH60_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH60_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH59_2;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH59_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH58_3;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH58_1;
-        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_Kokuchi4;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH75_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH71_Kokuchi4;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH74_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH74_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH73_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH73_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH72_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH72_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH70_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH70_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH68_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH68_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH69_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH69_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH66_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH66_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_Kokuchi4;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH67_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH65_Kokuchi4;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH64_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH64_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH63_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH63_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH62_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH62_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH60_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH60_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH59_Kokuchi2;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH59_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH58_Kokuchi3;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH58_Kokuchi1;
+        private System.Windows.Forms.PictureBox Kokuchi_Station_TH61_Kokuchi1;
     }
 }
