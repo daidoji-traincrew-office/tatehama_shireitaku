@@ -15,7 +15,7 @@ namespace TatehamaCommanderTable
         private readonly DataManager _dataManager;                          // GlobalData管理
         private readonly Timer _mainTimer;                                  // メインタイマー
         private KokuchiForm _kokuchiForm;                                   // 運転告知器フォーム
-        private AccidentForm _accidentForm;                                 // 運転支障フォーム
+        private TroubleForm _accidentForm;                                 // 運転支障フォーム
         private TrackCircuitForm _trackCircuitForm;                         // 軌道回路フォーム
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace TatehamaCommanderTable
             _dataManager = DataManager.Instance;
             // Form生成
             _kokuchiForm = new KokuchiForm();
-            _accidentForm = new AccidentForm();
+            _accidentForm = new TroubleForm();
             _trackCircuitForm = new TrackCircuitForm(serverCommunication);
 
             // イベント設定
@@ -108,7 +108,7 @@ namespace TatehamaCommanderTable
                         {
                             if (_accidentForm.IsDisposed)
                             {
-                                _accidentForm = new AccidentForm();
+                                _accidentForm = new TroubleForm();
                             }
                             _accidentForm.Show();
                         }
