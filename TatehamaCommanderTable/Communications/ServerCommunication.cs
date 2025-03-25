@@ -99,12 +99,12 @@ namespace TatehamaCommanderTable.Communications
                 // サーバー接続初期化
                 await InitializeConnection();
             }
-            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Message == OpenIddictConstants.Errors.AccessDenied)
+            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.AccessDenied)
             {
                 // ログインしたユーザーがサーバーにいないか、入鋏ロールがついてない
                 CustomMessage.Show("認証が拒否されました。\n司令主任に連絡してください。", "認証拒否", exception, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Message == OpenIddictConstants.Errors.ServerError)
+            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.ServerError)
             {
                 // サーバーでトラブル発生
                 var result = CustomMessage.Show("認証時にサーバーでエラーが発生しました。\\n再認証しますか？", "サーバーエラー", exception, MessageBoxButton.YesNo, MessageBoxImage.Error);
@@ -221,7 +221,7 @@ namespace TatehamaCommanderTable.Communications
                         }
                         // DataGridView設定リストデータを作成
                         var list = new SortableBindingList<DataGridViewSetting>();
-                        foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuits)
+                        foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuitDataList)
                         {
                             list.Add(new DataGridViewSetting
                             {
@@ -250,6 +250,24 @@ namespace TatehamaCommanderTable.Communications
             catch (Exception ex)
             {
                 Debug.WriteLine($"Failed to send constant data to server: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ運転支障イベント送信用データをリクエスト
+        /// </summary>
+        /// <param name="troubleEventDataToServer"></param>
+        /// <returns></returns>
+        public async Task SendTroubleEventDataRequestToServerAsync(DatabaseOperational.TroubleEventDataToServer troubleEventDataToServer)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync<string>("test", troubleEventDataToServer);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
         }
 

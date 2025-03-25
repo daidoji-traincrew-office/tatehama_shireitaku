@@ -2,6 +2,9 @@
 
 namespace TatehamaCommanderTable.Models
 {
+    /// <summary>
+    /// 運転告知器データクラス
+    /// </summary>
     public class KokuchiData
     {
         public KokuchiType Type { get; set; }
@@ -15,6 +18,7 @@ namespace TatehamaCommanderTable.Models
             this.OriginTime = OriginTime;
         }
     }
+
     public enum KokuchiType
     {
         None,

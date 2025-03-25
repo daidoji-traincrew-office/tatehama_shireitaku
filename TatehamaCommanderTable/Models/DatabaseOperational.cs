@@ -19,12 +19,23 @@ namespace TatehamaCommanderTable.Models
         }
 
         /// <summary>
+        /// イベント送信用データクラス(運転支障)
+        /// </summary>
+        public class TroubleEventDataToServer
+        {
+            /// <summary>
+            /// 運転支障データ
+            /// </summary>
+            public TroubleData TroubleData { get; set; }
+        }
+
+        /// <summary>
         /// イベント送信用データクラス(運転告知器)
         /// </summary>
         public class KokuchiEventDataToServer
         {
             /// <summary>
-            /// 運転告知器データ
+            /// 運転告知器データ辞書
             /// </summary>
             public Dictionary<string, KokuchiData> KokuchiDataDic { get; set; }
         }
@@ -35,9 +46,9 @@ namespace TatehamaCommanderTable.Models
         public class TrackCircuitEventDataToServer
         {
             /// <summary>
-            /// 軌道回路情報リスト
+            /// 軌道回路データ
             /// </summary>
-            public List<ServerTrackCircuitData> TrackCircuits { get; set; }
+            public TrackCircuitData TrackCircuitData { get; set; }
         }
 
         /// <summary>
@@ -46,42 +57,19 @@ namespace TatehamaCommanderTable.Models
         public class DataFromServer
         {
             /// <summary>
-            /// 運転告知器データ
+            /// 運転支障データリスト
             /// </summary>
-            public Dictionary<string, KokuchiData> KokuchiDataDic { get; set; }
+            public List<TroubleData> TroubleDataList { get; set; }
 
             /// <summary>
-            /// 軌道回路情報リスト
+            /// 運転告知器データリスト
             /// </summary>
-            public List<ServerTrackCircuitData> TrackCircuits { get; set; }
-        }
-    }
+            public List<KokuchiData> KokuchiDataList { get; set; }
 
-    /// <summary>
-    /// 軌道回路データクラス
-    /// </summary>
-    public class ServerTrackCircuitData
-    {
-        /// <summary>
-        /// 在線状態    
-        /// </summary>
-        public bool On { get; set; } = false;
-        /// <summary>
-        /// 鎖錠状態
-        /// </summary>
-        public bool Lock { get; set; } = false;
-        /// <summary>
-        /// 軌道回路を踏んだ列車の名前
-        /// </summary>
-        public string Last { get; set; } = null;
-        /// <summary>
-        /// 軌道回路名称
-        /// </summary>
-        public string Name { get; set; } = "";
-
-        public override string ToString()
-        {
-            return $"{Name}";
+            /// <summary>
+            /// 軌道回路データリスト
+            /// </summary>
+            public List<TrackCircuitData> TrackCircuitDataList { get; set; }
         }
     }
 }
