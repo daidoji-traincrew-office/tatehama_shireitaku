@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Services;
-using TrainCrewTIDWindow;
 
 namespace TatehamaCommanderTable
 {
@@ -22,12 +21,12 @@ namespace TatehamaCommanderTable
         [STAThread]
         static async Task Main()
         {
-            // IHost�̏�����
+            // IHostの初期化
             var host = new HostBuilder()
                 .ConfigureLogging(options => options.AddDebug())
                 .ConfigureServices(services =>
                 {
-                    // DbContext�̐ݒ�
+                    // DbContextの設定
                     services.AddDbContext<DbContext>(options =>
                     {
                         options.UseSqlite(
@@ -35,7 +34,7 @@ namespace TatehamaCommanderTable
                         options.UseOpenIddict();
                     });
 
-                    // OpenIddict�̐ݒ�
+                    // OpenIddictの設定
                     services.AddOpenIddict()
 
                         .AddCore(options =>
@@ -64,10 +63,10 @@ namespace TatehamaCommanderTable
                                 RedirectUri = new Uri("/", UriKind.Relative),
                             });
                         });
-                    // �K�v�ȃT�[�r�X�̓o�^
+                    // 必要なサービスの登録
                     services.AddSingleton(DataManager.Instance);
                     services.AddSingleton<ServerCommunication>();
-                    // Worker�T�[�r�X��o�^
+                    // Workerサービスを登録
                     services.AddHostedService<Worker>();
                 })
                 .ConfigureWinForms<MainForm>()

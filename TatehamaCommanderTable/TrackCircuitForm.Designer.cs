@@ -39,7 +39,6 @@
             TrackCircuit_TextBox_TrainNumber = new System.Windows.Forms.TextBox();
             TrackCircuit_RadioButton_ShortCircuit_ON = new System.Windows.Forms.RadioButton();
             TrackCircuit_RadioButton_ShortCircuit_OFF = new System.Windows.Forms.RadioButton();
-            TrackCircuit_Label_TrackCircuit = new System.Windows.Forms.Label();
             TrackCircuit_Label_Title_TrackCircuit = new System.Windows.Forms.Label();
             TrackCircuit_Label_Title_TrainNumber = new System.Windows.Forms.Label();
             TrackCircuit_GroupBox_TrackCircuitSetting = new System.Windows.Forms.GroupBox();
@@ -52,6 +51,7 @@
             TrackCircuit_Label_Title_DeleteTrainNumber = new System.Windows.Forms.Label();
             TrackCircuit_TextBox_DeleteTrainNumber = new System.Windows.Forms.TextBox();
             TrackCircuit_Button_DeleteTrainNumber = new System.Windows.Forms.Button();
+            TrackCircuit_TextBox_TrackCircuit = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_DataGridView_TrackCircuitData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_BindingSource).BeginInit();
             TrackCircuit_GroupBox_TrackCircuitSetting.SuspendLayout();
@@ -163,17 +163,6 @@
             TrackCircuit_RadioButton_ShortCircuit_OFF.Text = "なし";
             TrackCircuit_RadioButton_ShortCircuit_OFF.UseVisualStyleBackColor = true;
             // 
-            // TrackCircuit_Label_TrackCircuit
-            // 
-            TrackCircuit_Label_TrackCircuit.BackColor = System.Drawing.Color.White;
-            TrackCircuit_Label_TrackCircuit.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            TrackCircuit_Label_TrackCircuit.ForeColor = System.Drawing.Color.Black;
-            TrackCircuit_Label_TrackCircuit.Location = new System.Drawing.Point(46, 45);
-            TrackCircuit_Label_TrackCircuit.Name = "TrackCircuit_Label_TrackCircuit";
-            TrackCircuit_Label_TrackCircuit.Size = new System.Drawing.Size(265, 28);
-            TrackCircuit_Label_TrackCircuit.TabIndex = 10;
-            TrackCircuit_Label_TrackCircuit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // TrackCircuit_Label_Title_TrackCircuit
             // 
             TrackCircuit_Label_Title_TrackCircuit.BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
@@ -200,9 +189,9 @@
             // 
             // TrackCircuit_GroupBox_TrackCircuitSetting
             // 
+            TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_TextBox_TrackCircuit);
             TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_GroupBox_Title_Loking);
             TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_GroupBox_Title_ShortCircuit);
-            TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_Label_TrackCircuit);
             TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_Label_Title_TrackCircuit);
             TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_Label_Title_TrainNumber);
             TrackCircuit_GroupBox_TrackCircuitSetting.Controls.Add(TrackCircuit_TextBox_TrainNumber);
@@ -331,6 +320,16 @@
             TrackCircuit_Button_DeleteTrainNumber.UseVisualStyleBackColor = false;
             TrackCircuit_Button_DeleteTrainNumber.Click += TrackCircuit_Button_Click;
             // 
+            // TrackCircuit_TextBox_TrackCircuit
+            // 
+            TrackCircuit_TextBox_TrackCircuit.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            TrackCircuit_TextBox_TrackCircuit.Location = new System.Drawing.Point(46, 46);
+            TrackCircuit_TextBox_TrackCircuit.MaxLength = 6;
+            TrackCircuit_TextBox_TrackCircuit.Name = "TrackCircuit_TextBox_TrackCircuit";
+            TrackCircuit_TextBox_TrackCircuit.Size = new System.Drawing.Size(265, 28);
+            TrackCircuit_TextBox_TrackCircuit.TabIndex = 19;
+            TrackCircuit_TextBox_TrackCircuit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // TrackCircuitForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -370,7 +369,6 @@
         private System.Windows.Forms.TextBox TrackCircuit_TextBox_TrainNumber;
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_ShortCircuit_ON;
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_ShortCircuit_OFF;
-        private System.Windows.Forms.Label TrackCircuit_Label_TrackCircuit;
         private System.Windows.Forms.Label TrackCircuit_Label_Title_TrackCircuit;
         private System.Windows.Forms.Label TrackCircuit_Label_Title_TrainNumber;
         private System.Windows.Forms.GroupBox TrackCircuit_GroupBox_TrackCircuitSetting;
@@ -388,5 +386,6 @@
         private System.Windows.Forms.Label TrackCircuit_Label_Title_DeleteTrainNumber;
         private System.Windows.Forms.TextBox TrackCircuit_TextBox_DeleteTrainNumber;
         private System.Windows.Forms.Button TrackCircuit_Button_DeleteTrainNumber;
+        private System.Windows.Forms.TextBox TrackCircuit_TextBox_TrackCircuit;
     }
 }

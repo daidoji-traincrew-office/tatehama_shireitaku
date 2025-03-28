@@ -11,7 +11,6 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
-using TrainCrewTIDWindow;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -308,7 +307,7 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ列車の削除をリクエスト
         /// </summary>
-        /// <param name="trackCircuitEventDataToServer"></param>
+        /// <param name="trainName"></param>
         /// <returns></returns>
         public async Task SendDeleteTrainRequestToServerAsync(string trainName)
         {

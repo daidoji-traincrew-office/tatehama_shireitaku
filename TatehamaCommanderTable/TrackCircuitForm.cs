@@ -57,7 +57,7 @@ namespace TatehamaCommanderTable
                 // 在線削除ボタン
                 case "TrackCircuit_Button_DeleteTrainNumber":
                     {
-
+                        _serverCommunication.SendDeleteTrainRequestToServerAsync(TrackCircuit_TextBox_DeleteTrainNumber.Text);
                     }
                     break;
                 // サーバー送信ボタン
@@ -71,7 +71,7 @@ namespace TatehamaCommanderTable
                                     On = TrackCircuit_RadioButton_ShortCircuit_ON.Checked,
                                     Lock = TrackCircuit_RadioButton_Locking_ON.Checked,
                                     Last = TrackCircuit_TextBox_TrainNumber.Text,
-                                    Name = TrackCircuit_Label_TrackCircuit.Text
+                                    Name = TrackCircuit_TextBox_TrackCircuit.Text
                                 }
                             });
                     }
@@ -125,7 +125,7 @@ namespace TatehamaCommanderTable
                 string lockingStatus = selectedRow.Cells["lockingStatus"].Value.ToString();
 
                 // 各コントロールに設定
-                TrackCircuit_Label_TrackCircuit.Text = trackCircuit;
+                TrackCircuit_TextBox_TrackCircuit.Text = trackCircuit;
                 TrackCircuit_TextBox_TrainNumber.Text = trainNumber;
                 TrackCircuit_TextBox_DeleteTrainNumber.Text = trainNumber;
                 TrackCircuit_RadioButton_ShortCircuit_ON.Checked = shortCircuitStatus == "〇";
