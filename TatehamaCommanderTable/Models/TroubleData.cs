@@ -16,18 +16,26 @@ namespace TatehamaCommanderTable.Models
         public TroubleData()
         {
             TroubleType = TroubleType.None;
-            PlaceType = PlaceType.None;
+            PlaceType = PlaceType.TrackCircuit;
             PlaceName = "";
             OccuredAt = DateTime.Now;
             AdditionalData = "";
         }
     }
 
-    public enum TroubleType
-    {
-        None,
-    }
     public enum PlaceType
+    {
+        // 軌道回路
+        TrackCircuit,
+        // 踏切
+        Crossing,
+        // 車両
+        Train,
+        // 駅ホーム
+        Platform
+    }
+
+    public enum TroubleType
     {
         None,
     }

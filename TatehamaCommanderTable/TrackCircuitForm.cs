@@ -45,6 +45,41 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// ボタンクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TrackCircuit_Button_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            switch (button.Name)
+            {
+                // 在線削除ボタン
+                case "TrackCircuit_Button_DeleteTrainNumber":
+                    {
+
+                    }
+                    break;
+                // サーバー送信ボタン
+                case "TrackCircuit_Button_SendServer":
+                    {
+                        _serverCommunication.SendTrackCircuitEventDataRequestToServerAsync(
+                            new DatabaseOperational.TrackCircuitEventDataToServer
+                            {
+                                TrackCircuitData = new TrackCircuitData
+                                {
+                                    On = TrackCircuit_RadioButton_ShortCircuit_ON.Checked,
+                                    Lock = TrackCircuit_RadioButton_Locking_ON.Checked,
+                                    Last = TrackCircuit_TextBox_TrainNumber.Text,
+                                    Name = TrackCircuit_Label_TrackCircuit.Text
+                                }
+                            });
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
         /// DataGridView更新処理
         /// </summary>
         /// <param name="newDataSource"></param>
@@ -92,6 +127,7 @@ namespace TatehamaCommanderTable
                 // 各コントロールに設定
                 TrackCircuit_Label_TrackCircuit.Text = trackCircuit;
                 TrackCircuit_TextBox_TrainNumber.Text = trainNumber;
+                TrackCircuit_TextBox_DeleteTrainNumber.Text = trainNumber;
                 TrackCircuit_RadioButton_ShortCircuit_ON.Checked = shortCircuitStatus == "〇";
                 TrackCircuit_RadioButton_ShortCircuit_OFF.Checked = shortCircuitStatus != "〇";
                 TrackCircuit_RadioButton_Locking_ON.Checked = lockingStatus == "〇";

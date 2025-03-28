@@ -11,9 +11,8 @@ namespace TatehamaCommanderTable
 {
     public partial class KokuchiForm : Form
     {
-        Dictionary<string, KokuchiData> KokuchiDataDic;
-        //KokuchiData KokuchiData;
-        private Timer _kokuchiTimer;
+        private readonly Dictionary<string, KokuchiData> KokuchiDataDic;
+        private readonly Timer _kokuchiTimer;
         private readonly Bitmap _sourceImage;
 
         /// <summary>
@@ -22,6 +21,7 @@ namespace TatehamaCommanderTable
         public KokuchiForm()
         {
             InitializeComponent();
+            InitializePlaceholder();
 
             // イベント設定
             Load += KokuchiForm_Load;
@@ -53,14 +53,14 @@ namespace TatehamaCommanderTable
                 ContextMenuStrip contextMenu = new ContextMenuStrip();
                 ToolStripMenuItem item1 = new ToolStripMenuItem("抑止");
                 ToolStripMenuItem item2 = new ToolStripMenuItem("解除");
-                ToolStripMenuItem item3 = new ToolStripMenuItem("通知");
+                //ToolStripMenuItem item3 = new ToolStripMenuItem("通知");
                 contextMenu.Items.Add(item1);
                 contextMenu.Items.Add(item2);
-                contextMenu.Items.Add(item3);
+                //contextMenu.Items.Add(item3);
                 ctrl.ContextMenuStrip = contextMenu;
                 item1.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                 item2.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
-                item3.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                //item3.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
 
                 // 初期表示
                 DisplayImageByPos(ctrl.Name, 1, 1);
@@ -76,6 +76,36 @@ namespace TatehamaCommanderTable
         private async void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _kokuchiTimer.Stop();
+        }
+
+        /// <summary>
+        /// TextBoxプレースホルダー初期化
+        /// </summary>
+        private void InitializePlaceholder()
+        {
+            // TextBoxに初期のプレースホルダーテキストを設定
+            Kokuchi_TextBox_Shuppatsu.Text = "0000";
+            Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Gray;
+
+            // Leaveイベントで、プレースホルダーテキストが入力されている場合は消去
+            Kokuchi_TextBox_Shuppatsu.Leave += (sender, e) =>
+            {
+                if (Kokuchi_TextBox_Shuppatsu.Text == "")
+                {
+                    Kokuchi_TextBox_Shuppatsu.Text = "0000";
+                    Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Gray;
+                }
+            };
+
+            // Enterイベントで、プレースホルダーテキストを消去
+            Kokuchi_TextBox_Shuppatsu.Enter += (sender, e) =>
+            {
+                if (Kokuchi_TextBox_Shuppatsu.Text == "0000")
+                {
+                    Kokuchi_TextBox_Shuppatsu.Text = "";
+                    Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Black;
+                }
+            };
         }
 
         /// <summary>

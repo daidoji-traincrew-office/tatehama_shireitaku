@@ -355,6 +355,7 @@
             Kokuchi_RadioButton_Tsuuchi.Text = "通知";
             Kokuchi_RadioButton_Tsuuchi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             Kokuchi_RadioButton_Tsuuchi.UseVisualStyleBackColor = false;
+            Kokuchi_RadioButton_Tsuuchi.Visible = false;
             Kokuchi_RadioButton_Tsuuchi.CheckedChanged += RadioButton_CheckedChanged;
             // 
             // Kokuchi_RadioButton_Kaijyo
@@ -389,7 +390,6 @@
             Kokuchi_TextBox_Shuppatsu.Name = "Kokuchi_TextBox_Shuppatsu";
             Kokuchi_TextBox_Shuppatsu.Size = new System.Drawing.Size(160, 39);
             Kokuchi_TextBox_Shuppatsu.TabIndex = 5;
-            Kokuchi_TextBox_Shuppatsu.Text = "0000";
             Kokuchi_TextBox_Shuppatsu.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Kokuchi_Button_Cansel
