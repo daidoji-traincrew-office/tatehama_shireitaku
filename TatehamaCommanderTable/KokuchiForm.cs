@@ -21,7 +21,6 @@ namespace TatehamaCommanderTable
         public KokuchiForm()
         {
             InitializeComponent();
-            InitializePlaceholder();
 
             // イベント設定
             Load += KokuchiForm_Load;
@@ -54,13 +53,16 @@ namespace TatehamaCommanderTable
                 ToolStripMenuItem item1 = new ToolStripMenuItem("抑止");
                 ToolStripMenuItem item2 = new ToolStripMenuItem("解除");
                 //ToolStripMenuItem item3 = new ToolStripMenuItem("通知");
+                ToolStripMenuItem item4 = new ToolStripMenuItem("取消");
                 contextMenu.Items.Add(item1);
                 contextMenu.Items.Add(item2);
                 //contextMenu.Items.Add(item3);
+                contextMenu.Items.Add(item4);
                 ctrl.ContextMenuStrip = contextMenu;
                 item1.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                 item2.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                 //item3.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                item4.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
 
                 // 初期表示
                 DisplayImageByPos(ctrl.Name, 1, 1);
@@ -76,36 +78,6 @@ namespace TatehamaCommanderTable
         private async void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _kokuchiTimer.Stop();
-        }
-
-        /// <summary>
-        /// TextBoxプレースホルダー初期化
-        /// </summary>
-        private void InitializePlaceholder()
-        {
-            // TextBoxに初期のプレースホルダーテキストを設定
-            Kokuchi_TextBox_Shuppatsu.Text = "0000";
-            Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Gray;
-
-            // Leaveイベントで、プレースホルダーテキストが入力されている場合は消去
-            Kokuchi_TextBox_Shuppatsu.Leave += (sender, e) =>
-            {
-                if (Kokuchi_TextBox_Shuppatsu.Text == "")
-                {
-                    Kokuchi_TextBox_Shuppatsu.Text = "0000";
-                    Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Gray;
-                }
-            };
-
-            // Enterイベントで、プレースホルダーテキストを消去
-            Kokuchi_TextBox_Shuppatsu.Enter += (sender, e) =>
-            {
-                if (Kokuchi_TextBox_Shuppatsu.Text == "0000")
-                {
-                    Kokuchi_TextBox_Shuppatsu.Text = "";
-                    Kokuchi_TextBox_Shuppatsu.ForeColor = Color.Black;
-                }
-            };
         }
 
         /// <summary>
@@ -147,6 +119,9 @@ namespace TatehamaCommanderTable
                     break;
                 case "通知":
                     SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
+                    break;
+                case "取消":
+                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.None, "", DateTime.Now));
                     break;
             }
         }
@@ -215,7 +190,11 @@ namespace TatehamaCommanderTable
                 case "Kokuchi_RadioButton_Shuppatsu":
                     // 4ケタの数字が入力されているかチェック
                     string input = Kokuchi_TextBox_Shuppatsu.Text;
-                    if (input.Length == 4 && int.TryParse(input, out _))
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Shuppatsu, "", DateTime.Now));
+                    }
+                    else if (input.Length == 4 && int.TryParse(input, out _))
                     {
                         SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.ShuppatsuJikoku, input, DateTime.Now));
                     }
