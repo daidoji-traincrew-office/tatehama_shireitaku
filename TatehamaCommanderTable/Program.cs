@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Services;
+using TrainCrewTIDWindow;
 
 namespace TatehamaCommanderTable
 {
@@ -21,12 +22,12 @@ namespace TatehamaCommanderTable
         [STAThread]
         static async Task Main()
         {
-            // IHost‚Ì‰Šú‰»
+            // IHostï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
             var host = new HostBuilder()
                 .ConfigureLogging(options => options.AddDebug())
                 .ConfigureServices(services =>
                 {
-                    // DbContext‚Ìİ’è
+                    // DbContextï¿½Ìİ’ï¿½
                     services.AddDbContext<DbContext>(options =>
                     {
                         options.UseSqlite(
@@ -34,7 +35,7 @@ namespace TatehamaCommanderTable
                         options.UseOpenIddict();
                     });
 
-                    // OpenIddict‚Ìİ’è
+                    // OpenIddictï¿½Ìİ’ï¿½
                     services.AddOpenIddict()
 
                         .AddCore(options =>
@@ -63,10 +64,10 @@ namespace TatehamaCommanderTable
                                 RedirectUri = new Uri("/", UriKind.Relative),
                             });
                         });
-                    // •K—v‚ÈƒT[ƒrƒX‚Ì“o˜^
+                    // ï¿½Kï¿½vï¿½ÈƒTï¿½[ï¿½rï¿½Xï¿½Ì“oï¿½^
                     services.AddSingleton(DataManager.Instance);
                     services.AddSingleton<ServerCommunication>();
-                    // WorkerƒT[ƒrƒX‚ğ“o˜^
+                    // Workerï¿½Tï¿½[ï¿½rï¿½Xï¿½ï¿½oï¿½^
                     services.AddHostedService<Worker>();
                 })
                 .ConfigureWinForms<MainForm>()

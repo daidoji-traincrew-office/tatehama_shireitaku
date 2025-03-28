@@ -11,6 +11,7 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
+using TrainCrewTIDWindow;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -24,7 +25,7 @@ namespace TatehamaCommanderTable.Communications
         private readonly DataManager _dataManager;
         private static HubConnection _connection;
         private static bool _isUpdateLoopRunning = false;
-        private const string HubConnectionName = "train"; // Todo: サーバーhubが構築されたら名称を変更する
+        private const string HubConnectionName = "commander_table";
         /// <summary>
         /// DataGridView更新通知イベント
         /// </summary>
@@ -62,10 +63,7 @@ namespace TatehamaCommanderTable.Communications
                 // サーバー接続中ならデータ送信
                 if (_dataManager.ServerConnected)
                 {
-                    await SendConstantDataRequestToServerAsync(new DatabaseOperational.ConstantDataToServer
-                    {
-                        // Todo: 定期的に送信するデータを設定
-                    });
+                    await SendConstantDataRequestToServerAsync();
                 }
             }
         }
@@ -191,12 +189,12 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="constantDataToServer"></param>
         /// <returns></returns>
-        public async Task SendConstantDataRequestToServerAsync(DatabaseOperational.ConstantDataToServer constantDataToServer)
+        public async Task SendConstantDataRequestToServerAsync()
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                var data = await _connection.InvokeAsync<DatabaseOperational.DataFromServer>("SendData_CommanderTable", constantDataToServer);
+                var data = await _connection.InvokeAsync<DatabaseOperational.DataFromServer>("SendData_CommanderTable");
                 try
                 {
                     if (data != null)
@@ -263,7 +261,7 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("test", troubleEventDataToServer);
+                await _connection.InvokeAsync<string>("SendTroubleData", troubleEventDataToServer.TroubleData);
             }
             catch (Exception exception)
             {
@@ -281,7 +279,7 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("test", kokuchiEventDataToServer);
+                await _connection.InvokeAsync<string>("SendKokuchiData", kokuchiEventDataToServer.KokuchiDataDic);
             }
             catch (Exception exception)
             {
@@ -299,7 +297,25 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("test", trackCircuitEventDataToServer);
+                await _connection.InvokeAsync<string>("SendTrackCircuitData", trackCircuitEventDataToServer.TrackCircuitData);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ列車の削除をリクエスト
+        /// </summary>
+        /// <param name="trackCircuitEventDataToServer"></param>
+        /// <returns></returns>
+        public async Task SendDeleteTrainRequestToServerAsync(string trainName)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync<string>("DeleteTrain", trainName);
             }
             catch (Exception exception)
             {

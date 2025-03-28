@@ -11,14 +11,6 @@ namespace TatehamaCommanderTable.Models
         public static DatabaseOperational Instance => _instance;
 
         /// <summary>
-        /// 常時送信用データクラス
-        /// </summary>
-        public class ConstantDataToServer
-        {
-
-        }
-
-        /// <summary>
         /// イベント送信用データクラス(運転支障)
         /// </summary>
         public class TroubleEventDataToServer
