@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Properties;
 using TatehamaCommanderTable.Services;
@@ -12,6 +13,7 @@ namespace TatehamaCommanderTable
     public partial class KokuchiForm : Form
     {
         private readonly Dictionary<string, KokuchiData> KokuchiDataDic;
+        private readonly DataManager _dataManager;
         private readonly Timer _kokuchiTimer;
         private readonly Bitmap _sourceImage;
 
@@ -33,6 +35,7 @@ namespace TatehamaCommanderTable
 
             KokuchiDataDic = new();
             _sourceImage = KokuchiResource.KokuchiLED;
+            _dataManager = DataManager.Instance;
         }
 
         /// <summary>
@@ -68,6 +71,10 @@ namespace TatehamaCommanderTable
                 DisplayImageByPos(ctrl.Name, 1, 1);
                 KokuchiDataDic.Add(ctrl.Name, new KokuchiData(KokuchiType.None, "", DateTime.Now));
             }
+
+            // 駅選択コンボボックス初期化
+            Kokuchi_ComboBox_KokuchiSelect.Items.AddRange(_dataManager.StationSettingList.Select(s => s.PlatformName).ToArray());
+            Kokuchi_ComboBox_KokuchiSelect.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -78,6 +85,11 @@ namespace TatehamaCommanderTable
         private async void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _kokuchiTimer.Stop();
+
+            foreach (Control ctrl in Controls.Cast<Control>().Where(c => c.Name.Contains("Kokuchi_Station")))
+            {
+                ctrl.Click -= Kokuchi_Station_Click;
+            }
         }
 
         /// <summary>

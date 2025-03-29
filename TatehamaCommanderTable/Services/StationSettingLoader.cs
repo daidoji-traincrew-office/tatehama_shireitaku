@@ -46,13 +46,22 @@ namespace TatehamaCommanderTable.Services
 
                     var columns = line.Split('\t');
 
-                    Settings.Add(
-                        new()
+                    // 駅番線がNoneでなければ、駅番線分だけ設定を追加
+                    if (columns[2] != "None")
+                    {
+                        foreach (var num in columns[2].Split(','))
                         {
-                            StationName = columns[0],
-                            StationNumber = columns[1],
-                            Platforms = columns[2]
-                        });
+                            var cleanedNum = num.Replace("\"", string.Empty);
+                            Settings.Add(
+                            new()
+                            {
+                                StationName = columns[0],
+                                StationNumber = columns[1],
+                                PlatformName = columns[0] + cleanedNum + "番線",
+                                ControlName = columns[1] + "_Kokuchi" + cleanedNum,
+                            });
+                        }
+                    }
                 }
                 return Settings;
             }

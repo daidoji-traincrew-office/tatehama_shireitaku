@@ -11,8 +11,12 @@
         /// </summary>
         public string StationNumber { get; set; }
         /// <summary>
-        /// 駅番線一覧
+        /// 日本語駅番線名
         /// </summary>
-        public string Platforms { get; set; }
+        public string PlatformName { get; set; }
+        /// <summary>
+        /// コントロール名
+        /// </summary>
+        public string ControlName { get; set; }
     }
 }
