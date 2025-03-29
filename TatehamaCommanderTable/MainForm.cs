@@ -2,6 +2,7 @@ using Dapplo.Microsoft.Extensions.Hosting.WinForms;
 using OpenIddict.Client;
 using System;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -66,8 +67,12 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _mainTimer.Stop();
-
+            // 閉じる確認ダイアログの処理
+            if (!ConfirmClose())
+            {
+                e.Cancel = true;
+                return;
+            }
             // サーバー切断
             await _serverCommunication.DisconnectAsync();
         }
@@ -158,6 +163,28 @@ namespace TatehamaCommanderTable
                 Label_ServerConectionState.ForeColor = ColorTranslator.FromHtml("#FF888888");
                 Label_ServerConectionState.BackColor = ColorTranslator.FromHtml("#FF555555");
             }
+        }
+
+        /// <summary>
+        /// ウィンドウを閉じる際の確認処理
+        /// </summary>
+        /// <returns>ウィンドウを閉じて良い場合はtrue、それ以外はfalse</returns>
+        public bool ConfirmClose()
+        {
+            var result = CustomMessage.Show("全ての司令卓画面を閉じます。よろしいですか？",
+                "終了確認",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                return false;
+            }
+
+            // タイマー停止
+            _mainTimer.Stop();
+
+            return true;
         }
     }
 }
