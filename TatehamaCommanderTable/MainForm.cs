@@ -15,7 +15,7 @@ namespace TatehamaCommanderTable
         private readonly DataManager _dataManager;                          // GlobalData管理
         private readonly Timer _mainTimer;                                  // メインタイマー
         private KokuchiForm _kokuchiForm;                                   // 運転告知器フォーム
-        private TroubleForm _accidentForm;                                 // 運転支障フォーム
+        private TroubleForm _accidentForm;                                  // 運転支障フォーム
         private TrackCircuitForm _trackCircuitForm;                         // 軌道回路フォーム
 
         /// <summary>

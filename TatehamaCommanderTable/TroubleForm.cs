@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace TatehamaCommanderTable
 {
@@ -10,6 +11,30 @@ namespace TatehamaCommanderTable
         public TroubleForm()
         {
             InitializeComponent();
+
+            // イベント設定
+            Load += TroubleForm_Load;
+            FormClosing += TroubleForm_FormClosing;
+        }
+
+        /// <summary>
+        /// TroubleForm_Loadイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void TroubleForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// TroubleForm_FormClosingイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void TroubleForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
         }
 
         /// <summary>

@@ -21,21 +21,43 @@ namespace TatehamaCommanderTable
         {
             InitializeComponent();
 
+            // イベント設定
+            Load += TrackCircuitForm_Load;
+            FormClosing += TrackCircuitForm_FormClosing;
+
             // インスタンス取得
             _dataManager = DataManager.Instance;
             _serverCommunication = serverCommunication;
+        }
 
+        /// <summary>
+        /// TrackCircuitForm_Loadイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void TrackCircuitForm_Load(object sender, EventArgs e)
+        {
             // イベントハンドラ設定
             _serverCommunication.DataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
+            TrackCircuit_DataGridView_TrackCircuitData.CellClick += DataGridView_TrackCircuitData_CellClick;
 
             // DataGridViewのデータバインド
             TrackCircuit_BindingSource.DataSource = _dataManager.DataGridViewSettingList;
 
             // DataGridViewの設定
             SetupDataGridView();
+        }
 
-            // CellClickイベントハンドラを追加
-            TrackCircuit_DataGridView_TrackCircuitData.CellClick += DataGridView_TrackCircuitData_CellClick;
+        /// <summary>
+        /// TrackCircuitForm_FormClosingイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void TrackCircuitForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _serverCommunication.DataGridViewUpdated -= (newDataSource) => UpdateDataSource(newDataSource);
+            TrackCircuit_DataGridView_TrackCircuitData.CellClick -= DataGridView_TrackCircuitData_CellClick;
+            TrackCircuit_BindingSource.DataSource = null;
         }
 
         /// <summary>
