@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -32,6 +33,9 @@ namespace TatehamaCommanderTable
 
             // DataGridViewの設定
             SetupDataGridView();
+
+            // CellClickイベントハンドラを追加
+            TrackCircuit_DataGridView_TrackCircuitData.CellClick += DataGridView_TrackCircuitData_CellClick;
         }
 
         /// <summary>
@@ -85,13 +89,56 @@ namespace TatehamaCommanderTable
         /// <param name="newDataSource"></param>
         public void UpdateDataSource(SortableBindingList<DataGridViewSetting> newDataSource)
         {
-            if (this.InvokeRequired)
+            if (this.IsHandleCreated && !this.IsDisposed)
             {
-                this.Invoke(new Action(() => TrackCircuit_BindingSource.DataSource = newDataSource));
-            }
-            else
-            {
-                TrackCircuit_BindingSource.DataSource = newDataSource;
+                // フィルター設定
+                var filteredData = newDataSource
+                    .Where(data => data.trackCircuit.Contains(TrackCircuit_TextBox_FilterTrackCircuit.Text))
+                    .Where(data => data.trainNumber.Contains(TrackCircuit_TextBox_FilterTrainNumber.Text))
+                    .ToList();
+                if (!TrackCircuit_RadioButton_FilterShortCircuit_All.Checked)
+                {
+                    filteredData = filteredData
+                        .Where(data => data.shortCircuitStatus == (TrackCircuit_RadioButton_FilterShortCircuit_Only.Checked ? "〇" : ""))
+                        .ToList();
+                }
+                if (!TrackCircuit_RadioButton_FilterLocking_All.Checked)
+                {
+                    filteredData = filteredData
+                        .Where(data => data.lockingStatus == (TrackCircuit_RadioButton_FilterLocking_Only.Checked ? "〇" : ""))
+                        .ToList();
+                }
+
+                // スクロール位置を保持
+                int firstDisplayedScrollingRowIndex = TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex;
+                int selectedRowIndex = TrackCircuit_DataGridView_TrackCircuitData.CurrentCell?.RowIndex ?? 0;
+                if (firstDisplayedScrollingRowIndex < 0)
+                {
+                    firstDisplayedScrollingRowIndex = 0;
+                }
+
+                // データバインド
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        TrackCircuit_BindingSource.DataSource = filteredData;
+                        if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
+                        {
+                            TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
+                            TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[0];
+                        }
+                    }));
+                }
+                else
+                {
+                    TrackCircuit_BindingSource.DataSource = filteredData;
+                    if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
+                    {
+                        TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
+                        TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[0];
+                    }
+                }
             }
         }
 
@@ -114,11 +161,11 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DataGridView_TrackCircuitData_SelectionChanged(object sender, EventArgs e)
+        private void DataGridView_TrackCircuitData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (TrackCircuit_DataGridView_TrackCircuitData.SelectedRows.Count > 0)
+            if (e.RowIndex >= 0)
             {
-                var selectedRow = TrackCircuit_DataGridView_TrackCircuitData.SelectedRows[0];
+                var selectedRow = TrackCircuit_DataGridView_TrackCircuitData.Rows[e.RowIndex];
                 string trackCircuit = selectedRow.Cells["trackCircuit"].Value.ToString();
                 string trainNumber = selectedRow.Cells["trainNumber"].Value.ToString();
                 string shortCircuitStatus = selectedRow.Cells["shortCircuitStatus"].Value.ToString();
