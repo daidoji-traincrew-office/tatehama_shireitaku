@@ -242,10 +242,7 @@ namespace TatehamaCommanderTable.Communications
                         var operationNotificationDataList = _dataManager.DataFromServer.OperationNotificationDataList;
                         if (operationNotificationDataList != null)
                         {
-                            var test = new List<OperationNotificationData>();
-                            test.Add(new OperationNotificationData("館浜1番線", OperationNotificationType.Tsuuchi, "", DateTime.Now));
-                            //OnOperationNotificationDataUpdated(_dataManager.DataFromServer.OperationNotificationDataList);
-                            _dataManager.OperationNotificationDataList = test;
+                            OnOperationNotificationDataUpdated(_dataManager.DataFromServer.OperationNotificationDataList);
                         }
                     }
                     else
