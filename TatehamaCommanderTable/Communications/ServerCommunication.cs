@@ -11,6 +11,7 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
+using TrainCrewTIDWindow;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -271,14 +272,15 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ運転告知器イベント送信用データをリクエスト
         /// </summary>
-        /// <param name="kokuchiEventDataToServer"></param>
+        /// <param name="operationNotificationEventDataToServer"></param>
         /// <returns></returns>
-        public async Task SendKokuchiEventDataRequestToServerAsync(DatabaseOperational.KokuchiEventDataToServer kokuchiEventDataToServer)
+        public async Task SendOperationNotificationDataToServer(DatabaseOperational.OperationNotificationEventDataToServer operationNotificationEventDataToServer) 
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendKokuchiData", kokuchiEventDataToServer.KokuchiDataDic);
+                await _connection.InvokeAsync<string>("SendOperationNotificationData",
+                    operationNotificationEventDataToServer.OperationNotificationData);
             }
             catch (Exception exception)
             {
