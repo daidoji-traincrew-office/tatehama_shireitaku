@@ -84,9 +84,12 @@ namespace TatehamaCommanderTable
                     item5.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                     item6.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
 
+                    // 駅番線名を取得
+                    var platformName = _dataManager.StationSettingList.FirstOrDefault(s => s.ControlName == ctrl.Name).PlatformName;
+
                     // 初期表示
-                    DisplayImageByPos(ctrl.Name, 1, 1);
-                    _dataManager.OperationNotificationDataList.Add(new OperationNotificationData(ctrl.Name, OperationNotificationType.None, "", DateTime.Now));
+                    DisplayImageByPos(platformName, 1, 1);
+                    _dataManager.OperationNotificationDataList.Add(new OperationNotificationData(platformName, OperationNotificationType.None, "", DateTime.Now));
                 }
 
                 // 駅選択コンボボックス初期化
@@ -95,7 +98,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -189,7 +192,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -249,7 +252,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -273,7 +276,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -286,8 +289,10 @@ namespace TatehamaCommanderTable
         {
             try
             {
+                var list = _dataManager.OperationNotificationDataList;
+
                 // 運転告知器データを元にLED画像を表示
-                foreach (var item in _dataManager.OperationNotificationDataList)
+                foreach (var item in list)
                 {
                     if (item == null)
                     {
@@ -367,7 +372,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -446,7 +451,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
                 return null;
             }
         }
@@ -467,7 +472,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -484,7 +489,7 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.Message, "エラー");
+                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
@@ -560,10 +565,11 @@ namespace TatehamaCommanderTable
         /// <param name="y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        private void DisplayImageByPos(string ctrlName, int x, int y, int width = 48, int height = 16)
+        private void DisplayImageByPos(string name, int x, int y, int width = 48, int height = 16)
         {
             var Image = GetImageByPos(x, y, width, height);
-            var control = Controls.Find(ctrlName, true).FirstOrDefault();
+            var controlName = _dataManager.StationSettingList.FirstOrDefault(s => s.PlatformName == name).ControlName;
+            var control = Controls.Find(controlName, true).FirstOrDefault();
             control.BackgroundImage = Image;
         }
 
@@ -572,7 +578,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="ctrlName"></param>
         /// <param name="Time"></param>
-        private void DisplayTimeImage(string ctrlName, string Time)
+        private void DisplayTimeImage(string name, string Time)
         {
             if (int.TryParse(Time, out _))
             {
@@ -589,12 +595,12 @@ namespace TatehamaCommanderTable
                     g.DrawImage(S2, 18, 0, S2.Width, S2.Height);
                     g.DrawImage(S1, 24, 0, S1.Width, S1.Height);
                 }
-                var control = Controls.Find(ctrlName, true).FirstOrDefault();
+                var control = Controls.Find(name, true).FirstOrDefault();
                 control.BackgroundImage = De;
             }
             else
             {
-                DisplayImageByPos(ctrlName, 1, 171);
+                DisplayImageByPos(name, 1, 171);
             }
         }
 

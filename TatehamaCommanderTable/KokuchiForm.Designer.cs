@@ -47,8 +47,6 @@
             Kokuchi_TextBox_Shuppatsu = new System.Windows.Forms.TextBox();
             Kokuchi_Button_Cansel = new System.Windows.Forms.Button();
             Kokuchi_Button_Set = new System.Windows.Forms.Button();
-            Kokuchi_ListBox_SettingList = new System.Windows.Forms.ListBox();
-            Kokuchi_Label_SettingList = new System.Windows.Forms.Label();
             Kokuchi_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             Kokuchi_Station_TH76_Kokuchi1 = new System.Windows.Forms.PictureBox();
             Kokuchi_Station_TH76_Kokuchi2 = new System.Windows.Forms.PictureBox();
@@ -165,7 +163,7 @@
             Kokuchi_ComboBox_SelectPlatform.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             Kokuchi_ComboBox_SelectPlatform.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_ComboBox_SelectPlatform.FormattingEnabled = true;
-            Kokuchi_ComboBox_SelectPlatform.Location = new System.Drawing.Point(80, 450);
+            Kokuchi_ComboBox_SelectPlatform.Location = new System.Drawing.Point(373, 442);
             Kokuchi_ComboBox_SelectPlatform.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Kokuchi_ComboBox_SelectPlatform.Name = "Kokuchi_ComboBox_SelectPlatform";
             Kokuchi_ComboBox_SelectPlatform.Size = new System.Drawing.Size(165, 27);
@@ -175,7 +173,7 @@
             // 
             Kokuchi_Label_KokuchiSelect.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_Label_KokuchiSelect.ForeColor = System.Drawing.Color.White;
-            Kokuchi_Label_KokuchiSelect.Location = new System.Drawing.Point(27, 451);
+            Kokuchi_Label_KokuchiSelect.Location = new System.Drawing.Point(320, 443);
             Kokuchi_Label_KokuchiSelect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             Kokuchi_Label_KokuchiSelect.Name = "Kokuchi_Label_KokuchiSelect";
             Kokuchi_Label_KokuchiSelect.Size = new System.Drawing.Size(48, 28);
@@ -218,11 +216,11 @@
             Kokuchi_GroupBox_Setting.Controls.Add(Kokuchi_RadioButton_Yokushi);
             Kokuchi_GroupBox_Setting.Font = new System.Drawing.Font("BIZ UDゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_GroupBox_Setting.ForeColor = System.Drawing.Color.White;
-            Kokuchi_GroupBox_Setting.Location = new System.Drawing.Point(27, 491);
+            Kokuchi_GroupBox_Setting.Location = new System.Drawing.Point(320, 483);
             Kokuchi_GroupBox_Setting.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Kokuchi_GroupBox_Setting.Name = "Kokuchi_GroupBox_Setting";
             Kokuchi_GroupBox_Setting.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            Kokuchi_GroupBox_Setting.Size = new System.Drawing.Size(447, 178);
+            Kokuchi_GroupBox_Setting.Size = new System.Drawing.Size(557, 178);
             Kokuchi_GroupBox_Setting.TabIndex = 4;
             Kokuchi_GroupBox_Setting.TabStop = false;
             Kokuchi_GroupBox_Setting.Text = "設定項目";
@@ -238,7 +236,7 @@
             Kokuchi_RadioButton_Torikeshi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_Torikeshi.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_Torikeshi.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_Torikeshi.Location = new System.Drawing.Point(9, 120);
+            Kokuchi_RadioButton_Torikeshi.Location = new System.Drawing.Point(228, 20);
             Kokuchi_RadioButton_Torikeshi.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_Torikeshi.Name = "Kokuchi_RadioButton_Torikeshi";
             Kokuchi_RadioButton_Torikeshi.Size = new System.Drawing.Size(100, 40);
@@ -258,7 +256,7 @@
             Kokuchi_RadioButton_TsuuchiKaijo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_TsuuchiKaijo.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_TsuuchiKaijo.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_TsuuchiKaijo.Location = new System.Drawing.Point(228, 20);
+            Kokuchi_RadioButton_TsuuchiKaijo.Location = new System.Drawing.Point(448, 20);
             Kokuchi_RadioButton_TsuuchiKaijo.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_TsuuchiKaijo.Name = "Kokuchi_RadioButton_TsuuchiKaijo";
             Kokuchi_RadioButton_TsuuchiKaijo.Size = new System.Drawing.Size(100, 40);
@@ -275,7 +273,7 @@
             Kokuchi_GroupBox_Tenmatsusho.Controls.Add(Kokuchi_CheckBox_M);
             Kokuchi_GroupBox_Tenmatsusho.Controls.Add(Kokuchi_CheckBox_C);
             Kokuchi_GroupBox_Tenmatsusho.Controls.Add(Kokuchi_Label_C);
-            Kokuchi_GroupBox_Tenmatsusho.Location = new System.Drawing.Point(228, 66);
+            Kokuchi_GroupBox_Tenmatsusho.Location = new System.Drawing.Point(118, 66);
             Kokuchi_GroupBox_Tenmatsusho.Name = "Kokuchi_GroupBox_Tenmatsusho";
             Kokuchi_GroupBox_Tenmatsusho.Size = new System.Drawing.Size(210, 44);
             Kokuchi_GroupBox_Tenmatsusho.TabIndex = 10;
@@ -347,7 +345,7 @@
             Kokuchi_RadioButton_Shuppatsu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_Shuppatsu.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_Shuppatsu.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_Shuppatsu.Location = new System.Drawing.Point(118, 120);
+            Kokuchi_RadioButton_Shuppatsu.Location = new System.Drawing.Point(8, 120);
             Kokuchi_RadioButton_Shuppatsu.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_Shuppatsu.Name = "Kokuchi_RadioButton_Shuppatsu";
             Kokuchi_RadioButton_Shuppatsu.Size = new System.Drawing.Size(100, 40);
@@ -368,7 +366,7 @@
             Kokuchi_RadioButton_Tenmatsusho.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_Tenmatsusho.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_Tenmatsusho.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_Tenmatsusho.Location = new System.Drawing.Point(118, 70);
+            Kokuchi_RadioButton_Tenmatsusho.Location = new System.Drawing.Point(8, 70);
             Kokuchi_RadioButton_Tenmatsusho.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_Tenmatsusho.Name = "Kokuchi_RadioButton_Tenmatsusho";
             Kokuchi_RadioButton_Tenmatsusho.Size = new System.Drawing.Size(100, 40);
@@ -389,7 +387,7 @@
             Kokuchi_RadioButton_Tsuuchi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_Tsuuchi.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_Tsuuchi.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_Tsuuchi.Location = new System.Drawing.Point(118, 20);
+            Kokuchi_RadioButton_Tsuuchi.Location = new System.Drawing.Point(338, 20);
             Kokuchi_RadioButton_Tsuuchi.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_Tsuuchi.Name = "Kokuchi_RadioButton_Tsuuchi";
             Kokuchi_RadioButton_Tsuuchi.Size = new System.Drawing.Size(100, 40);
@@ -411,7 +409,7 @@
             Kokuchi_RadioButton_Kaijo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Kokuchi_RadioButton_Kaijo.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_RadioButton_Kaijo.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_RadioButton_Kaijo.Location = new System.Drawing.Point(9, 70);
+            Kokuchi_RadioButton_Kaijo.Location = new System.Drawing.Point(118, 20);
             Kokuchi_RadioButton_Kaijo.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_RadioButton_Kaijo.Name = "Kokuchi_RadioButton_Kaijo";
             Kokuchi_RadioButton_Kaijo.Size = new System.Drawing.Size(100, 40);
@@ -425,7 +423,7 @@
             Kokuchi_TextBox_Shuppatsu.BackColor = System.Drawing.Color.White;
             Kokuchi_TextBox_Shuppatsu.Font = new System.Drawing.Font("BIZ UDゴシック", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_TextBox_Shuppatsu.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_TextBox_Shuppatsu.Location = new System.Drawing.Point(228, 121);
+            Kokuchi_TextBox_Shuppatsu.Location = new System.Drawing.Point(118, 121);
             Kokuchi_TextBox_Shuppatsu.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_TextBox_Shuppatsu.MaxLength = 4;
             Kokuchi_TextBox_Shuppatsu.Name = "Kokuchi_TextBox_Shuppatsu";
@@ -441,7 +439,7 @@
             Kokuchi_Button_Cansel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             Kokuchi_Button_Cansel.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_Button_Cansel.ForeColor = System.Drawing.Color.White;
-            Kokuchi_Button_Cansel.Location = new System.Drawing.Point(483, 558);
+            Kokuchi_Button_Cansel.Location = new System.Drawing.Point(886, 551);
             Kokuchi_Button_Cansel.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_Button_Cansel.Name = "Kokuchi_Button_Cansel";
             Kokuchi_Button_Cansel.Size = new System.Drawing.Size(75, 40);
@@ -458,7 +456,7 @@
             Kokuchi_Button_Set.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             Kokuchi_Button_Set.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_Button_Set.ForeColor = System.Drawing.Color.Black;
-            Kokuchi_Button_Set.Location = new System.Drawing.Point(483, 610);
+            Kokuchi_Button_Set.Location = new System.Drawing.Point(886, 603);
             Kokuchi_Button_Set.Margin = new System.Windows.Forms.Padding(5);
             Kokuchi_Button_Set.Name = "Kokuchi_Button_Set";
             Kokuchi_Button_Set.Size = new System.Drawing.Size(75, 40);
@@ -466,28 +464,6 @@
             Kokuchi_Button_Set.Text = "設定";
             Kokuchi_Button_Set.UseVisualStyleBackColor = false;
             Kokuchi_Button_Set.Click += Kokuchi_Button_Click;
-            // 
-            // Kokuchi_ListBox_SettingList
-            // 
-            Kokuchi_ListBox_SettingList.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            Kokuchi_ListBox_SettingList.FormattingEnabled = true;
-            Kokuchi_ListBox_SettingList.Location = new System.Drawing.Point(629, 472);
-            Kokuchi_ListBox_SettingList.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            Kokuchi_ListBox_SettingList.Name = "Kokuchi_ListBox_SettingList";
-            Kokuchi_ListBox_SettingList.Size = new System.Drawing.Size(623, 196);
-            Kokuchi_ListBox_SettingList.TabIndex = 7;
-            // 
-            // Kokuchi_Label_SettingList
-            // 
-            Kokuchi_Label_SettingList.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            Kokuchi_Label_SettingList.ForeColor = System.Drawing.Color.White;
-            Kokuchi_Label_SettingList.Location = new System.Drawing.Point(629, 442);
-            Kokuchi_Label_SettingList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            Kokuchi_Label_SettingList.Name = "Kokuchi_Label_SettingList";
-            Kokuchi_Label_SettingList.Size = new System.Drawing.Size(187, 28);
-            Kokuchi_Label_SettingList.TabIndex = 8;
-            Kokuchi_Label_SettingList.Text = "設定中の運転告知器一覧";
-            Kokuchi_Label_SettingList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Kokuchi_CheckBox_TopMost
             // 
@@ -941,8 +917,6 @@
             Controls.Add(Kokuchi_Station_TH76_Kokuchi2);
             Controls.Add(Kokuchi_Station_TH76_Kokuchi1);
             Controls.Add(Kokuchi_CheckBox_TopMost);
-            Controls.Add(Kokuchi_Label_SettingList);
-            Controls.Add(Kokuchi_ListBox_SettingList);
             Controls.Add(Kokuchi_Button_Set);
             Controls.Add(Kokuchi_Button_Cansel);
             Controls.Add(Kokuchi_GroupBox_Setting);
@@ -1029,8 +1003,6 @@
         private System.Windows.Forms.RadioButton Kokuchi_RadioButton_Shuppatsu;
         private System.Windows.Forms.Button Kokuchi_Button_Cansel;
         private System.Windows.Forms.Button Kokuchi_Button_Set;
-        private System.Windows.Forms.ListBox Kokuchi_ListBox_SettingList;
-        private System.Windows.Forms.Label Kokuchi_Label_SettingList;
         private System.Windows.Forms.CheckBox Kokuchi_CheckBox_TopMost;
         private System.Windows.Forms.GroupBox Kokuchi_GroupBox_Tenmatsusho;
         private System.Windows.Forms.PictureBox Kokuchi_Station_TH76_Kokuchi1;
