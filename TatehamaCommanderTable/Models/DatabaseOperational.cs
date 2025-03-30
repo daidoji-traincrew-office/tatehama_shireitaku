@@ -56,7 +56,7 @@ namespace TatehamaCommanderTable.Models
             /// <summary>
             /// 運転告知器データリスト
             /// </summary>
-            public List<OperationNotificationData> KokuchiDataList { get; set; }
+            public List<OperationNotificationData> OperationNotificationDataList { get; set; }
 
             /// <summary>
             /// 軌道回路データリスト

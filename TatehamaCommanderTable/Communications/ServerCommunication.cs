@@ -2,6 +2,7 @@
 using OpenIddict.Abstractions;
 using OpenIddict.Client;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net;
@@ -29,6 +30,10 @@ namespace TatehamaCommanderTable.Communications
         /// DataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<DataGridViewSetting>> DataGridViewUpdated;
+        /// <summary>
+        /// 運転告知器更新通知イベント
+        /// </summary>
+        public event Action<List<OperationNotificationData>> OperationNotificationDataUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -217,10 +222,10 @@ namespace TatehamaCommanderTable.Communications
                             }
                         }
                         // DataGridView設定リストデータを作成
-                        var list = new SortableBindingList<DataGridViewSetting>();
+                        var dataGridViewList = new SortableBindingList<DataGridViewSetting>();
                         foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuitDataList)
                         {
-                            list.Add(new DataGridViewSetting
+                            dataGridViewList.Add(new DataGridViewSetting
                             {
                                 trackCircuit = trackCircuit.Name,
                                 trainNumber = trackCircuit.Last,
@@ -229,10 +234,16 @@ namespace TatehamaCommanderTable.Communications
                             });
                         }
                         // DataGridView設定リストデータを更新
-                        _dataManager.DataGridViewSettingList = list;
+                        _dataManager.DataGridViewSettingList = dataGridViewList;
+                        // DataGridView変更通知イベントを発火
+                        OnDataGridViewUpdated(dataGridViewList);
 
-                        // 変更通知イベントを発火
-                        OnDataGridViewUpdated(list);
+                        // 運転告知器変更通知イベントを発火
+                        var operationNotificationDataList = _dataManager.DataFromServer.OperationNotificationDataList;
+                        if (operationNotificationDataList != null)
+                        {
+                            OnOperationNotificationDataUpdated(_dataManager.DataFromServer.OperationNotificationDataList);
+                        }
                     }
                     else
                     {
@@ -273,7 +284,7 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationNotificationEventDataToServer"></param>
         /// <returns></returns>
-        public async Task SendOperationNotificationDataToServer(DatabaseOperational.OperationNotificationEventDataToServer operationNotificationEventDataToServer) 
+        public async Task SendOperationNotificationDataRequestToServer(DatabaseOperational.OperationNotificationEventDataToServer operationNotificationEventDataToServer) 
         {
             try
             {
@@ -330,6 +341,15 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnDataGridViewUpdated(SortableBindingList<DataGridViewSetting> list)
         {
             DataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// 運転告知器更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnOperationNotificationDataUpdated(List<OperationNotificationData> list)
+        {
+            OperationNotificationDataUpdated?.Invoke(list);
         }
 
         /// <summary>
