@@ -12,7 +12,7 @@ namespace TatehamaCommanderTable
 {
     public partial class KokuchiForm : Form
     {
-        private readonly Dictionary<string, KokuchiData> KokuchiDataDic;
+        private readonly Dictionary<string, OperationNotificationData> KokuchiDataDic;
         private readonly DataManager _dataManager;
         private readonly Timer _kokuchiTimer;
         private readonly Bitmap _sourceImage;
@@ -69,7 +69,7 @@ namespace TatehamaCommanderTable
 
                 // 初期表示
                 DisplayImageByPos(ctrl.Name, 1, 1);
-                KokuchiDataDic.Add(ctrl.Name, new KokuchiData(KokuchiType.None, "", DateTime.Now));
+                KokuchiDataDic.Add(ctrl.Name, new OperationNotificationData(KokuchiType.None, "", DateTime.Now));
             }
 
             // 駅選択コンボボックス初期化
@@ -124,16 +124,16 @@ namespace TatehamaCommanderTable
             switch (item.Text)
             {
                 case "抑止":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrl.Name, new OperationNotificationData(KokuchiType.Yokushi, "", DateTime.Now));
                     break;
                 case "解除":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrl.Name, new OperationNotificationData(KokuchiType.Kaijo, "", DateTime.Now));
                     break;
                 case "通知":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrl.Name, new OperationNotificationData(KokuchiType.Tsuuchi, "", DateTime.Now));
                     break;
                 case "取消":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.None, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrl.Name, new OperationNotificationData(KokuchiType.None, "", DateTime.Now));
                     break;
             }
         }
@@ -177,13 +177,13 @@ namespace TatehamaCommanderTable
             switch (selectKokuchiType.Name)
             {
                 case "Kokuchi_RadioButton_Yokushi":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.Yokushi, "", DateTime.Now));
                     break;
                 case "Kokuchi_RadioButton_Kaijyo":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.Kaijo, "", DateTime.Now));
                     break;
                 case "Kokuchi_RadioButton_Tsuuchi":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
+                    SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.Tsuuchi, "", DateTime.Now));
                     break;
                 case "Kokuchi_RadioButton_Tenmatsusho":
                     // MまたはCどちらかが選択されているかチェック
@@ -196,7 +196,7 @@ namespace TatehamaCommanderTable
                     {
                         var charM = Kokuchi_CheckBox_M.Checked ? "M" : "";
                         var charC = Kokuchi_CheckBox_C.Checked ? "C" : "";
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Tenmatsusho, charM + charC, DateTime.Now));
+                        SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.Tenmatsusho, charM + charC, DateTime.Now));
                     }
                     break;
                 case "Kokuchi_RadioButton_Shuppatsu":
@@ -204,11 +204,11 @@ namespace TatehamaCommanderTable
                     string input = Kokuchi_TextBox_Shuppatsu.Text;
                     if (string.IsNullOrEmpty(input))
                     {
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Shuppatsu, "", DateTime.Now));
+                        SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.Shuppatsu, "", DateTime.Now));
                     }
                     else if (input.Length == 4 && int.TryParse(input, out _))
                     {
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.ShuppatsuJikoku, input, DateTime.Now));
+                        SetKokuchiLEDData(ctrlName, new OperationNotificationData(KokuchiType.ShuppatsuJikoku, input, DateTime.Now));
                     }
                     else
                     {
@@ -243,7 +243,7 @@ namespace TatehamaCommanderTable
                     DisplayImageByPos(kokuchiData.Key, 1, 1);
                     return;
                 }
-                var DeltaTime = (DateTime.Now - kokuchiData.Value.OriginTime).TotalMilliseconds;
+                var DeltaTime = (DateTime.Now - kokuchiData.Value.OperatedAt).TotalMilliseconds;
 
                 switch (kokuchiData.Value.Type)
                 {
@@ -318,20 +318,20 @@ namespace TatehamaCommanderTable
         /// KokuchiLEDデータをセット
         /// </summary>
         /// <param name="ctrlName"></param>
-        /// <param name="kokuchiData"></param>
-        public void SetKokuchiLEDData(string ctrlName, KokuchiData kokuchiData)
+        /// <param name="operationNotificationData"></param>
+        public void SetKokuchiLEDData(string ctrlName, OperationNotificationData operationNotificationData)
         {
-            KokuchiDataDic[ctrlName] = kokuchiData;
+            KokuchiDataDic[ctrlName] = operationNotificationData;
         }
 
         /// <summary>
         /// 表示内容を変更する
         /// </summary>
-        private void SetLED(string ctrlName, KokuchiData kokuchiData)
+        private void SetLED(string ctrlName, OperationNotificationData operationNotificationData)
         {
             try
             {
-                switch (kokuchiData.Type)
+                switch (operationNotificationData.Type)
                 {
                     case KokuchiType.None:
                         DisplayImageByPos(ctrlName, 1, 1);
@@ -350,21 +350,21 @@ namespace TatehamaCommanderTable
                         DisplayImageByPos(ctrlName, 1, 69);
                         break;
                     case KokuchiType.Tenmatsusho:
-                        if (kokuchiData.DisplayData == "MC")
+                        if (operationNotificationData.Content == "MC")
                         {
                             DisplayImageByPos(ctrlName, 1, 86);
                         }
-                        else if (kokuchiData.DisplayData == "M")
+                        else if (operationNotificationData.Content == "M")
                         {
                             DisplayImageByPos(ctrlName, 1, 103);
                         }
-                        else if (kokuchiData.DisplayData == "C")
+                        else if (operationNotificationData.Content == "C")
                         {
                             DisplayImageByPos(ctrlName, 1, 120);
                         }
                         break;
                     case KokuchiType.ShuppatsuJikoku:
-                        DisplayTimeImage(ctrlName, kokuchiData.DisplayData);
+                        DisplayTimeImage(ctrlName, operationNotificationData.Content);
                         break;
                     default:
                         DisplayImageByPos(ctrlName, 1, 171);
