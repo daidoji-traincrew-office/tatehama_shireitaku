@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -58,26 +57,8 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void TrackCircuitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // データバインド解除
-            TrackCircuit_BindingSource.DataSource = null;
-
-            // イベントハンドラ解除
-            _serverCommunication.DataGridViewUpdated -= (newDataSource) => UpdateDataSource(newDataSource);
-            TrackCircuit_DataGridView_TrackCircuitData.CellClick -= DataGridView_TrackCircuitData_CellClick;
-        }
-
-        /// <summary>
-        /// フォームクローズイベント
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-            }
+            Hide();
+            e.Cancel = true;
         }
 
         /// <summary>

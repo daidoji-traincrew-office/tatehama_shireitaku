@@ -43,21 +43,8 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void TroubleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
-        }
-
-        /// <summary>
-        /// フォームクローズイベント
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-            }
+            Hide();
+            e.Cancel = true;
         }
 
         /// <summary>

@@ -30,10 +30,6 @@ namespace TatehamaCommanderTable.Communications
         /// DataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<DataGridViewSetting>> DataGridViewUpdated;
-        /// <summary>
-        /// 運転告知器更新通知イベント
-        /// </summary>
-        public event Action<List<OperationNotificationData>> OperationNotificationDataUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -238,11 +234,10 @@ namespace TatehamaCommanderTable.Communications
                         // DataGridView変更通知イベントを発火
                         OnDataGridViewUpdated(dataGridViewList);
 
-                        // 運転告知器変更通知イベントを発火
-                        var operationNotificationDataList = _dataManager.DataFromServer.OperationNotificationDataList;
-                        if (operationNotificationDataList != null)
+                        // 運転告知器リストデータを更新
+                        lock (_dataManager.OperationNotificationDataList)
                         {
-                            OnOperationNotificationDataUpdated(_dataManager.DataFromServer.OperationNotificationDataList);
+                            _dataManager.OperationNotificationDataList = _dataManager.DataFromServer.OperationNotificationDataList;
                         }
                     }
                     else
@@ -341,15 +336,6 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnDataGridViewUpdated(SortableBindingList<DataGridViewSetting> list)
         {
             DataGridViewUpdated?.Invoke(list);
-        }
-
-        /// <summary>
-        /// 運転告知器更新通知イベント
-        /// </summary>
-        /// <param name="list"></param>
-        protected virtual void OnOperationNotificationDataUpdated(List<OperationNotificationData> list)
-        {
-            OperationNotificationDataUpdated?.Invoke(list);
         }
 
         /// <summary>

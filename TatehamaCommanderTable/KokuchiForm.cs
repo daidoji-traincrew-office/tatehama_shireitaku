@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -53,9 +52,6 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                // イベントハンドラ設定
-                _serverCommunication.OperationNotificationDataUpdated += (list) => UpdateOperationNotificationLEDData(list);
-
                 // 全駅データ初期化
                 foreach (Control ctrl in Controls.Cast<Control>().Where(c => c.Name.Contains("Kokuchi_Station")))
                 {
@@ -109,29 +105,8 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // タイマー停止
-            _kokuchiTimer.Stop();
-
-            // イベントハンドラ解除
-            _serverCommunication.OperationNotificationDataUpdated -= (list) => UpdateOperationNotificationLEDData(list);
-            foreach (Control ctrl in Controls.Cast<Control>().Where(c => c.Name.Contains("Kokuchi_Station")))
-            {
-                ctrl.Click -= Kokuchi_Station_Click;
-            }
-        }
-
-        /// <summary>
-        /// フォームクローズイベント
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-            }
+            Hide();
+            e.Cancel = true;
         }
 
         /// <summary>
@@ -303,45 +278,34 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                var list = _dataManager.OperationNotificationDataList;
-
-                // 運転告知器データを元にLED画像を表示
-                foreach (var item in list)
+                lock (_dataManager.OperationNotificationDataList)
                 {
-                    if (item == null)
-                    {
-                        DisplayImageByPos(item.DisplayName, 1, 1);
-                        return;
-                    }
-                    var DeltaTime = (DateTime.Now - item.OperatedAt).TotalMilliseconds;
+                    var list = _dataManager.OperationNotificationDataList;
 
-                    switch (item.Type)
+                    // 運転告知器データを元にLED画像を表示
+                    foreach (var item in list)
                     {
-                        case OperationNotificationType.None:
-                        case OperationNotificationType.Kaijo:
-                        case OperationNotificationType.Shuppatsu:
-                        case OperationNotificationType.ShuppatsuJikoku:
-                        case OperationNotificationType.Torikeshi:
-                            //点滅なし
-                            SetLED(item);
-                            break;
-                        case OperationNotificationType.Yokushi:
-                        case OperationNotificationType.Tsuuchi:
-                            //1000+500点滅
-                            if (DeltaTime % 1500 < 1000)
-                            {
+                        if (item == null)
+                        {
+                            DisplayImageByPos(item.DisplayName, 1, 1);
+                            return;
+                        }
+                        var DeltaTime = (DateTime.Now - item.OperatedAt).TotalMilliseconds;
+
+                        switch (item.Type)
+                        {
+                            case OperationNotificationType.None:
+                            case OperationNotificationType.Kaijo:
+                            case OperationNotificationType.Shuppatsu:
+                            case OperationNotificationType.ShuppatsuJikoku:
+                            case OperationNotificationType.Torikeshi:
+                                //点滅なし
                                 SetLED(item);
-                            }
-                            else
-                            {
-                                DisplayImageByPos(item.DisplayName, 50, 171);
-                            }
-                            break;
-                        case OperationNotificationType.TsuuchiKaijo:
-                            if (DeltaTime < 5 * 1000)
-                            {
-                                //500+250点滅     
-                                if (DeltaTime % 750 < 500)
+                                break;
+                            case OperationNotificationType.Yokushi:
+                            case OperationNotificationType.Tsuuchi:
+                                //1000+500点滅
+                                if (DeltaTime % 1500 < 1000)
                                 {
                                     SetLED(item);
                                 }
@@ -349,38 +313,52 @@ namespace TatehamaCommanderTable
                                 {
                                     DisplayImageByPos(item.DisplayName, 50, 171);
                                 }
-                            }
-                            else if (DeltaTime < 20 * 1000)
-                            {
-                                //250+250点滅     
-                                if (DeltaTime % 500 < 250)
+                                break;
+                            case OperationNotificationType.TsuuchiKaijo:
+                                if (DeltaTime < 5 * 1000)
                                 {
+                                    //500+250点滅     
+                                    if (DeltaTime % 750 < 500)
+                                    {
+                                        SetLED(item);
+                                    }
+                                    else
+                                    {
+                                        DisplayImageByPos(item.DisplayName, 50, 171);
+                                    }
+                                }
+                                else if (DeltaTime < 20 * 1000)
+                                {
+                                    //250+250点滅     
+                                    if (DeltaTime % 500 < 250)
+                                    {
+                                        SetLED(item);
+                                    }
+                                    else
+                                    {
+                                        DisplayImageByPos(item.DisplayName, 50, 171);
+                                    }
+                                }
+                                else
+                                {
+                                    DisplayImageByPos(item.DisplayName, 50, 171);
+                                }
+                                break;
+                            case OperationNotificationType.Tenmatsusho:
+                                if (DeltaTime % 2000 < 1500)
+                                {
+                                    //1500+500点滅   
                                     SetLED(item);
                                 }
                                 else
                                 {
                                     DisplayImageByPos(item.DisplayName, 50, 171);
                                 }
-                            }
-                            else
-                            {
+                                break;
+                            default:
                                 DisplayImageByPos(item.DisplayName, 50, 171);
-                            }
-                            break;
-                        case OperationNotificationType.Tenmatsusho:
-                            if (DeltaTime % 2000 < 1500)
-                            {
-                                //1500+500点滅   
-                                SetLED(item);
-                            }
-                            else
-                            {
-                                DisplayImageByPos(item.DisplayName, 50, 171);
-                            }
-                            break;
-                        default:
-                            DisplayImageByPos(item.DisplayName, 50, 171);
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -467,43 +445,6 @@ namespace TatehamaCommanderTable
             {
                 CustomMessage.Show(ex.ToString(), "エラー");
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// LEDデータ更新処理
-        /// </summary>
-        /// <param name="list"></param>
-        public void UpdateOperationNotificationLEDData(List<OperationNotificationData> list)
-        {
-            try
-            {
-                // リストのデータを更新
-                foreach (var item in list)
-                {
-                    SetOperationNotificationDataLEDData(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                CustomMessage.Show(ex.ToString(), "エラー");
-            }
-        }
-
-        /// <summary>
-        /// 運転告知器LEDデータをリストにセット
-        /// </summary>
-        /// <param name="data"></param>
-        public void SetOperationNotificationDataLEDData(OperationNotificationData data)
-        {
-            try
-            {
-                var listID = _dataManager.OperationNotificationDataList.FindIndex(o => o.DisplayName == data.DisplayName);
-                _dataManager.OperationNotificationDataList[listID] = data;
-            }
-            catch (Exception ex)
-            {
-                CustomMessage.Show(ex.ToString(), "エラー");
             }
         }
 
