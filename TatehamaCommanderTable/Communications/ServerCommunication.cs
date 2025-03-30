@@ -261,12 +261,12 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="troubleEventDataToServer"></param>
         /// <returns></returns>
-        public async Task SendTroubleEventDataRequestToServerAsync(DatabaseOperational.TroubleEventDataToServer troubleEventDataToServer)
+        public async Task SendTroubleEventDataRequestToServerAsync(TroubleData troubleData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendTroubleData", troubleEventDataToServer.TroubleData);
+                await _connection.InvokeAsync<string>("SendTroubleData", troubleData);
             }
             catch (Exception exception)
             {
@@ -279,13 +279,12 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationNotificationEventDataToServer"></param>
         /// <returns></returns>
-        public async Task SendOperationNotificationDataRequestToServer(DatabaseOperational.OperationNotificationEventDataToServer operationNotificationEventDataToServer) 
+        public async Task SendOperationNotificationDataRequestToServer(OperationNotificationData operationNotificationData) 
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendOperationNotificationData",
-                    operationNotificationEventDataToServer.OperationNotificationData);
+                await _connection.InvokeAsync<string>("SendOperationNotificationData", operationNotificationData);
             }
             catch (Exception exception)
             {
@@ -298,12 +297,12 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="trackCircuitEventDataToServer"></param>
         /// <returns></returns>
-        public async Task SendTrackCircuitEventDataRequestToServerAsync(DatabaseOperational.TrackCircuitEventDataToServer trackCircuitEventDataToServer)
+        public async Task SendTrackCircuitEventDataRequestToServerAsync(TrackCircuitData trackCircuitData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendTrackCircuitData", trackCircuitEventDataToServer.TrackCircuitData);
+                await _connection.InvokeAsync<string>("SendTrackCircuitData", trackCircuitData);
             }
             catch (Exception exception)
             {

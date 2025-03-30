@@ -170,11 +170,7 @@ namespace TatehamaCommanderTable
                     }
 
                     // サーバーにデータ送信
-                    _serverCommunication.SendOperationNotificationDataRequestToServer(
-                        new DatabaseOperational.OperationNotificationEventDataToServer
-                        {
-                            OperationNotificationData = result
-                        });
+                    _serverCommunication.SendOperationNotificationDataRequestToServer(result);
 
                     //CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                 }
@@ -208,11 +204,7 @@ namespace TatehamaCommanderTable
                             var result = new OperationNotificationData(platformName, OperationNotificationType.None, "", DateTime.Now);
 
                             // サーバーにデータ送信
-                            _serverCommunication.SendOperationNotificationDataRequestToServer(
-                                new DatabaseOperational.OperationNotificationEventDataToServer
-                                {
-                                    OperationNotificationData = result
-                                });
+                            _serverCommunication.SendOperationNotificationDataRequestToServer(result);
 
                             //CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                         }
@@ -227,11 +219,7 @@ namespace TatehamaCommanderTable
                             if (result != null)
                             {
                                 // サーバーにデータ送信
-                                _serverCommunication.SendOperationNotificationDataRequestToServer(
-                                    new DatabaseOperational.OperationNotificationEventDataToServer
-                                    {
-                                        OperationNotificationData = result
-                                    });
+                                _serverCommunication.SendOperationNotificationDataRequestToServer(result);
 
                                 //CustomMessage.Show($"Name: {result.DisplayName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                             }

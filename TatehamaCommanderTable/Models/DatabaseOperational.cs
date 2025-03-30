@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TatehamaCommanderTable.Models
 {
@@ -9,39 +10,6 @@ namespace TatehamaCommanderTable.Models
     {
         private static readonly DatabaseOperational _instance = new();
         public static DatabaseOperational Instance => _instance;
-
-        /// <summary>
-        /// イベント送信用データクラス(運転支障)
-        /// </summary>
-        public class TroubleEventDataToServer
-        {
-            /// <summary>
-            /// 運転支障データ
-            /// </summary>
-            public TroubleData TroubleData { get; set; }
-        }
-
-        /// <summary>
-        /// イベント送信用データクラス(運転告知器)
-        /// </summary>
-        public class OperationNotificationEventDataToServer
-        {
-            /// <summary>
-            /// 運転告知器データ
-            /// </summary>
-            public OperationNotificationData OperationNotificationData { get; set; }
-        }
-
-        /// <summary>
-        /// イベント送信用データクラス(軌道回路)
-        /// </summary>
-        public class TrackCircuitEventDataToServer
-        {
-            /// <summary>
-            /// 軌道回路データ
-            /// </summary>
-            public TrackCircuitData TrackCircuitData { get; set; }
-        }
 
         /// <summary>
         /// 受信用データクラス

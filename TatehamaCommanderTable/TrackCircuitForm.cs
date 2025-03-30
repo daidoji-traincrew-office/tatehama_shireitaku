@@ -106,17 +106,14 @@ namespace TatehamaCommanderTable
                         }
 
                         // サーバーにデータ送信
-                        _serverCommunication.SendTrackCircuitEventDataRequestToServerAsync(
-                            new DatabaseOperational.TrackCircuitEventDataToServer
-                            {
-                                TrackCircuitData = new TrackCircuitData
-                                {
-                                    On = TrackCircuit_RadioButton_ShortCircuit_ON.Checked,
-                                    Lock = TrackCircuit_RadioButton_Locking_ON.Checked,
-                                    Last = TrackCircuit_RadioButton_ShortCircuit_OFF.Checked ? TrackCircuit_TextBox_TrainNumber.Text : "",
-                                    Name = TrackCircuit_TextBox_TrackCircuit.Text
-                                }
-                            });
+                        var result = new TrackCircuitData
+                        {
+                            On = TrackCircuit_RadioButton_ShortCircuit_ON.Checked,
+                            Lock = TrackCircuit_RadioButton_Locking_ON.Checked,
+                            Last = TrackCircuit_RadioButton_ShortCircuit_OFF.Checked ? TrackCircuit_TextBox_TrainNumber.Text : "",
+                            Name = TrackCircuit_TextBox_TrackCircuit.Text
+                        };
+                        _serverCommunication.SendTrackCircuitEventDataRequestToServerAsync(result);
                     }
                     break;
             }
