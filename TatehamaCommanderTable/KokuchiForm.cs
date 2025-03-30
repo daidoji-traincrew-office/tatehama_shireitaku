@@ -177,14 +177,14 @@ namespace TatehamaCommanderTable
                             break;
                     }
 
-                    //// サーバーにデータ送信
-                    //_serverCommunication.SendOperationNotificationDataRequestToServer(
-                    //    new DatabaseOperational.OperationNotificationEventDataToServer
-                    //    {
-                    //        OperationNotificationData = Result
-                    //    });
+                    // サーバーにデータ送信
+                    _serverCommunication.SendOperationNotificationDataRequestToServer(
+                        new DatabaseOperational.OperationNotificationEventDataToServer
+                        {
+                            OperationNotificationData = result
+                        });
 
-                    CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
+                    //CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                 }
             }
             catch (Exception ex)
@@ -215,14 +215,14 @@ namespace TatehamaCommanderTable
                             // 無表示データ作成
                             var result = new OperationNotificationData(platformName, OperationNotificationType.None, "", DateTime.Now);
 
-                            //// サーバーにデータ送信
-                            //_serverCommunication.SendOperationNotificationDataRequestToServer(
-                            //    new DatabaseOperational.OperationNotificationEventDataToServer
-                            //    {
-                            //        OperationNotificationData = result
-                            //    });
+                            // サーバーにデータ送信
+                            _serverCommunication.SendOperationNotificationDataRequestToServer(
+                                new DatabaseOperational.OperationNotificationEventDataToServer
+                                {
+                                    OperationNotificationData = result
+                                });
 
-                            CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
+                            //CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                         }
                         break;
                     // 設定ボタン
@@ -234,14 +234,14 @@ namespace TatehamaCommanderTable
 
                             if (result != null)
                             {
-                                //// サーバーにデータ送信
-                                //_serverCommunication.SendOperationNotificationDataRequestToServer(
-                                //    new DatabaseOperational.OperationNotificationEventDataToServer
-                                //    {
-                                //        OperationNotificationData = result
-                                //    });
+                                // サーバーにデータ送信
+                                _serverCommunication.SendOperationNotificationDataRequestToServer(
+                                    new DatabaseOperational.OperationNotificationEventDataToServer
+                                    {
+                                        OperationNotificationData = result
+                                    });
 
-                                CustomMessage.Show($"Name: {result.DisplayName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
+                                //CustomMessage.Show($"Name: {result.DisplayName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                             }
                         }
                         break;
