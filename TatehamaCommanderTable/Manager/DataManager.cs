@@ -40,6 +40,11 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<DataGridViewSetting> DataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// 運転告知器設定一覧データ
+        /// </summary>
+        public Dictionary<string, KokuchiData> KokuchiSettingDic { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         private DataManager()
@@ -48,6 +53,7 @@ namespace TatehamaCommanderTable.Manager
             DataFromServer = new();
             StationSettingList = new();
             DataGridViewSettingList = new();
+            KokuchiSettingDic = new();
         }
     }
 }

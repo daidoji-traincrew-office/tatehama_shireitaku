@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
+using TatehamaCommanderTable.Services;
 
 namespace TatehamaCommanderTable
 {
@@ -21,13 +23,13 @@ namespace TatehamaCommanderTable
         {
             InitializeComponent();
 
-            // イベント設定
-            Load += TrackCircuitForm_Load;
-            FormClosing += TrackCircuitForm_FormClosing;
-
             // インスタンス取得
             _dataManager = DataManager.Instance;
             _serverCommunication = serverCommunication;
+
+            // イベント設定
+            Load += TrackCircuitForm_Load;
+            FormClosing += TrackCircuitForm_FormClosing;
         }
 
         /// <summary>
@@ -35,7 +37,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void TrackCircuitForm_Load(object sender, EventArgs e)
+        private void TrackCircuitForm_Load(object sender, EventArgs e)
         {
             // イベントハンドラ設定
             _serverCommunication.DataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
@@ -53,10 +55,13 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void TrackCircuitForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void TrackCircuitForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // イベントハンドラ解除
             _serverCommunication.DataGridViewUpdated -= (newDataSource) => UpdateDataSource(newDataSource);
             TrackCircuit_DataGridView_TrackCircuitData.CellClick -= DataGridView_TrackCircuitData_CellClick;
+
+            // データバインド解除
             TrackCircuit_BindingSource.DataSource = null;
         }
 
@@ -78,6 +83,10 @@ namespace TatehamaCommanderTable
         private void TrackCircuit_Button_Click(object sender, EventArgs e)
         {
             Button button = sender as Button;
+
+            // 正規表現パターンの定義
+            var pattern = @"^([回試臨]?)([0-9]{0,4})(A|B|C|K|X|AX|BX|CX|KX)?$";
+
             switch (button.Name)
             {
                 // 在線削除ボタン
@@ -89,6 +98,18 @@ namespace TatehamaCommanderTable
                 // サーバー送信ボタン
                 case "TrackCircuit_Button_SendServer":
                     {
+                        var retsuban = TrackCircuit_TextBox_DeleteTrainNumber.Text;
+                        var match = Regex.IsMatch(retsuban, pattern);
+                        var retsubanCheck = TrackCircuit_RadioButton_ShortCircuit_ON.Checked;
+
+                        // 列車番号の形式チェック
+                        if (retsubanCheck && !match && !retsuban.Contains("溝月"))
+                        {
+                            CustomMessage.Show("列車番号の形式が正しくありません", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            break;
+                        }
+
+                        // サーバーにデータ送信
                         _serverCommunication.SendTrackCircuitEventDataRequestToServerAsync(
                             new DatabaseOperational.TrackCircuitEventDataToServer
                             {

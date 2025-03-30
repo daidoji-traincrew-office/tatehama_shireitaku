@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Windows.Forms;
+using TatehamaCommanderTable.Communications;
+using TatehamaCommanderTable.Manager;
 
 namespace TatehamaCommanderTable
 {
     public partial class TroubleForm : Form
     {
+        private readonly DataManager _dataManager;
+        private readonly ServerCommunication _serverCommunication;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public TroubleForm()
+        public TroubleForm(ServerCommunication serverCommunication)
         {
             InitializeComponent();
+
+            // インスタンス取得
+            _dataManager = DataManager.Instance;
+            _serverCommunication = serverCommunication;
 
             // イベント設定
             Load += TroubleForm_Load;
@@ -22,7 +31,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void TroubleForm_Load(object sender, EventArgs e)
+        private void TroubleForm_Load(object sender, EventArgs e)
         {
 
         }
@@ -32,7 +41,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void TroubleForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void TroubleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             
         }

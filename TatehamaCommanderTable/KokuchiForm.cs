@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Properties;
@@ -12,6 +13,7 @@ namespace TatehamaCommanderTable
 {
     public partial class KokuchiForm : Form
     {
+        private readonly ServerCommunication _serverCommunication;
         private readonly Dictionary<string, KokuchiData> KokuchiDataDic;
         private readonly DataManager _dataManager;
         private readonly Timer _kokuchiTimer;
@@ -20,22 +22,28 @@ namespace TatehamaCommanderTable
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public KokuchiForm()
+        /// <param name="serverCommunication"></param>
+        public KokuchiForm(ServerCommunication serverCommunication)
         {
             InitializeComponent();
+
+            // インスタンス取得
+            _dataManager = DataManager.Instance;
+            _serverCommunication = serverCommunication;
 
             // イベント設定
             Load += KokuchiForm_Load;
             FormClosing += KokuchiForm_FormClosing;
 
+            // Timer設定
             _kokuchiTimer = new();
             _kokuchiTimer.Interval = 100;
             _kokuchiTimer.Tick += KokuchiTimer_Tick;
             _kokuchiTimer.Start();
 
+            // 変数初期化
             KokuchiDataDic = new();
             _sourceImage = KokuchiResource.KokuchiLED;
-            _dataManager = DataManager.Instance;
         }
 
         /// <summary>
@@ -43,7 +51,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void KokuchiForm_Load(object sender, EventArgs e)
+        private void KokuchiForm_Load(object sender, EventArgs e)
         {
             // 全駅データ初期化
             foreach (Control ctrl in Controls.Cast<Control>().Where(c => c.Name.Contains("Kokuchi_Station")))
@@ -56,16 +64,22 @@ namespace TatehamaCommanderTable
                 ToolStripMenuItem item1 = new ToolStripMenuItem("抑止");
                 ToolStripMenuItem item2 = new ToolStripMenuItem("解除");
                 //ToolStripMenuItem item3 = new ToolStripMenuItem("通知");
-                ToolStripMenuItem item4 = new ToolStripMenuItem("取消");
+                //ToolStripMenuItem item4 = new ToolStripMenuItem("通知解除");
+                ToolStripMenuItem item5 = new ToolStripMenuItem("取消");
+                ToolStripMenuItem item6 = new ToolStripMenuItem("削除");
                 contextMenu.Items.Add(item1);
                 contextMenu.Items.Add(item2);
                 //contextMenu.Items.Add(item3);
-                contextMenu.Items.Add(item4);
+                //contextMenu.Items.Add(item4);
+                contextMenu.Items.Add(item5);
+                contextMenu.Items.Add(item6);
                 ctrl.ContextMenuStrip = contextMenu;
                 item1.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                 item2.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                 //item3.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
-                item4.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                //item4.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                item5.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                item6.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
 
                 // 初期表示
                 DisplayImageByPos(ctrl.Name, 1, 1);
@@ -73,8 +87,8 @@ namespace TatehamaCommanderTable
             }
 
             // 駅選択コンボボックス初期化
-            Kokuchi_ComboBox_KokuchiSelect.Items.AddRange(_dataManager.StationSettingList.Select(s => s.PlatformName).ToArray());
-            Kokuchi_ComboBox_KokuchiSelect.SelectedIndex = 0;
+            Kokuchi_ComboBox_SelectPlatform.Items.AddRange(_dataManager.StationSettingList.Select(s => s.PlatformName).ToArray());
+            Kokuchi_ComboBox_SelectPlatform.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -82,7 +96,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void KokuchiForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _kokuchiTimer.Stop();
 
@@ -120,21 +134,43 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void Kokuchi_ContextMenuStrip_Click(object sender, EventArgs e, Control ctrl)
         {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
-            switch (item.Text)
+            var platformName = Kokuchi_ComboBox_SelectPlatform.SelectedItem.ToString();
+
+            if (!string.IsNullOrEmpty(platformName))
             {
-                case "抑止":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now));
-                    break;
-                case "解除":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now));
-                    break;
-                case "通知":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
-                    break;
-                case "取消":
-                    SetKokuchiLEDData(ctrl.Name, new KokuchiData(KokuchiType.None, "", DateTime.Now));
-                    break;
+                var kokuchiData = new KokuchiData(KokuchiType.None, "", DateTime.Now);
+
+                ToolStripMenuItem item = sender as ToolStripMenuItem;
+                switch (item.Text)
+                {
+                    case "抑止":
+                        kokuchiData = new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now);
+                        break;
+                    case "解除":
+                        kokuchiData = new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now);
+                        break;
+                    case "通知":
+                        kokuchiData = new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now);
+                        break;
+                    case "通知解除":
+                        kokuchiData = new KokuchiData(KokuchiType.TsuuchiKaijo, "", DateTime.Now);
+                        break;
+                    case "取消":
+                        kokuchiData = new KokuchiData(KokuchiType.Torikeshi, "", DateTime.Now);
+                        break;
+                    case "削除":
+                        kokuchiData = new KokuchiData(KokuchiType.None, "", DateTime.Now);
+                        break;
+                }
+
+                //// サーバーにデータ送信
+                //_serverCommunication.SendKokuchiEventDataRequestToServerAsync(
+                //    new DatabaseOperational.KokuchiEventDataToServer
+                //    {
+                //        KokuchiDataDic = new Dictionary<string, KokuchiData> { { platformName, kokuchiData } }
+                //    });
+
+                CustomMessage.Show($"Name: {platformName}\nType: {kokuchiData.Type}\nDisp: {kokuchiData.DisplayData}\nTime: {kokuchiData.OriginTime}", "設定完了");
             }
         }
 
@@ -145,19 +181,56 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void Kokuchi_Button_Click(object sender, EventArgs e)
         {
+            // 選択されている駅番線を取得
+            var platformName = Kokuchi_ComboBox_SelectPlatform.SelectedItem.ToString();
+
             Button button = sender as Button;
             switch (button.Name)
             {
-                // 取消ボタン
+                // 無表示ボタン
                 case "Kokuchi_Button_Cansel":
+                    if (!string.IsNullOrEmpty(platformName))
                     {
+                        // 無表示データ作成
+                        Dictionary<string, KokuchiData> kokuchiDataDic = new()
+                        {
+                            { platformName, new KokuchiData(KokuchiType.None, "", DateTime.Now) }
+                        };
 
+                        //// サーバーにデータ送信
+                        //_serverCommunication.SendKokuchiEventDataRequestToServerAsync(
+                        //    new DatabaseOperational.KokuchiEventDataToServer
+                        //    {
+                        //        KokuchiDataDic = kokuchiDataDic
+                        //    });
+
+                        var item = kokuchiDataDic.FirstOrDefault();
+                        CustomMessage.Show($"Name: {item.Key}\nType: {item.Value.Type}\nDisp: {item.Value.DisplayData}\nTime: {item.Value.OriginTime}", "設定完了");
                     }
                     break;
                 // 設定ボタン
                 case "Kokuchi_Button_Set":
+                    if (!string.IsNullOrEmpty(platformName))
                     {
+                        // 設定内容からKokuchiDataDicを作成
+                        var kokuchiDataDic = CreateKokuchiDataDic(platformName);
 
+                        if (kokuchiDataDic != null)
+                        {
+                            //// サーバーにデータ送信
+                            //_serverCommunication.SendKokuchiEventDataRequestToServerAsync(
+                            //    new DatabaseOperational.KokuchiEventDataToServer
+                            //    {
+                            //        KokuchiDataDic = kokuchiDataDic
+                            //    });
+
+                            var item = kokuchiDataDic.FirstOrDefault();
+                            CustomMessage.Show($"Name: {item.Key}\nType: {item.Value.Type}\nDisp: {item.Value.DisplayData}\nTime: {item.Value.OriginTime}", "設定完了");
+                        }
+                        else
+                        {
+                            CustomMessage.Show("設定内容が正しくありません", "設定エラー");
+                        }
                     }
                     break;
             }
@@ -171,62 +244,13 @@ namespace TatehamaCommanderTable
         private void Kokuchi_Station_Click(object sender, EventArgs e)
         {
             var ctrlName = ((Control)sender).Name;
+            var platformName = _dataManager.StationSettingList.FirstOrDefault(s => s.ControlName == ctrlName).PlatformName;
 
-            var selectKokuchiType = Kokuchi_GroupBox_Setting.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-
-            switch (selectKokuchiType.Name)
+            var index = Kokuchi_ComboBox_SelectPlatform.FindString(platformName);
+            if (index >= 0)
             {
-                case "Kokuchi_RadioButton_Yokushi":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now));
-                    break;
-                case "Kokuchi_RadioButton_Kaijyo":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now));
-                    break;
-                case "Kokuchi_RadioButton_Tsuuchi":
-                    SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
-                    break;
-                case "Kokuchi_RadioButton_Tenmatsusho":
-                    // MまたはCどちらかが選択されているかチェック
-                    if (!Kokuchi_CheckBox_M.Checked && !Kokuchi_CheckBox_C.Checked)
-                    {
-                        CustomMessage.Show("「M」または「C」を選択してください", "設定エラー");
-                        return;
-                    }
-                    else
-                    {
-                        var charM = Kokuchi_CheckBox_M.Checked ? "M" : "";
-                        var charC = Kokuchi_CheckBox_C.Checked ? "C" : "";
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Tenmatsusho, charM + charC, DateTime.Now));
-                    }
-                    break;
-                case "Kokuchi_RadioButton_Shuppatsu":
-                    // 4ケタの数字が入力されているかチェック
-                    string input = Kokuchi_TextBox_Shuppatsu.Text;
-                    if (string.IsNullOrEmpty(input))
-                    {
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.Shuppatsu, "", DateTime.Now));
-                    }
-                    else if (input.Length == 4 && int.TryParse(input, out _))
-                    {
-                        SetKokuchiLEDData(ctrlName, new KokuchiData(KokuchiType.ShuppatsuJikoku, input, DateTime.Now));
-                    }
-                    else
-                    {
-                        CustomMessage.Show("4ケタの数字を入力してください", "設定エラー");
-                        return;
-                    }
-                    break;
+                Kokuchi_ComboBox_SelectPlatform.SelectedIndex = index;
             }
-        }
-
-        /// <summary>
-        /// ラジオボタンチェックイベント
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -251,6 +275,7 @@ namespace TatehamaCommanderTable
                     case KokuchiType.Kaijo:
                     case KokuchiType.Shuppatsu:
                     case KokuchiType.ShuppatsuJikoku:
+                    case KokuchiType.Torikeshi:
                         //点滅しないやつ
                         SetLED(kokuchiData.Key, kokuchiData.Value);
                         break;
@@ -315,6 +340,78 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// 設定内容からKokuchiDataDicを作成する
+        /// </summary>
+        /// <param name="ctrlName"></param>
+        /// <returns></returns>
+        private Dictionary<string, KokuchiData> CreateKokuchiDataDic(string ctrlName)
+        {
+            Dictionary<string, KokuchiData> kokuchiDataDic = new();
+            var selectKokuchiType = Kokuchi_GroupBox_Setting.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+
+            // 選択されているラジオボタンによって処理を分岐
+            switch (selectKokuchiType.Name)
+            {
+                // 抑止
+                case "Kokuchi_RadioButton_Yokushi":
+                    kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Yokushi, "", DateTime.Now));
+                    break;
+                // 解除
+                case "Kokuchi_RadioButton_Kaijo":
+                    kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Kaijo, "", DateTime.Now));
+                    break;
+                // 取消
+                case "Kokuchi_RadioButton_Torikeshi":
+                    kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Torikeshi, "", DateTime.Now));
+                    break;
+                // 通知
+                case "Kokuchi_RadioButton_Tsuuchi":
+                    kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Tsuuchi, "", DateTime.Now));
+                    break;
+                // 通知解除
+                case "Kokuchi_RadioButton_TsuuchiKaijo":
+                    kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.TsuuchiKaijo, "", DateTime.Now));
+                    break;
+                // 顛末書
+                case "Kokuchi_RadioButton_Tenmatsusho":
+                    // MまたはCどちらかが選択されているかチェック
+                    if (!Kokuchi_CheckBox_M.Checked && !Kokuchi_CheckBox_C.Checked)
+                    {
+                        CustomMessage.Show("「M」または「C」を選択してください", "設定エラー");
+                        return null;
+                    }
+                    else
+                    {
+                        var charM = Kokuchi_CheckBox_M.Checked ? "M" : "";
+                        var charC = Kokuchi_CheckBox_C.Checked ? "C" : "";
+                        kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Tenmatsusho, charM + charC, DateTime.Now));
+                    }
+                    break;
+                // 出発・出発時刻
+                case "Kokuchi_RadioButton_Shuppatsu":
+                    string input = Kokuchi_TextBox_Shuppatsu.Text;
+
+                    // 出発時刻が未入力の場合は出発を設定
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.Shuppatsu, "", DateTime.Now));
+                    }
+                    // 出発時刻が入力されている場合は出発時刻を設定
+                    else if (input.Length == 4 && int.TryParse(input, out _))
+                    {
+                        kokuchiDataDic.Add(ctrlName, new KokuchiData(KokuchiType.ShuppatsuJikoku, input, DateTime.Now));
+                    }
+                    else
+                    {
+                        CustomMessage.Show("4ケタの数字を入力してください", "設定エラー");
+                        return null;
+                    }
+                    break;
+            }
+            return kokuchiDataDic;
+        }
+
+        /// <summary>
         /// KokuchiLEDデータをセット
         /// </summary>
         /// <param name="ctrlName"></param>
@@ -333,22 +430,28 @@ namespace TatehamaCommanderTable
             {
                 switch (kokuchiData.Type)
                 {
+                    // 無表示
                     case KokuchiType.None:
                         DisplayImageByPos(ctrlName, 1, 1);
                         break;
+                    // 抑止
                     case KokuchiType.Yokushi:
                         DisplayImageByPos(ctrlName, 1, 18);
                         break;
+                    // 通知・通知解除
                     case KokuchiType.Tsuuchi:
                     case KokuchiType.TsuuchiKaijo:
                         DisplayImageByPos(ctrlName, 1, 35);
                         break;
+                    // 出発
                     case KokuchiType.Shuppatsu:
                         DisplayImageByPos(ctrlName, 1, 52);
                         break;
+                    // 解除
                     case KokuchiType.Kaijo:
                         DisplayImageByPos(ctrlName, 1, 69);
                         break;
+                    // 顛末書
                     case KokuchiType.Tenmatsusho:
                         if (kokuchiData.DisplayData == "MC")
                         {
@@ -363,9 +466,15 @@ namespace TatehamaCommanderTable
                             DisplayImageByPos(ctrlName, 1, 120);
                         }
                         break;
+                    // 取消
+                    case KokuchiType.Torikeshi:
+                        DisplayImageByPos(ctrlName, 1, 137);
+                        break;
+                    // 出発時刻
                     case KokuchiType.ShuppatsuJikoku:
                         DisplayTimeImage(ctrlName, kokuchiData.DisplayData);
                         break;
+                    // その他
                     default:
                         DisplayImageByPos(ctrlName, 1, 171);
                         break;

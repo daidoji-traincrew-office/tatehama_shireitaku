@@ -12,12 +12,14 @@ namespace TatehamaCommanderTable
 {
     public partial class MainForm : Form, IWinFormsShell
     {
-        private readonly ServerCommunication _serverCommunication;          // サーバー通信
-        private readonly DataManager _dataManager;                          // GlobalData管理
-        private readonly Timer _mainTimer;                                  // メインタイマー
-        private KokuchiForm _kokuchiForm;                                   // 運転告知器フォーム
-        private TroubleForm _accidentForm;                                  // 運転支障フォーム
-        private TrackCircuitForm _trackCircuitForm;                         // 軌道回路フォーム
+        private readonly DataManager _dataManager;
+        private readonly ServerCommunication _serverCommunication;
+        
+        private KokuchiForm _kokuchiForm;
+        private TroubleForm _accidentForm;
+        private TrackCircuitForm _trackCircuitForm;
+
+        private readonly Timer _mainTimer;
 
         /// <summary>
         /// コンストラクタ
@@ -29,9 +31,14 @@ namespace TatehamaCommanderTable
             // インスタンス生成
             _serverCommunication = serverCommunication;
             _dataManager = DataManager.Instance;
+
+            // 駅設定データをリストに格納
+            var tsvFolderPath = "TSV";
+            _dataManager.StationSettingList = StationSettingLoader.LoadSettings(tsvFolderPath, "StationSettingList.tsv");
+
             // Form生成
-            _kokuchiForm = new KokuchiForm();
-            _accidentForm = new TroubleForm();
+            _kokuchiForm = new KokuchiForm(serverCommunication);
+            _accidentForm = new TroubleForm(serverCommunication);
             _trackCircuitForm = new TrackCircuitForm(serverCommunication);
 
             // イベント設定
@@ -43,10 +50,6 @@ namespace TatehamaCommanderTable
             _mainTimer.Interval = 100;
             _mainTimer.Tick += MainTimer_Tick;
             _mainTimer.Start();
-
-            var tsvFolderPath = "TSV";
-            // 駅設定データをリストに格納
-            _dataManager.StationSettingList = StationSettingLoader.LoadSettings(tsvFolderPath, "StationSettingList.tsv");
         }
 
         /// <summary>
@@ -103,7 +106,7 @@ namespace TatehamaCommanderTable
                         {
                             if (_kokuchiForm.IsDisposed)
                             {
-                                _kokuchiForm = new KokuchiForm();
+                                _kokuchiForm = new KokuchiForm(_serverCommunication);
                             }
                             _kokuchiForm.Show();
                         }
@@ -113,7 +116,7 @@ namespace TatehamaCommanderTable
                         {
                             if (_accidentForm.IsDisposed)
                             {
-                                _accidentForm = new TroubleForm();
+                                _accidentForm = new TroubleForm(_serverCommunication);
                             }
                             _accidentForm.Show();
                         }

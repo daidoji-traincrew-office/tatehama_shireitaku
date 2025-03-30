@@ -58,7 +58,7 @@ namespace TatehamaCommanderTable.Services
                                 StationName = columns[0],
                                 StationNumber = columns[1],
                                 PlatformName = columns[0] + cleanedNum + "番線",
-                                ControlName = columns[1] + "_Kokuchi" + cleanedNum,
+                                ControlName = "Kokuchi_Station_" + columns[1] + "_Kokuchi" + cleanedNum,
                             });
                         }
                     }

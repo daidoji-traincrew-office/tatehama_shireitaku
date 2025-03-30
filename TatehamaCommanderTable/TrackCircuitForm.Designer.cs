@@ -54,17 +54,17 @@
             TrackCircuit_GroupBox_DeleteNumberSetting = new System.Windows.Forms.GroupBox();
             TrackCircuit_GroupBox_Filter = new System.Windows.Forms.GroupBox();
             TrackCircuit_GroupBox_Title_FilterLoking = new System.Windows.Forms.GroupBox();
+            TrackCircuit_RadioButton_FilterLocking_All = new System.Windows.Forms.RadioButton();
             TrackCircuit_RadioButton_FilterLocking_Other = new System.Windows.Forms.RadioButton();
             TrackCircuit_RadioButton_FilterLocking_Only = new System.Windows.Forms.RadioButton();
             TrackCircuit_GroupBox_Title_FilterShortCircuit = new System.Windows.Forms.GroupBox();
+            TrackCircuit_RadioButton_FilterShortCircuit_All = new System.Windows.Forms.RadioButton();
             TrackCircuit_RadioButton_FilterShortCircuit_Other = new System.Windows.Forms.RadioButton();
             TrackCircuit_RadioButton_FilterShortCircuit_Only = new System.Windows.Forms.RadioButton();
             TrackCircuit_TextBox_FilterTrainNumber = new System.Windows.Forms.TextBox();
             TrackCircuit_Label_Title_FilterTrainNumber = new System.Windows.Forms.Label();
             TrackCircuit_Label_Title_FilterTrackCircuit = new System.Windows.Forms.Label();
             TrackCircuit_TextBox_FilterTrackCircuit = new System.Windows.Forms.TextBox();
-            TrackCircuit_RadioButton_FilterShortCircuit_All = new System.Windows.Forms.RadioButton();
-            TrackCircuit_RadioButton_FilterLocking_All = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_DataGridView_TrackCircuitData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_BindingSource).BeginInit();
             TrackCircuit_GroupBox_TrackCircuitSetting.SuspendLayout();
@@ -146,7 +146,7 @@
             // 
             TrackCircuit_TextBox_TrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_TrainNumber.Location = new System.Drawing.Point(91, 49);
-            TrackCircuit_TextBox_TrainNumber.MaxLength = 6;
+            TrackCircuit_TextBox_TrainNumber.MaxLength = 7;
             TrackCircuit_TextBox_TrainNumber.Name = "TrackCircuit_TextBox_TrainNumber";
             TrackCircuit_TextBox_TrainNumber.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_TrainNumber.TabIndex = 4;
@@ -224,7 +224,7 @@
             // 
             TrackCircuit_TextBox_TrackCircuit.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_TrackCircuit.Location = new System.Drawing.Point(91, 15);
-            TrackCircuit_TextBox_TrackCircuit.MaxLength = 6;
+            TrackCircuit_TextBox_TrackCircuit.MaxLength = 10;
             TrackCircuit_TextBox_TrackCircuit.Name = "TrackCircuit_TextBox_TrackCircuit";
             TrackCircuit_TextBox_TrackCircuit.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_TrackCircuit.TabIndex = 19;
@@ -315,7 +315,7 @@
             // 
             TrackCircuit_TextBox_DeleteTrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_DeleteTrainNumber.Location = new System.Drawing.Point(91, 15);
-            TrackCircuit_TextBox_DeleteTrainNumber.MaxLength = 6;
+            TrackCircuit_TextBox_DeleteTrainNumber.MaxLength = 7;
             TrackCircuit_TextBox_DeleteTrainNumber.Name = "TrackCircuit_TextBox_DeleteTrainNumber";
             TrackCircuit_TextBox_DeleteTrainNumber.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_DeleteTrainNumber.TabIndex = 4;
@@ -378,6 +378,20 @@
             TrackCircuit_GroupBox_Title_FilterLoking.TabStop = false;
             TrackCircuit_GroupBox_Title_FilterLoking.Text = "鎖錠状態";
             // 
+            // TrackCircuit_RadioButton_FilterLocking_All
+            // 
+            TrackCircuit_RadioButton_FilterLocking_All.AutoSize = true;
+            TrackCircuit_RadioButton_FilterLocking_All.Checked = true;
+            TrackCircuit_RadioButton_FilterLocking_All.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            TrackCircuit_RadioButton_FilterLocking_All.ForeColor = System.Drawing.Color.White;
+            TrackCircuit_RadioButton_FilterLocking_All.Location = new System.Drawing.Point(43, 22);
+            TrackCircuit_RadioButton_FilterLocking_All.Name = "TrackCircuit_RadioButton_FilterLocking_All";
+            TrackCircuit_RadioButton_FilterLocking_All.Size = new System.Drawing.Size(57, 20);
+            TrackCircuit_RadioButton_FilterLocking_All.TabIndex = 8;
+            TrackCircuit_RadioButton_FilterLocking_All.TabStop = true;
+            TrackCircuit_RadioButton_FilterLocking_All.Text = "全て";
+            TrackCircuit_RadioButton_FilterLocking_All.UseVisualStyleBackColor = true;
+            // 
             // TrackCircuit_RadioButton_FilterLocking_Other
             // 
             TrackCircuit_RadioButton_FilterLocking_Other.AutoSize = true;
@@ -416,6 +430,20 @@
             TrackCircuit_GroupBox_Title_FilterShortCircuit.TabStop = false;
             TrackCircuit_GroupBox_Title_FilterShortCircuit.Text = "短絡状態";
             // 
+            // TrackCircuit_RadioButton_FilterShortCircuit_All
+            // 
+            TrackCircuit_RadioButton_FilterShortCircuit_All.AutoSize = true;
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Checked = true;
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            TrackCircuit_RadioButton_FilterShortCircuit_All.ForeColor = System.Drawing.Color.White;
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Location = new System.Drawing.Point(43, 22);
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Name = "TrackCircuit_RadioButton_FilterShortCircuit_All";
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Size = new System.Drawing.Size(57, 20);
+            TrackCircuit_RadioButton_FilterShortCircuit_All.TabIndex = 7;
+            TrackCircuit_RadioButton_FilterShortCircuit_All.TabStop = true;
+            TrackCircuit_RadioButton_FilterShortCircuit_All.Text = "全て";
+            TrackCircuit_RadioButton_FilterShortCircuit_All.UseVisualStyleBackColor = true;
+            // 
             // TrackCircuit_RadioButton_FilterShortCircuit_Other
             // 
             TrackCircuit_RadioButton_FilterShortCircuit_Other.AutoSize = true;
@@ -444,7 +472,7 @@
             // 
             TrackCircuit_TextBox_FilterTrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_FilterTrainNumber.Location = new System.Drawing.Point(91, 49);
-            TrackCircuit_TextBox_FilterTrainNumber.MaxLength = 6;
+            TrackCircuit_TextBox_FilterTrainNumber.MaxLength = 7;
             TrackCircuit_TextBox_FilterTrainNumber.Name = "TrackCircuit_TextBox_FilterTrainNumber";
             TrackCircuit_TextBox_FilterTrainNumber.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_FilterTrainNumber.TabIndex = 14;
@@ -478,39 +506,11 @@
             // 
             TrackCircuit_TextBox_FilterTrackCircuit.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_FilterTrackCircuit.Location = new System.Drawing.Point(91, 15);
-            TrackCircuit_TextBox_FilterTrackCircuit.MaxLength = 6;
+            TrackCircuit_TextBox_FilterTrackCircuit.MaxLength = 10;
             TrackCircuit_TextBox_FilterTrackCircuit.Name = "TrackCircuit_TextBox_FilterTrackCircuit";
             TrackCircuit_TextBox_FilterTrackCircuit.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_FilterTrackCircuit.TabIndex = 4;
             TrackCircuit_TextBox_FilterTrackCircuit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // TrackCircuit_RadioButton_FilterShortCircuit_All
-            // 
-            TrackCircuit_RadioButton_FilterShortCircuit_All.AutoSize = true;
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Checked = true;
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            TrackCircuit_RadioButton_FilterShortCircuit_All.ForeColor = System.Drawing.Color.White;
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Location = new System.Drawing.Point(43, 22);
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Name = "TrackCircuit_RadioButton_FilterShortCircuit_All";
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Size = new System.Drawing.Size(57, 20);
-            TrackCircuit_RadioButton_FilterShortCircuit_All.TabIndex = 7;
-            TrackCircuit_RadioButton_FilterShortCircuit_All.TabStop = true;
-            TrackCircuit_RadioButton_FilterShortCircuit_All.Text = "全て";
-            TrackCircuit_RadioButton_FilterShortCircuit_All.UseVisualStyleBackColor = true;
-            // 
-            // TrackCircuit_RadioButton_FilterLocking_All
-            // 
-            TrackCircuit_RadioButton_FilterLocking_All.AutoSize = true;
-            TrackCircuit_RadioButton_FilterLocking_All.Checked = true;
-            TrackCircuit_RadioButton_FilterLocking_All.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            TrackCircuit_RadioButton_FilterLocking_All.ForeColor = System.Drawing.Color.White;
-            TrackCircuit_RadioButton_FilterLocking_All.Location = new System.Drawing.Point(43, 22);
-            TrackCircuit_RadioButton_FilterLocking_All.Name = "TrackCircuit_RadioButton_FilterLocking_All";
-            TrackCircuit_RadioButton_FilterLocking_All.Size = new System.Drawing.Size(57, 20);
-            TrackCircuit_RadioButton_FilterLocking_All.TabIndex = 8;
-            TrackCircuit_RadioButton_FilterLocking_All.TabStop = true;
-            TrackCircuit_RadioButton_FilterLocking_All.Text = "全て";
-            TrackCircuit_RadioButton_FilterLocking_All.UseVisualStyleBackColor = true;
             // 
             // TrackCircuitForm
             // 
