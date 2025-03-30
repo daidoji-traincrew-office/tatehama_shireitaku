@@ -67,6 +67,20 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// フォームクローズイベント
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
+
+        /// <summary>
         /// 最前面表示切替イベント
         /// </summary>
         /// <param name="sender"></param>
