@@ -24,12 +24,12 @@ namespace TatehamaCommanderTable.Models
         /// <summary>
         /// イベント送信用データクラス(運転告知器)
         /// </summary>
-        public class KokuchiEventDataToServer
+        public class OperationNotificationEventDataToServer
         {
             /// <summary>
-            /// 運転告知器データ辞書
+            /// 運転告知器データ
             /// </summary>
-            public Dictionary<string, KokuchiData> KokuchiDataDic { get; set; }
+            public OperationNotificationData OperationNotificationData { get; set; }
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace TatehamaCommanderTable.Models
             /// <summary>
             /// 運転告知器データリスト
             /// </summary>
-            public List<KokuchiData> KokuchiDataList { get; set; }
+            public List<OperationNotificationData> KokuchiDataList { get; set; }
 
             /// <summary>
             /// 軌道回路データリスト
