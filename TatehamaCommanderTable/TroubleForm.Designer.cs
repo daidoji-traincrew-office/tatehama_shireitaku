@@ -35,7 +35,7 @@
             Trouble_ComboBox_SelectTokuhatsu = new System.Windows.Forms.ComboBox();
             Trouble_Label_TokuhatsuSelect = new System.Windows.Forms.Label();
             Trouble_Label_SettingList = new System.Windows.Forms.Label();
-            Trouble_DataGridView_SettingList = new System.Windows.Forms.DataGridView();
+            Trouble_DataGridView_TroubleData = new System.Windows.Forms.DataGridView();
             troubleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             placeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             placeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +45,7 @@
             Trouble_Button_Set = new System.Windows.Forms.Button();
             Trouble_Button_Cansel = new System.Windows.Forms.Button();
             Trouble_GroupBox_Setting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_SettingList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_TroubleData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Trouble_BindingSource).BeginInit();
             SuspendLayout();
             // 
@@ -130,21 +130,21 @@
             Trouble_Label_SettingList.Text = "設定中の運転支障一覧";
             Trouble_Label_SettingList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Trouble_DataGridView_SettingList
+            // Trouble_DataGridView_TroubleData
             // 
-            Trouble_DataGridView_SettingList.AllowUserToAddRows = false;
-            Trouble_DataGridView_SettingList.AllowUserToDeleteRows = false;
-            Trouble_DataGridView_SettingList.AllowUserToResizeColumns = false;
-            Trouble_DataGridView_SettingList.AllowUserToResizeRows = false;
-            Trouble_DataGridView_SettingList.AutoGenerateColumns = false;
-            Trouble_DataGridView_SettingList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Trouble_DataGridView_SettingList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { troubleType, placeType, placeName, occuredAt, additionalData });
-            Trouble_DataGridView_SettingList.DataSource = Trouble_BindingSource;
-            Trouble_DataGridView_SettingList.Location = new System.Drawing.Point(13, 40);
-            Trouble_DataGridView_SettingList.Name = "Trouble_DataGridView_SettingList";
-            Trouble_DataGridView_SettingList.RowHeadersVisible = false;
-            Trouble_DataGridView_SettingList.Size = new System.Drawing.Size(760, 244);
-            Trouble_DataGridView_SettingList.TabIndex = 16;
+            Trouble_DataGridView_TroubleData.AllowUserToAddRows = false;
+            Trouble_DataGridView_TroubleData.AllowUserToDeleteRows = false;
+            Trouble_DataGridView_TroubleData.AllowUserToResizeColumns = false;
+            Trouble_DataGridView_TroubleData.AllowUserToResizeRows = false;
+            Trouble_DataGridView_TroubleData.AutoGenerateColumns = false;
+            Trouble_DataGridView_TroubleData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Trouble_DataGridView_TroubleData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { troubleType, placeType, placeName, occuredAt, additionalData });
+            Trouble_DataGridView_TroubleData.DataSource = Trouble_BindingSource;
+            Trouble_DataGridView_TroubleData.Location = new System.Drawing.Point(13, 40);
+            Trouble_DataGridView_TroubleData.Name = "Trouble_DataGridView_TroubleData";
+            Trouble_DataGridView_TroubleData.RowHeadersVisible = false;
+            Trouble_DataGridView_TroubleData.Size = new System.Drawing.Size(760, 244);
+            Trouble_DataGridView_TroubleData.TabIndex = 16;
             // 
             // troubleType
             // 
@@ -213,7 +213,7 @@
             ClientSize = new System.Drawing.Size(784, 561);
             Controls.Add(Trouble_Button_Set);
             Controls.Add(Trouble_Button_Cansel);
-            Controls.Add(Trouble_DataGridView_SettingList);
+            Controls.Add(Trouble_DataGridView_TroubleData);
             Controls.Add(Trouble_Label_SettingList);
             Controls.Add(Trouble_Label_TokuhatsuSelect);
             Controls.Add(Trouble_ComboBox_SelectTokuhatsu);
@@ -226,7 +226,7 @@
             Name = "TroubleForm";
             Text = "運転支障 | 司令卓 - ダイヤ運転会";
             Trouble_GroupBox_Setting.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_SettingList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_TroubleData).EndInit();
             ((System.ComponentModel.ISupportInitialize)Trouble_BindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -240,7 +240,7 @@
         private System.Windows.Forms.Label Trouble_Label_TokuhatsuSelect;
         private System.Windows.Forms.RadioButton Trouble_RadioButton_Tokuhatsu;
         private System.Windows.Forms.Label Trouble_Label_SettingList;
-        private System.Windows.Forms.DataGridView Trouble_DataGridView_SettingList;
+        private System.Windows.Forms.DataGridView Trouble_DataGridView_TroubleData;
         private System.Windows.Forms.BindingSource Trouble_BindingSource;
         private System.Windows.Forms.Button Trouble_Button_Set;
         private System.Windows.Forms.Button Trouble_Button_Cansel;

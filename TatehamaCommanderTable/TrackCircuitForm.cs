@@ -13,6 +13,7 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
+        private bool _isScrolling = false;
 
         /// <summary>
         /// コンストラクタ
@@ -41,6 +42,7 @@ namespace TatehamaCommanderTable
             // イベントハンドラ設定
             _serverCommunication.TrackCircuitDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
             TrackCircuit_DataGridView_TrackCircuitData.CellClick += DataGridView_TrackCircuitData_CellClick;
+            TrackCircuit_DataGridView_TrackCircuitData.Scroll += DataGridView_TrackCircuitData_Scroll;
 
             // DataGridViewのデータバインド
             TrackCircuit_BindingSource.DataSource = _dataManager.TrackCircuitDataGridViewSettingList;
@@ -119,96 +121,7 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// DataGridView更新処理
-        /// </summary>
-        /// <param name="newDataSource"></param>
-        public void UpdateDataSource(SortableBindingList<TrackCircuitDataGridViewSetting> newDataSource)
-        {
-            try
-            {
-                if (!this.IsDisposed)
-                {
-                    if (this.IsHandleCreated && !this.IsDisposed)
-                    {
-                        // フィルター設定
-                        var filteredData = newDataSource
-                            .Where(data => data.trackCircuit.Contains(TrackCircuit_TextBox_FilterTrackCircuit.Text))
-                            .Where(data => data.trainNumber.Contains(TrackCircuit_TextBox_FilterTrainNumber.Text))
-                            .ToList();
-                        if (!TrackCircuit_RadioButton_FilterShortCircuit_All.Checked)
-                        {
-                            filteredData = filteredData
-                                .Where(data => data.shortCircuitStatus == (TrackCircuit_RadioButton_FilterShortCircuit_Only.Checked ? "〇" : ""))
-                                .ToList();
-                        }
-                        if (!TrackCircuit_RadioButton_FilterLocking_All.Checked)
-                        {
-                            filteredData = filteredData
-                                .Where(data => data.lockingStatus == (TrackCircuit_RadioButton_FilterLocking_Only.Checked ? "〇" : ""))
-                                .ToList();
-                        }
-
-                        // スクロール位置を保持
-                        int firstDisplayedScrollingRowIndex = TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex;
-                        int selectedRowIndex = TrackCircuit_DataGridView_TrackCircuitData.CurrentCell?.RowIndex ?? 0;
-                        if (firstDisplayedScrollingRowIndex < 0)
-                        {
-                            firstDisplayedScrollingRowIndex = 0;
-                        }
-
-                        // データバインド
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new Action(() =>
-                            {
-                                if (!this.IsDisposed)
-                                {
-                                    TrackCircuit_BindingSource.DataSource = filteredData;
-                                    if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
-                                    {
-                                        TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
-                                        TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[0];
-                                    }
-                                }
-                            }));
-                        }
-                        else
-                        {
-                            if (!this.IsDisposed)
-                            {
-                                TrackCircuit_BindingSource.DataSource = filteredData;
-                                if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
-                                {
-                                    TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
-                                    TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[0];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// DataGridViewの設定
-        /// </summary>
-        private void SetupDataGridView()
-        {
-            // 複数選択不可
-            TrackCircuit_DataGridView_TrackCircuitData.MultiSelect = false;
-
-            // 中央揃え
-            TrackCircuit_DataGridView_TrackCircuitData.Columns["trainNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TrackCircuit_DataGridView_TrackCircuitData.Columns["shortCircuitStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TrackCircuit_DataGridView_TrackCircuitData.Columns["lockingStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        /// <summary>
-        /// 選択したデータを表示
+        /// DataGridViewの選択したデータを表示
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -231,6 +144,114 @@ namespace TatehamaCommanderTable
                 TrackCircuit_RadioButton_Locking_ON.Checked = lockingStatus == "〇";
                 TrackCircuit_RadioButton_Locking_OFF.Checked = lockingStatus != "〇";
             }
+        }
+
+        /// <summary>
+        /// DataGridViewスクロールイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_TrackCircuitData_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                _isScrolling = true;
+            }
+        }
+
+        /// <summary>
+        /// DataGridView更新処理
+        /// </summary>
+        /// <param name="newDataSource"></param>
+        public void UpdateDataSource(SortableBindingList<TrackCircuitDataGridViewSetting> newDataSource)
+        {
+            try
+            {
+                if (!this.IsDisposed)
+                {
+                    if (this.IsHandleCreated && !this.IsDisposed)
+                    {
+                        SuspendLayout();
+
+                        // フィルター設定
+                        var filteredData = newDataSource
+                            .Where(data => data.trackCircuit.Contains(TrackCircuit_TextBox_FilterTrackCircuit.Text))
+                            .Where(data => data.trainNumber.Contains(TrackCircuit_TextBox_FilterTrainNumber.Text))
+                            .ToList();
+                        if (!TrackCircuit_RadioButton_FilterShortCircuit_All.Checked)
+                        {
+                            filteredData = filteredData
+                                .Where(data => data.shortCircuitStatus == (TrackCircuit_RadioButton_FilterShortCircuit_Only.Checked ? "〇" : ""))
+                                .ToList();
+                        }
+                        if (!TrackCircuit_RadioButton_FilterLocking_All.Checked)
+                        {
+                            filteredData = filteredData
+                                .Where(data => data.lockingStatus == (TrackCircuit_RadioButton_FilterLocking_Only.Checked ? "〇" : ""))
+                                .ToList();
+                        }
+
+                        // スクロール位置と選択位置を保持
+                        int firstDisplayedScrollingRowIndex = TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex;
+                        int selectedRowIndex = TrackCircuit_DataGridView_TrackCircuitData.CurrentCell?.RowIndex ?? 0;
+                        int selectedColumnIndex = !_isScrolling ? (TrackCircuit_DataGridView_TrackCircuitData.CurrentCell?.ColumnIndex ?? 0) : 0;
+                        if (firstDisplayedScrollingRowIndex < 0)
+                        {
+                            firstDisplayedScrollingRowIndex = 0;
+                        }
+
+                        // データバインド
+                        if (this.InvokeRequired)
+                        {
+                            this.Invoke(new Action(() =>
+                            {
+                                if (!this.IsDisposed)
+                                {
+                                    TrackCircuit_BindingSource.DataSource = filteredData;
+                                    if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
+                                    {
+                                        TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
+                                        TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, TrackCircuit_DataGridView_TrackCircuitData.Columns.Count - 1)];
+                                    }
+                                }
+                            }));
+                        }
+                        else
+                        {
+                            if (!this.IsDisposed)
+                            {
+                                TrackCircuit_BindingSource.DataSource = filteredData;
+                                if (TrackCircuit_DataGridView_TrackCircuitData.Rows.Count > 0)
+                                {
+                                    TrackCircuit_DataGridView_TrackCircuitData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1);
+                                    TrackCircuit_DataGridView_TrackCircuitData.CurrentCell = TrackCircuit_DataGridView_TrackCircuitData.Rows[Math.Min(selectedRowIndex, TrackCircuit_DataGridView_TrackCircuitData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, TrackCircuit_DataGridView_TrackCircuitData.Columns.Count - 1)];
+                                }
+                            }
+                        }
+                        ResumeLayout();
+                    }
+                    _isScrolling = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// DataGridViewの設定
+        /// </summary>
+        private void SetupDataGridView()
+        {
+            // 複数選択不可
+            TrackCircuit_DataGridView_TrackCircuitData.MultiSelect = false;
+            TrackCircuit_DataGridView_TrackCircuitData.AutoGenerateColumns = false;
+
+            // 中央揃え
+            TrackCircuit_DataGridView_TrackCircuitData.Columns["trainNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TrackCircuit_DataGridView_TrackCircuitData.Columns["shortCircuitStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TrackCircuit_DataGridView_TrackCircuitData.Columns["lockingStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
     }
 }

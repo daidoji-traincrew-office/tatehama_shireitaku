@@ -11,6 +11,7 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
+        private bool _isScrolling = false;
 
         /// <summary>
         /// コンストラクタ
@@ -99,6 +100,19 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// DataGridViewスクロールイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_TrubleData_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                _isScrolling = true;
+            }
+        }
+
+        /// <summary>
         /// DataGridView更新処理
         /// </summary>
         /// <param name="newDataSource"></param>
@@ -111,8 +125,9 @@ namespace TatehamaCommanderTable
                     if (this.IsHandleCreated && !this.IsDisposed)
                     {
                         // スクロール位置を保持
-                        int firstDisplayedScrollingRowIndex = Trouble_DataGridView_SettingList.FirstDisplayedScrollingRowIndex;
-                        int selectedRowIndex = Trouble_DataGridView_SettingList.CurrentCell?.RowIndex ?? 0;
+                        int firstDisplayedScrollingRowIndex = Trouble_DataGridView_TroubleData.FirstDisplayedScrollingRowIndex;
+                        int selectedRowIndex = Trouble_DataGridView_TroubleData.CurrentCell?.RowIndex ?? 0;
+                        int selectedColumnIndex = !_isScrolling ? (Trouble_DataGridView_TroubleData.CurrentCell?.ColumnIndex ?? 0) : 0;
                         if (firstDisplayedScrollingRowIndex < 0)
                         {
                             firstDisplayedScrollingRowIndex = 0;
@@ -126,10 +141,10 @@ namespace TatehamaCommanderTable
                                 if (!this.IsDisposed)
                                 {
                                     Trouble_BindingSource.DataSource = newDataSource;
-                                    if (Trouble_DataGridView_SettingList.Rows.Count > 0)
+                                    if (Trouble_DataGridView_TroubleData.Rows.Count > 0)
                                     {
-                                        Trouble_DataGridView_SettingList.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, Trouble_DataGridView_SettingList.Rows.Count - 1);
-                                        Trouble_DataGridView_SettingList.CurrentCell = Trouble_DataGridView_SettingList.Rows[Math.Min(selectedRowIndex, Trouble_DataGridView_SettingList.Rows.Count - 1)].Cells[0];
+                                        Trouble_DataGridView_TroubleData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, Trouble_DataGridView_TroubleData.Rows.Count - 1);
+                                        Trouble_DataGridView_TroubleData.CurrentCell = Trouble_DataGridView_TroubleData.Rows[Math.Min(selectedRowIndex, Trouble_DataGridView_TroubleData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, Trouble_DataGridView_TroubleData.Columns.Count - 1)];
                                     }
                                 }
                             }));
@@ -139,14 +154,15 @@ namespace TatehamaCommanderTable
                             if (!this.IsDisposed)
                             {
                                 Trouble_BindingSource.DataSource = newDataSource;
-                                if (Trouble_DataGridView_SettingList.Rows.Count > 0)
+                                if (Trouble_DataGridView_TroubleData.Rows.Count > 0)
                                 {
-                                    Trouble_DataGridView_SettingList.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, Trouble_DataGridView_SettingList.Rows.Count - 1);
-                                    Trouble_DataGridView_SettingList.CurrentCell = Trouble_DataGridView_SettingList.Rows[Math.Min(selectedRowIndex, Trouble_DataGridView_SettingList.Rows.Count - 1)].Cells[0];
+                                    Trouble_DataGridView_TroubleData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, Trouble_DataGridView_TroubleData.Rows.Count - 1);
+                                    Trouble_DataGridView_TroubleData.CurrentCell = Trouble_DataGridView_TroubleData.Rows[Math.Min(selectedRowIndex, Trouble_DataGridView_TroubleData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, Trouble_DataGridView_TroubleData.Columns.Count - 1)];
                                 }
                             }
                         }
                     }
+                    _isScrolling = false;
                 }
             }
             catch (Exception ex)
@@ -161,7 +177,8 @@ namespace TatehamaCommanderTable
         private void SetupDataGridView()
         {
             // 複数選択不可
-            Trouble_DataGridView_SettingList.MultiSelect = false;
+            Trouble_DataGridView_TroubleData.MultiSelect = false;
+            Trouble_DataGridView_TroubleData.AutoGenerateColumns = false;
         }
     }
 }
