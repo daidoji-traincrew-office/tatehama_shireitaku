@@ -38,6 +38,7 @@ namespace TatehamaCommanderTable
         {
             // イベントハンドラ設定
             _serverCommunication.TroubleDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
+            Trouble_DataGridView_TroubleData.Scroll += DataGridView_TrubleData_Scroll;
 
             // DataGridViewのデータバインド
             Trouble_BindingSource.DataSource = _dataManager.TroubleDataGridViewSettingList;
@@ -62,7 +63,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Trouble_CheckBox_TopMost_CheckedChanged(object sender, System.EventArgs e)
+        private void Trouble_CheckBox_TopMost_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = Trouble_CheckBox_TopMost.Checked;
         }
