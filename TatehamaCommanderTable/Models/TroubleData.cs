@@ -23,6 +23,29 @@ namespace TatehamaCommanderTable.Models
         }
     }
 
+    public static class TroubleDataConverter
+    {
+        public static string ConversionPlaceType(PlaceType placeType)
+        {
+            return placeType switch
+            {
+                PlaceType.TrackCircuit => "軌道回路",
+                PlaceType.Crossing => "踏切",
+                PlaceType.Train => "車両",
+                PlaceType.Platform => "駅ホーム",
+                _ => "不明"
+            };
+        }
+
+        public static string ConversionTroubleType(TroubleType troubleType)
+        {
+            return troubleType switch
+            {
+                _ => "不明"
+            };
+        }
+    }
+
     public enum PlaceType
     {
         // 軌道回路

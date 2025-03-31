@@ -30,10 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             TrackCircuit_DataGridView_TrackCircuitData = new System.Windows.Forms.DataGridView();
-            trackCircuit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            trainNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            shortCircuitStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            lockingStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TrackCircuit_BindingSource = new System.Windows.Forms.BindingSource(components);
             TrackCircuit_Button_SendServer = new System.Windows.Forms.Button();
             TrackCircuit_TextBox_TrainNumber = new System.Windows.Forms.TextBox();
@@ -65,6 +61,10 @@
             TrackCircuit_Label_Title_FilterTrainNumber = new System.Windows.Forms.Label();
             TrackCircuit_Label_Title_FilterTrackCircuit = new System.Windows.Forms.Label();
             TrackCircuit_TextBox_FilterTrackCircuit = new System.Windows.Forms.TextBox();
+            trackCircuit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            trainNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            shortCircuitStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            lockingStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_DataGridView_TrackCircuitData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TrackCircuit_BindingSource).BeginInit();
             TrackCircuit_GroupBox_TrackCircuitSetting.SuspendLayout();
@@ -92,39 +92,6 @@
             TrackCircuit_DataGridView_TrackCircuitData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             TrackCircuit_DataGridView_TrackCircuitData.Size = new System.Drawing.Size(520, 705);
             TrackCircuit_DataGridView_TrackCircuitData.TabIndex = 0;
-            // 
-            // trackCircuit
-            // 
-            trackCircuit.DataPropertyName = "trackCircuit";
-            trackCircuit.HeaderText = "軌道回路";
-            trackCircuit.MaxInputLength = 20;
-            trackCircuit.Name = "trackCircuit";
-            trackCircuit.ReadOnly = true;
-            trackCircuit.Width = 200;
-            // 
-            // trainNumber
-            // 
-            trainNumber.DataPropertyName = "trainNumber";
-            trainNumber.HeaderText = "列車番号";
-            trainNumber.MaxInputLength = 6;
-            trainNumber.Name = "trainNumber";
-            trainNumber.ReadOnly = true;
-            // 
-            // shortCircuitStatus
-            // 
-            shortCircuitStatus.DataPropertyName = "shortCircuitStatus";
-            shortCircuitStatus.HeaderText = "短絡状態";
-            shortCircuitStatus.MaxInputLength = 5;
-            shortCircuitStatus.Name = "shortCircuitStatus";
-            shortCircuitStatus.ReadOnly = true;
-            // 
-            // lockingStatus
-            // 
-            lockingStatus.DataPropertyName = "lockingStatus";
-            lockingStatus.HeaderText = "鎖錠状態";
-            lockingStatus.MaxInputLength = 5;
-            lockingStatus.Name = "lockingStatus";
-            lockingStatus.ReadOnly = true;
             // 
             // TrackCircuit_Button_SendServer
             // 
@@ -512,6 +479,39 @@
             TrackCircuit_TextBox_FilterTrackCircuit.TabIndex = 4;
             TrackCircuit_TextBox_FilterTrackCircuit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // trackCircuit
+            // 
+            trackCircuit.DataPropertyName = "trackCircuit";
+            trackCircuit.HeaderText = "軌道回路";
+            trackCircuit.MaxInputLength = 20;
+            trackCircuit.Name = "trackCircuit";
+            trackCircuit.ReadOnly = true;
+            trackCircuit.Width = 200;
+            // 
+            // trainNumber
+            // 
+            trainNumber.DataPropertyName = "trainNumber";
+            trainNumber.HeaderText = "列車番号";
+            trainNumber.MaxInputLength = 7;
+            trainNumber.Name = "trainNumber";
+            trainNumber.ReadOnly = true;
+            // 
+            // shortCircuitStatus
+            // 
+            shortCircuitStatus.DataPropertyName = "shortCircuitStatus";
+            shortCircuitStatus.HeaderText = "短絡状態";
+            shortCircuitStatus.MaxInputLength = 5;
+            shortCircuitStatus.Name = "shortCircuitStatus";
+            shortCircuitStatus.ReadOnly = true;
+            // 
+            // lockingStatus
+            // 
+            lockingStatus.DataPropertyName = "lockingStatus";
+            lockingStatus.HeaderText = "鎖錠状態";
+            lockingStatus.MaxInputLength = 5;
+            lockingStatus.Name = "lockingStatus";
+            lockingStatus.ReadOnly = true;
+            // 
             // TrackCircuitForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -565,10 +565,6 @@
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_Locking_ON;
         private System.Windows.Forms.GroupBox TrackCircuit_GroupBox_Title_ShortCircuit;
         private System.Windows.Forms.BindingSource TrackCircuit_BindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn trackCircuit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn trainNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn shortCircuitStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lockingStatus;
         private System.Windows.Forms.Button TrackCircuit_Button_DeleteTrainNumber;
         private System.Windows.Forms.TextBox TrackCircuit_TextBox_TrackCircuit;
         private System.Windows.Forms.TextBox TrackCircuit_TextBox_DeleteTrainNumber;
@@ -587,5 +583,9 @@
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_FilterLocking_Only;
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_FilterLocking_All;
         private System.Windows.Forms.RadioButton TrackCircuit_RadioButton_FilterShortCircuit_All;
+        private System.Windows.Forms.DataGridViewTextBoxColumn trackCircuit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn trainNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn shortCircuitStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lockingStatus;
     }
 }

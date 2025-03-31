@@ -35,9 +35,14 @@ namespace TatehamaCommanderTable.Manager
         public List<StationSetting> StationSettingList { get; set; }
 
         /// <summary>
-        /// DataGridView設定リストデータ
+        /// TrackCircuitDataGridView設定リストデータ
         /// </summary>
-        public SortableBindingList<DataGridViewSetting> DataGridViewSettingList { get; set; }
+        public SortableBindingList<TrackCircuitDataGridViewSetting> TrackCircuitDataGridViewSettingList { get; set; }
+
+        /// <summary>
+        /// TroubleDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<TroubleDataGridViewSetting> TroubleDataGridViewSettingList { get; set; }
 
         /// <summary>
         /// 運転告知器リストデータ
@@ -52,7 +57,7 @@ namespace TatehamaCommanderTable.Manager
             ServerConnected = false;
             DataFromServer = new();
             StationSettingList = new();
-            DataGridViewSettingList = new();
+            TrackCircuitDataGridViewSettingList = new();
             OperationNotificationDataList = new();
         }
     }

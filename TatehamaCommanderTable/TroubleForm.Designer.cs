@@ -28,14 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             Trouble_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             Trouble_GroupBox_Setting = new System.Windows.Forms.GroupBox();
-            Trouble_ListBox_SettingList = new System.Windows.Forms.ListBox();
+            Trouble_RadioButton_Tokuhatsu = new System.Windows.Forms.RadioButton();
             Trouble_ComboBox_SelectTokuhatsu = new System.Windows.Forms.ComboBox();
             Trouble_Label_TokuhatsuSelect = new System.Windows.Forms.Label();
-            Trouble_RadioButton_Tokuhatsu = new System.Windows.Forms.RadioButton();
             Trouble_Label_SettingList = new System.Windows.Forms.Label();
+            Trouble_DataGridView_SettingList = new System.Windows.Forms.DataGridView();
+            troubleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            placeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            placeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            occuredAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            additionalData = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Trouble_BindingSource = new System.Windows.Forms.BindingSource(components);
+            Trouble_Button_Set = new System.Windows.Forms.Button();
+            Trouble_Button_Cansel = new System.Windows.Forms.Button();
             Trouble_GroupBox_Setting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_SettingList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Trouble_BindingSource).BeginInit();
             SuspendLayout();
             // 
             // Trouble_CheckBox_TopMost
@@ -63,15 +74,27 @@
             Trouble_GroupBox_Setting.TabStop = false;
             Trouble_GroupBox_Setting.Text = "支障パターン";
             // 
-            // Trouble_ListBox_SettingList
+            // Trouble_RadioButton_Tokuhatsu
             // 
-            Trouble_ListBox_SettingList.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            Trouble_ListBox_SettingList.FormattingEnabled = true;
-            Trouble_ListBox_SettingList.Location = new System.Drawing.Point(11, 39);
-            Trouble_ListBox_SettingList.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            Trouble_ListBox_SettingList.Name = "Trouble_ListBox_SettingList";
-            Trouble_ListBox_SettingList.Size = new System.Drawing.Size(760, 244);
-            Trouble_ListBox_SettingList.TabIndex = 12;
+            Trouble_RadioButton_Tokuhatsu.Appearance = System.Windows.Forms.Appearance.Button;
+            Trouble_RadioButton_Tokuhatsu.BackColor = System.Drawing.Color.White;
+            Trouble_RadioButton_Tokuhatsu.Checked = true;
+            Trouble_RadioButton_Tokuhatsu.FlatAppearance.BorderSize = 0;
+            Trouble_RadioButton_Tokuhatsu.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold;
+            Trouble_RadioButton_Tokuhatsu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            Trouble_RadioButton_Tokuhatsu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gold;
+            Trouble_RadioButton_Tokuhatsu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Trouble_RadioButton_Tokuhatsu.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            Trouble_RadioButton_Tokuhatsu.ForeColor = System.Drawing.Color.Black;
+            Trouble_RadioButton_Tokuhatsu.Location = new System.Drawing.Point(8, 20);
+            Trouble_RadioButton_Tokuhatsu.Margin = new System.Windows.Forms.Padding(5);
+            Trouble_RadioButton_Tokuhatsu.Name = "Trouble_RadioButton_Tokuhatsu";
+            Trouble_RadioButton_Tokuhatsu.Size = new System.Drawing.Size(100, 40);
+            Trouble_RadioButton_Tokuhatsu.TabIndex = 1;
+            Trouble_RadioButton_Tokuhatsu.TabStop = true;
+            Trouble_RadioButton_Tokuhatsu.Text = "特発動作";
+            Trouble_RadioButton_Tokuhatsu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            Trouble_RadioButton_Tokuhatsu.UseVisualStyleBackColor = false;
             // 
             // Trouble_ComboBox_SelectTokuhatsu
             // 
@@ -95,28 +118,6 @@
             Trouble_Label_TokuhatsuSelect.Text = "特発";
             Trouble_Label_TokuhatsuSelect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Trouble_RadioButton_Tokuhatsu
-            // 
-            Trouble_RadioButton_Tokuhatsu.Appearance = System.Windows.Forms.Appearance.Button;
-            Trouble_RadioButton_Tokuhatsu.BackColor = System.Drawing.Color.White;
-            Trouble_RadioButton_Tokuhatsu.Checked = true;
-            Trouble_RadioButton_Tokuhatsu.FlatAppearance.BorderSize = 0;
-            Trouble_RadioButton_Tokuhatsu.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold;
-            Trouble_RadioButton_Tokuhatsu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
-            Trouble_RadioButton_Tokuhatsu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gold;
-            Trouble_RadioButton_Tokuhatsu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            Trouble_RadioButton_Tokuhatsu.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            Trouble_RadioButton_Tokuhatsu.ForeColor = System.Drawing.Color.Black;
-            Trouble_RadioButton_Tokuhatsu.Location = new System.Drawing.Point(8, 20);
-            Trouble_RadioButton_Tokuhatsu.Margin = new System.Windows.Forms.Padding(5);
-            Trouble_RadioButton_Tokuhatsu.Name = "Trouble_RadioButton_Tokuhatsu";
-            Trouble_RadioButton_Tokuhatsu.Size = new System.Drawing.Size(100, 40);
-            Trouble_RadioButton_Tokuhatsu.TabIndex = 1;
-            Trouble_RadioButton_Tokuhatsu.TabStop = true;
-            Trouble_RadioButton_Tokuhatsu.Text = "特発動作";
-            Trouble_RadioButton_Tokuhatsu.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            Trouble_RadioButton_Tokuhatsu.UseVisualStyleBackColor = false;
-            // 
             // Trouble_Label_SettingList
             // 
             Trouble_Label_SettingList.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
@@ -129,16 +130,93 @@
             Trouble_Label_SettingList.Text = "設定中の運転支障一覧";
             Trouble_Label_SettingList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Trouble_DataGridView_SettingList
+            // 
+            Trouble_DataGridView_SettingList.AllowUserToAddRows = false;
+            Trouble_DataGridView_SettingList.AllowUserToDeleteRows = false;
+            Trouble_DataGridView_SettingList.AllowUserToResizeColumns = false;
+            Trouble_DataGridView_SettingList.AllowUserToResizeRows = false;
+            Trouble_DataGridView_SettingList.AutoGenerateColumns = false;
+            Trouble_DataGridView_SettingList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Trouble_DataGridView_SettingList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { troubleType, placeType, placeName, occuredAt, additionalData });
+            Trouble_DataGridView_SettingList.DataSource = Trouble_BindingSource;
+            Trouble_DataGridView_SettingList.Location = new System.Drawing.Point(13, 40);
+            Trouble_DataGridView_SettingList.Name = "Trouble_DataGridView_SettingList";
+            Trouble_DataGridView_SettingList.RowHeadersVisible = false;
+            Trouble_DataGridView_SettingList.Size = new System.Drawing.Size(760, 244);
+            Trouble_DataGridView_SettingList.TabIndex = 16;
+            // 
+            // troubleType
+            // 
+            troubleType.HeaderText = "支障";
+            troubleType.Name = "troubleType";
+            // 
+            // placeType
+            // 
+            placeType.HeaderText = "分類";
+            placeType.Name = "placeType";
+            // 
+            // placeName
+            // 
+            placeName.HeaderText = "場所名称";
+            placeName.Name = "placeName";
+            // 
+            // occuredAt
+            // 
+            occuredAt.HeaderText = "発生時刻";
+            occuredAt.Name = "occuredAt";
+            // 
+            // additionalData
+            // 
+            additionalData.HeaderText = "補足情報";
+            additionalData.Name = "additionalData";
+            // 
+            // Trouble_Button_Set
+            // 
+            Trouble_Button_Set.BackColor = System.Drawing.Color.Lime;
+            Trouble_Button_Set.FlatAppearance.BorderSize = 0;
+            Trouble_Button_Set.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            Trouble_Button_Set.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            Trouble_Button_Set.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Trouble_Button_Set.ForeColor = System.Drawing.Color.Black;
+            Trouble_Button_Set.Location = new System.Drawing.Point(624, 310);
+            Trouble_Button_Set.Margin = new System.Windows.Forms.Padding(5);
+            Trouble_Button_Set.Name = "Trouble_Button_Set";
+            Trouble_Button_Set.Size = new System.Drawing.Size(75, 40);
+            Trouble_Button_Set.TabIndex = 19;
+            Trouble_Button_Set.Text = "設定";
+            Trouble_Button_Set.UseVisualStyleBackColor = false;
+            Trouble_Button_Set.Click += Trouble_Button_Click;
+            // 
+            // Trouble_Button_Cansel
+            // 
+            Trouble_Button_Cansel.BackColor = System.Drawing.Color.OrangeRed;
+            Trouble_Button_Cansel.FlatAppearance.BorderSize = 0;
+            Trouble_Button_Cansel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            Trouble_Button_Cansel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            Trouble_Button_Cansel.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Trouble_Button_Cansel.ForeColor = System.Drawing.Color.White;
+            Trouble_Button_Cansel.Location = new System.Drawing.Point(539, 310);
+            Trouble_Button_Cansel.Margin = new System.Windows.Forms.Padding(5);
+            Trouble_Button_Cansel.Name = "Trouble_Button_Cansel";
+            Trouble_Button_Cansel.Size = new System.Drawing.Size(75, 40);
+            Trouble_Button_Cansel.TabIndex = 18;
+            Trouble_Button_Cansel.Text = "削除";
+            Trouble_Button_Cansel.UseVisualStyleBackColor = false;
+            Trouble_Button_Cansel.Click += Trouble_Button_Click;
+            // 
             // TroubleForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Trouble_Button_Set);
+            Controls.Add(Trouble_Button_Cansel);
+            Controls.Add(Trouble_DataGridView_SettingList);
             Controls.Add(Trouble_Label_SettingList);
             Controls.Add(Trouble_Label_TokuhatsuSelect);
             Controls.Add(Trouble_ComboBox_SelectTokuhatsu);
-            Controls.Add(Trouble_ListBox_SettingList);
             Controls.Add(Trouble_GroupBox_Setting);
             Controls.Add(Trouble_CheckBox_TopMost);
             Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -148,6 +226,8 @@
             Name = "TroubleForm";
             Text = "運転支障 | 司令卓 - ダイヤ運転会";
             Trouble_GroupBox_Setting.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_SettingList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Trouble_BindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -156,10 +236,18 @@
 
         private System.Windows.Forms.CheckBox Trouble_CheckBox_TopMost;
         private System.Windows.Forms.GroupBox Trouble_GroupBox_Setting;
-        private System.Windows.Forms.ListBox Trouble_ListBox_SettingList;
         private System.Windows.Forms.ComboBox Trouble_ComboBox_SelectTokuhatsu;
         private System.Windows.Forms.Label Trouble_Label_TokuhatsuSelect;
         private System.Windows.Forms.RadioButton Trouble_RadioButton_Tokuhatsu;
         private System.Windows.Forms.Label Trouble_Label_SettingList;
+        private System.Windows.Forms.DataGridView Trouble_DataGridView_SettingList;
+        private System.Windows.Forms.BindingSource Trouble_BindingSource;
+        private System.Windows.Forms.Button Trouble_Button_Set;
+        private System.Windows.Forms.Button Trouble_Button_Cansel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn troubleType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn placeType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn placeName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn occuredAt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn additionalData;
     }
 }

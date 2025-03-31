@@ -26,9 +26,13 @@ namespace TatehamaCommanderTable.Communications
         private static bool _isUpdateLoopRunning = false;
         private const string HubConnectionName = "commander_table";
         /// <summary>
-        /// DataGridView更新通知イベント
+        /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
-        public event Action<SortableBindingList<DataGridViewSetting>> DataGridViewUpdated;
+        public event Action<SortableBindingList<TrackCircuitDataGridViewSetting>> TrackCircuitDataGridViewUpdated;
+        /// <summary>
+        /// TroubleDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<TroubleDataGridViewSetting>> TroubleDataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -186,7 +190,6 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ常時送信用データをリクエスト
         /// </summary>
-        /// <param name="constantDataToServer"></param>
         /// <returns></returns>
         public async Task SendConstantDataRequestToServerAsync()
         {
@@ -216,11 +219,11 @@ namespace TatehamaCommanderTable.Communications
                                 }
                             }
                         }
-                        // DataGridView設定リストデータを作成
-                        var dataGridViewList = new SortableBindingList<DataGridViewSetting>();
+                        // TrackCircuitDataGridView設定リストデータを作成
+                        var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
                         foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuitDataList)
                         {
-                            dataGridViewList.Add(new DataGridViewSetting
+                            trackCircuitDataGridViewList.Add(new TrackCircuitDataGridViewSetting
                             {
                                 trackCircuit = trackCircuit.Name,
                                 trainNumber = trackCircuit.Last,
@@ -228,10 +231,24 @@ namespace TatehamaCommanderTable.Communications
                                 lockingStatus = trackCircuit.Lock ? "〇" : ""
                             });
                         }
-                        // DataGridView設定リストデータを更新
-                        _dataManager.DataGridViewSettingList = dataGridViewList;
-                        // DataGridView変更通知イベントを発火
-                        OnDataGridViewUpdated(dataGridViewList);
+                        _dataManager.TrackCircuitDataGridViewSettingList = trackCircuitDataGridViewList;
+                        OnTrackCircuitDataGridViewUpdated(trackCircuitDataGridViewList);
+
+                        // TroubleDataGridView設定リストデータを作成
+                        var troubleDataGridViewList = new SortableBindingList<TroubleDataGridViewSetting>();
+                        foreach (var trouble in _dataManager.DataFromServer.TroubleDataList)
+                        {
+                            troubleDataGridViewList.Add(new TroubleDataGridViewSetting
+                            {
+                                troubleType = TroubleDataConverter.ConversionTroubleType(trouble.TroubleType),
+                                placeType = TroubleDataConverter.ConversionPlaceType(trouble.PlaceType),
+                                placeName = trouble.PlaceName,
+                                occuredAt = trouble.OccuredAt.ToString("yyyy/MM/dd HH:mm:ss"),
+                                additionalData = trouble.AdditionalData
+                            });
+                        }
+                        _dataManager.TroubleDataGridViewSettingList = troubleDataGridViewList;
+                        OnTroubleDataGridViewUpdated(troubleDataGridViewList);
 
                         // 運転告知器リストデータを更新
                         lock (_dataManager.OperationNotificationDataList)
@@ -258,14 +275,14 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ運転支障イベント送信用データをリクエスト
         /// </summary>
-        /// <param name="troubleEventDataToServer"></param>
+        /// <param name="troubleData"></param>
         /// <returns></returns>
         public async Task SendTroubleEventDataRequestToServerAsync(TroubleData troubleData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendTroubleData", troubleData);
+                await _connection.InvokeAsync("SendTroubleData", troubleData);
             }
             catch (Exception exception)
             {
@@ -276,14 +293,14 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ運転告知器イベント送信用データをリクエスト
         /// </summary>
-        /// <param name="operationNotificationEventDataToServer"></param>
+        /// <param name="operationNotificationData"></param>
         /// <returns></returns>
         public async Task SendOperationNotificationDataRequestToServer(OperationNotificationData operationNotificationData) 
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendOperationNotificationData", operationNotificationData);
+                await _connection.InvokeAsync("SendOperationNotificationData", operationNotificationData);
             }
             catch (Exception exception)
             {
@@ -294,14 +311,14 @@ namespace TatehamaCommanderTable.Communications
         /// <summary>
         /// サーバーへ軌道回路イベント送信用データをリクエスト
         /// </summary>
-        /// <param name="trackCircuitEventDataToServer"></param>
+        /// <param name="trackCircuitData"></param>
         /// <returns></returns>
         public async Task SendTrackCircuitEventDataRequestToServerAsync(TrackCircuitData trackCircuitData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("SendTrackCircuitData", trackCircuitData);
+                await _connection.InvokeAsync("SendTrackCircuitData", trackCircuitData);
             }
             catch (Exception exception)
             {
@@ -319,7 +336,7 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync<string>("DeleteTrain", trainName);
+                await _connection.InvokeAsync("DeleteTrain", trainName);
             }
             catch (Exception exception)
             {
@@ -328,12 +345,21 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
-        /// DataGridView更新通知イベント
+        /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
-        protected virtual void OnDataGridViewUpdated(SortableBindingList<DataGridViewSetting> list)
+        protected virtual void OnTrackCircuitDataGridViewUpdated(SortableBindingList<TrackCircuitDataGridViewSetting> list)
         {
-            DataGridViewUpdated?.Invoke(list);
+            TrackCircuitDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// TroubleDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnTroubleDataGridViewUpdated(SortableBindingList<TroubleDataGridViewSetting> list)
+        {
+            TroubleDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>

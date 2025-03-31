@@ -13,7 +13,6 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
-        public event Action UpdateTrackCircuitData;
 
         /// <summary>
         /// コンストラクタ
@@ -40,11 +39,11 @@ namespace TatehamaCommanderTable
         private void TrackCircuitForm_Load(object sender, EventArgs e)
         {
             // イベントハンドラ設定
-            _serverCommunication.DataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
+            _serverCommunication.TrackCircuitDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
             TrackCircuit_DataGridView_TrackCircuitData.CellClick += DataGridView_TrackCircuitData_CellClick;
 
             // DataGridViewのデータバインド
-            TrackCircuit_BindingSource.DataSource = _dataManager.DataGridViewSettingList;
+            TrackCircuit_BindingSource.DataSource = _dataManager.TrackCircuitDataGridViewSettingList;
 
             // DataGridViewの設定
             SetupDataGridView();
@@ -123,7 +122,7 @@ namespace TatehamaCommanderTable
         /// DataGridView更新処理
         /// </summary>
         /// <param name="newDataSource"></param>
-        public void UpdateDataSource(SortableBindingList<DataGridViewSetting> newDataSource)
+        public void UpdateDataSource(SortableBindingList<TrackCircuitDataGridViewSetting> newDataSource)
         {
             try
             {

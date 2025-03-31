@@ -1,11 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace TatehamaCommanderTable.Models
 {
     /// <summary>
-    /// DataGridView設定クラス
+    /// TrackCircuitDataGridView設定クラス
     /// </summary>
-    public class DataGridViewSetting
+    public class TrackCircuitDataGridViewSetting
     {
         /// <summary>
         /// 軌道回路
@@ -27,5 +28,37 @@ namespace TatehamaCommanderTable.Models
         /// </summary>
         [DisplayName("鎖錠状態")]
         public string lockingStatus { get; set; } = "";
+    }
+
+    /// <summary>
+    /// TroubleDataGridView設定クラス
+    /// </summary>
+    public class TroubleDataGridViewSetting
+    {
+        /// <summary>
+        /// 支障
+        /// </summary>
+        [DisplayName("支障")]
+        public string troubleType { get; set; } = "";
+        /// <summary>
+        /// 分類
+        /// </summary>
+        [DisplayName("分類")]
+        public string placeType { get; set; } = "";
+        /// <summary>
+        /// 場所名称  
+        /// </summary>
+        [DisplayName("場所名称")]
+        public string placeName { get; set; } = "";
+        /// <summary>
+        /// 発生時刻
+        /// </summary>
+        [DisplayName("発生時刻")]
+        public string occuredAt { get; set; } = "";
+        /// <summary>
+        /// 補足情報
+        /// </summary>
+        [DisplayName("補足情報")]
+        public string additionalData { get; set; } = "";
     }
 }
