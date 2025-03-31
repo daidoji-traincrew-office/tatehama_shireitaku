@@ -468,15 +468,15 @@ namespace TatehamaCommanderTable
                         break;
                     // 顛末書
                     case OperationNotificationType.Tenmatsusho:
-                        if (data.DisplayName == "MC")
+                        if (data.Content == "MC")
                         {
                             DisplayImageByPos(data.DisplayName, 1, 86);
                         }
-                        else if (data.DisplayName == "M")
+                        else if (data.Content == "M")
                         {
                             DisplayImageByPos(data.DisplayName, 1, 103);
                         }
-                        else if (data.DisplayName == "C")
+                        else if (data.Content == "C")
                         {
                             DisplayImageByPos(data.DisplayName, 1, 120);
                         }
