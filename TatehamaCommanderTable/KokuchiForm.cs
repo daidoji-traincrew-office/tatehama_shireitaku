@@ -538,7 +538,8 @@ namespace TatehamaCommanderTable
                     g.DrawImage(S2, 18, 0, S2.Width, S2.Height);
                     g.DrawImage(S1, 24, 0, S1.Width, S1.Height);
                 }
-                var control = Controls.Find(name, true).FirstOrDefault();
+                var controlName = _dataManager.StationSettingList.FirstOrDefault(s => s.PlatformName == name).ControlName;
+                var control = Controls.Find(controlName, true).FirstOrDefault();
                 control.BackgroundImage = De;
             }
             else
