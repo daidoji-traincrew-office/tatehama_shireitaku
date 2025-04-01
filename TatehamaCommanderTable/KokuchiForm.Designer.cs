@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KokuchiForm));
             Kokuchi_BackImage = new System.Windows.Forms.PictureBox();
             Kokuchi_ComboBox_SelectPlatform = new System.Windows.Forms.ComboBox();
             Kokuchi_Label_KokuchiSelect = new System.Windows.Forms.Label();
@@ -925,6 +926,7 @@
             Controls.Add(Kokuchi_BackImage);
             Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             MaximizeBox = false;
             Name = "KokuchiForm";

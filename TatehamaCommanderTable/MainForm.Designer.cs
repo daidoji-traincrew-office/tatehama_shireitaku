@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             Label_ServerConectionState = new System.Windows.Forms.Label();
             Button_Select_Kokuchi = new System.Windows.Forms.Button();
             Button_Select_Accident = new System.Windows.Forms.Button();
@@ -126,6 +127,7 @@
             Controls.Add(Label_ServerConectionState);
             Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             MaximizeBox = false;
             Name = "MainForm";

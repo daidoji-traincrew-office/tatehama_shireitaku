@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TroubleForm));
             Trouble_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             Trouble_GroupBox_Setting = new System.Windows.Forms.GroupBox();
             Trouble_RadioButton_Tokuhatsu = new System.Windows.Forms.RadioButton();
@@ -221,6 +222,7 @@
             Controls.Add(Trouble_CheckBox_TopMost);
             Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             MaximizeBox = false;
             Name = "TroubleForm";
