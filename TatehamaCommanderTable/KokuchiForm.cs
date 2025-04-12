@@ -139,8 +139,10 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                // 選択されている駅番線を取得
-                var platformName = Kokuchi_ComboBox_SelectPlatform.SelectedItem.ToString();
+                // 右クリックしたコントロールのNameを取得
+                string controlName = ctrl.Name;
+                // 駅番線名を取得
+                var platformName = _dataManager.StationSettingList.FirstOrDefault(s => s.ControlName == controlName).PlatformName;
 
                 if (!string.IsNullOrEmpty(platformName))
                 {
@@ -155,12 +157,6 @@ namespace TatehamaCommanderTable
                         case "解除":
                             result = new OperationNotificationData(platformName, OperationNotificationType.Kaijo, "", DateTime.Now);
                             break;
-                        case "通知":
-                            result = new OperationNotificationData(platformName, OperationNotificationType.Tsuuchi, "", DateTime.Now);
-                            break;
-                        case "通知解除":
-                            result = new OperationNotificationData(platformName, OperationNotificationType.TsuuchiKaijo, "", DateTime.Now);
-                            break;
                         case "取消":
                             result = new OperationNotificationData(platformName, OperationNotificationType.Torikeshi, "", DateTime.Now);
                             break;
@@ -172,7 +168,7 @@ namespace TatehamaCommanderTable
                     // サーバーにデータ送信
                     _serverCommunication.SendOperationNotificationDataRequestToServer(result);
 
-                    //CustomMessage.Show($"Name: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
+                    //CustomMessage.Show($"Control Name: {controlName}\nName: {platformName}\nType: {result.Type}\nCont: {result.Content}\nTime: {result.OperatedAt}", "設定完了");
                 }
             }
             catch (Exception ex)
