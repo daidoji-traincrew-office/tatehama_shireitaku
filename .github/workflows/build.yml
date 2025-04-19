@@ -88,11 +88,13 @@ jobs:
             -p:PublishSingleFile=true \
             -p:EnableWindowsTargeting=true \
             --self-contained ${{ matrix.standalone }}
+      - name: Copy Necessary Files
+        run: |
+          cp -r ./exe/Image ./out/
+          cp -r ./exe/TSV ./out/
       - name: Zip binaries
         run: |
           cd out
-          cp -r ../exe/Image ./
-          cp -r ../exe/Sound ./
           zip -r ../${{ env.ZIP_FILE_NAME }} .
       - name: Upload Artifact
         uses: actions/upload-artifact@v4.6.2
