@@ -43,11 +43,4 @@
       <LastGenOutput>KokuchiResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <None Update="..\exe\Image" CopyToPublishDirectory="PreserveNewest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="..\exe\TSV" CopyToPublishDirectory="PreserveNewest" />
-  </ItemGroup>
-
 </Project>
