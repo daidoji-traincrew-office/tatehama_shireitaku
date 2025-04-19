@@ -362,6 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /TatehamaCommanderTable/Manager/ServerAddress.cs
+/TatehamaCommanderTable/ServerAddress.cs
 /exe/runtimes/browser/lib/net8.0
 /exe/runtimes/browser-wasm/nativeassets/net8.0
 /exe/runtimes/linux-arm/native
