@@ -22,30 +22,30 @@ namespace TatehamaCommanderTable
         private readonly Timer _mainTimer;
 
         /// <summary>
-        /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         /// </summary>
         public MainForm(OpenIddictClientService openIddictClientService, ServerCommunication serverCommunication)
         {
             InitializeComponent();
 
-            // ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+            // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
             _serverCommunication = serverCommunication;
             _dataManager = DataManager.Instance;
 
-            // ‰wİ’èƒf[ƒ^‚ğƒŠƒXƒg‚ÉŠi”[
+            // é§…è¨­å®šãƒ‡ãƒ¼ã‚¿ã‚’ãƒªã‚¹ãƒˆã«æ ¼ç´
             var tsvFolderPath = "TSV";
             _dataManager.StationSettingList = StationSettingLoader.LoadSettings(tsvFolderPath, "StationSettingList.tsv");
 
-            // Form¶¬
+            // Formç”Ÿæˆ
             _kokuchiForm = new KokuchiForm(serverCommunication);
             _accidentForm = new TroubleForm(serverCommunication);
             _trackCircuitForm = new TrackCircuitForm(serverCommunication);
 
-            // ƒCƒxƒ“ƒgİ’è
+            // ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
             Load += MainForm_Load;
             FormClosing += MainForm_FormClosing;
 
-            // Timerİ’è
+            // Timerè¨­å®š
             _mainTimer = new();
             _mainTimer.Interval = 100;
             _mainTimer.Tick += MainTimer_Tick;
@@ -53,35 +53,35 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// MainForm_LoadƒCƒxƒ“ƒg
+        /// MainForm_Loadã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void MainForm_Load(object sender, EventArgs e)
         {
-            // ƒ†[ƒU[”FØE‰Šú‰»
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼èªè¨¼ãƒ»åˆæœŸåŒ–
             await _serverCommunication.AuthenticateAsync();
         }
 
         /// <summary>
-        /// MainForm_FormClosingƒCƒxƒ“ƒg
+        /// MainForm_FormClosingã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // •Â‚¶‚éŠm”Fƒ_ƒCƒAƒƒO‚Ìˆ—
+            // é–‰ã˜ã‚‹ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®å‡¦ç†
             if (!ConfirmClose())
             {
                 e.Cancel = true;
                 return;
             }
-            // ƒT[ƒo[Ø’f
+            // ã‚µãƒ¼ãƒãƒ¼åˆ‡æ–­
             await _serverCommunication.DisconnectAsync();
         }
 
         /// <summary>
-        /// Å‘O–Ê•\¦Ø‘ÖƒCƒxƒ“ƒg
+        /// æœ€å‰é¢è¡¨ç¤ºåˆ‡æ›¿ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -91,7 +91,7 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// ButtonƒNƒŠƒbƒNƒCƒxƒ“ƒg
+        /// Buttonã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -101,7 +101,7 @@ namespace TatehamaCommanderTable
             {
                 switch (button.Name)
                 {
-                    // ‰^“]’mŠí
+                    // é‹è»¢å‘ŠçŸ¥å™¨
                     case "Button_Select_Kokuchi":
                         {
                             if (_kokuchiForm.IsDisposed)
@@ -111,7 +111,7 @@ namespace TatehamaCommanderTable
                             _kokuchiForm.Show();
                         }
                         break;
-                    // ‰^“]xá
+                    // é‹è»¢æ”¯éšœ
                     case "Button_Select_Accident":
                         {
                             if (_accidentForm.IsDisposed)
@@ -121,7 +121,7 @@ namespace TatehamaCommanderTable
                             _accidentForm.Show();
                         }
                         break;
-                    // ‹O“¹‰ñ˜H
+                    // è»Œé“å›è·¯
                     case "Button_Select_TrackCircuit":
                         {
                             if (_trackCircuitForm.IsDisposed)
@@ -138,44 +138,44 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// MainTimer_TickƒCƒxƒ“ƒg
+        /// MainTimer_Tickã‚¤ãƒ™ãƒ³ãƒˆ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            // ƒT[ƒo[Ú‘±ó‘Ô‚Ì•\¦‚ğXV
+            // ã‚µãƒ¼ãƒãƒ¼æ¥ç¶šçŠ¶æ…‹ã®è¡¨ç¤ºã‚’æ›´æ–°
             UpdateServerConnectionState();
         }
 
         /// <summary>
-        /// ƒT[ƒo[Ú‘±ó‘Ô‚Ì•\¦‚ğXV
+        /// ã‚µãƒ¼ãƒãƒ¼æ¥ç¶šçŠ¶æ…‹ã®è¡¨ç¤ºã‚’æ›´æ–°
         /// </summary>
         private void UpdateServerConnectionState()
         {
-            // ƒT[ƒo[Ú‘±ó‘Ô‚Ì•\¦‚ğXV
-            if (_dataManager.ServerConnected && (Label_ServerConectionState.Text != "ƒIƒ“ƒ‰ƒCƒ“"))
+            // ã‚µãƒ¼ãƒãƒ¼æ¥ç¶šçŠ¶æ…‹ã®è¡¨ç¤ºã‚’æ›´æ–°
+            if (_dataManager.ServerConnected && (Label_ServerConectionState.Text != "ã‚ªãƒ³ãƒ©ã‚¤ãƒ³"))
             {
-                Label_ServerConectionState.Text = "ƒIƒ“ƒ‰ƒCƒ“";
+                Label_ServerConectionState.Text = "ã‚ªãƒ³ãƒ©ã‚¤ãƒ³";
                 Label_ServerConectionState.ForeColor = ColorTranslator.FromHtml("#FF000000");
                 Label_ServerConectionState.BackColor = ColorTranslator.FromHtml("#FF67FF4C");
             }
-            else if (!_dataManager.ServerConnected && (Label_ServerConectionState.Text != "ƒIƒtƒ‰ƒCƒ“"))
+            else if (!_dataManager.ServerConnected && (Label_ServerConectionState.Text != "ã‚ªãƒ•ãƒ©ã‚¤ãƒ³"))
             {
-                Label_ServerConectionState.Text = "ƒIƒtƒ‰ƒCƒ“";
+                Label_ServerConectionState.Text = "ã‚ªãƒ•ãƒ©ã‚¤ãƒ³";
                 Label_ServerConectionState.ForeColor = ColorTranslator.FromHtml("#FF888888");
                 Label_ServerConectionState.BackColor = ColorTranslator.FromHtml("#FF555555");
             }
         }
 
         /// <summary>
-        /// ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚éÛ‚ÌŠm”Fˆ—
+        /// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹éš›ã®ç¢ºèªå‡¦ç†
         /// </summary>
-        /// <returns>ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚Ä—Ç‚¢ê‡‚ÍtrueA‚»‚êˆÈŠO‚Ífalse</returns>
+        /// <returns>ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¦è‰¯ã„å ´åˆã¯trueã€ãã‚Œä»¥å¤–ã¯false</returns>
         public bool ConfirmClose()
         {
-            var result = CustomMessage.Show("‘S‚Ä‚Ìi—ß‘ì‰æ–Ê‚ğ•Â‚¶‚Ü‚·B‚æ‚ë‚µ‚¢‚Å‚·‚©H",
-                "I—¹Šm”F",
+            var result = CustomMessage.Show("å…¨ã¦ã®å¸ä»¤å“ç”»é¢ã‚’é–‰ã˜ã¾ã™ã€‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ",
+                "çµ‚äº†ç¢ºèª",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -184,7 +184,7 @@ namespace TatehamaCommanderTable
                 return false;
             }
 
-            // ƒ^ƒCƒ}[’â~
+            // ã‚¿ã‚¤ãƒãƒ¼åœæ­¢
             _mainTimer.Stop();
 
             return true;
