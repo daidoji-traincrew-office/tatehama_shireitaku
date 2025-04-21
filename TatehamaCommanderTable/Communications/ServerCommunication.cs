@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR.Client;
 using OpenIddict.Abstractions;
 using OpenIddict.Client;
 using System;
