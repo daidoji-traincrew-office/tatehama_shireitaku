@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TatehamaCommanderTable.Models;
 
 namespace TatehamaCommanderTable.Manager
