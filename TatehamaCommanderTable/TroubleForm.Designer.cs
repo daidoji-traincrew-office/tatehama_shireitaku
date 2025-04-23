@@ -37,14 +37,14 @@
             Trouble_Label_TokuhatsuSelect = new System.Windows.Forms.Label();
             Trouble_Label_SettingList = new System.Windows.Forms.Label();
             Trouble_DataGridView_TroubleData = new System.Windows.Forms.DataGridView();
+            Trouble_BindingSource = new System.Windows.Forms.BindingSource(components);
+            Trouble_Button_Set = new System.Windows.Forms.Button();
+            Trouble_Button_Cansel = new System.Windows.Forms.Button();
             troubleType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             placeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             placeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             occuredAt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             additionalData = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Trouble_BindingSource = new System.Windows.Forms.BindingSource(components);
-            Trouble_Button_Set = new System.Windows.Forms.Button();
-            Trouble_Button_Cansel = new System.Windows.Forms.Button();
             Trouble_GroupBox_Setting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Trouble_DataGridView_TroubleData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Trouble_BindingSource).BeginInit();
@@ -147,31 +147,6 @@
             Trouble_DataGridView_TroubleData.Size = new System.Drawing.Size(760, 244);
             Trouble_DataGridView_TroubleData.TabIndex = 16;
             // 
-            // troubleType
-            // 
-            troubleType.HeaderText = "支障";
-            troubleType.Name = "troubleType";
-            // 
-            // placeType
-            // 
-            placeType.HeaderText = "分類";
-            placeType.Name = "placeType";
-            // 
-            // placeName
-            // 
-            placeName.HeaderText = "場所名称";
-            placeName.Name = "placeName";
-            // 
-            // occuredAt
-            // 
-            occuredAt.HeaderText = "発生時刻";
-            occuredAt.Name = "occuredAt";
-            // 
-            // additionalData
-            // 
-            additionalData.HeaderText = "補足情報";
-            additionalData.Name = "additionalData";
-            // 
             // Trouble_Button_Set
             // 
             Trouble_Button_Set.BackColor = System.Drawing.Color.Lime;
@@ -205,6 +180,45 @@
             Trouble_Button_Cansel.Text = "削除";
             Trouble_Button_Cansel.UseVisualStyleBackColor = false;
             Trouble_Button_Cansel.Click += Trouble_Button_Click;
+            // 
+            // troubleType
+            // 
+            troubleType.HeaderText = "支障";
+            troubleType.MaxInputLength = 20;
+            troubleType.Name = "troubleType";
+            troubleType.ReadOnly = true;
+            troubleType.Width = 200;
+            // 
+            // placeType
+            // 
+            placeType.HeaderText = "分類";
+            placeType.MaxInputLength = 20;
+            placeType.Name = "placeType";
+            placeType.ReadOnly = true;
+            // 
+            // placeName
+            // 
+            placeName.HeaderText = "場所名称";
+            placeName.MaxInputLength = 20;
+            placeName.Name = "placeName";
+            placeName.ReadOnly = true;
+            placeName.Width = 150;
+            // 
+            // occuredAt
+            // 
+            occuredAt.HeaderText = "発生時刻";
+            occuredAt.MaxInputLength = 20;
+            occuredAt.Name = "occuredAt";
+            occuredAt.ReadOnly = true;
+            occuredAt.Width = 140;
+            // 
+            // additionalData
+            // 
+            additionalData.HeaderText = "補足情報";
+            additionalData.MaxInputLength = 20;
+            additionalData.Name = "additionalData";
+            additionalData.ReadOnly = true;
+            additionalData.Width = 150;
             // 
             // TroubleForm
             // 
