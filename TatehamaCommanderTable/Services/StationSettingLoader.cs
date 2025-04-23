@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using TatehamaCommanderTable.Helpers;
 using TatehamaCommanderTable.Models;
 
 namespace TatehamaCommanderTable.Services
@@ -21,15 +22,17 @@ namespace TatehamaCommanderTable.Services
         {
             try
             {
-                // EncodingProviderを登録
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
                 // ファイルパスを組み立てる
                 string filePath = Path.Combine(folderPath, fileName);
 
                 var Settings = new List<StationSetting>();
                 bool header = false;
-                foreach (var line in File.ReadAllLines(filePath, Encoding.GetEncoding("shift_jis")))
+
+                // ファイルのエンコーディングを判別
+                Encoding fileEncoding = DataHelper.ReadFileWithEncodingDetection(filePath);
+                string[] lines = File.ReadAllLines(filePath, fileEncoding);
+
+                foreach (var line in lines)
                 {
                     // ヘッダー行はスキップ
                     if (!header)
