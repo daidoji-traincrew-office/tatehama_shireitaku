@@ -11,6 +11,7 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
+using TatehamaATS_v1;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -77,6 +78,11 @@ namespace TatehamaCommanderTable.Communications
         /// <returns></returns>
         public async Task AuthenticateAsync()
         {
+            if (ServerAddress.IsDebug)
+            {
+                InitializeConnection();
+                return;
+            }
             try
             {
                 using var source = new CancellationTokenSource(TimeSpan.FromSeconds(90));
@@ -295,7 +301,7 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationNotificationData"></param>
         /// <returns></returns>
-        public async Task SendOperationNotificationDataRequestToServer(OperationNotificationData operationNotificationData) 
+        public async Task SendOperationNotificationDataRequestToServer(OperationNotificationData operationNotificationData)
         {
             try
             {
