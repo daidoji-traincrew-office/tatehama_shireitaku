@@ -383,3 +383,4 @@ FodyWeavers.xsd
 /exe/runtimes/osx-x64/native
 /exe/runtimes/win-arm/native
 /exe/runtimes/win-arm64/native
+/TatehamaCommanderTable/ServerAddress.cs
