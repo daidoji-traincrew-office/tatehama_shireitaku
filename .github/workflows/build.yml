@@ -57,9 +57,8 @@ jobs:
     needs: calc_version
     strategy:
       matrix:
-        standalone: [ true, false ]
-        # 接続先をProdにしたバージョンを作成する場合は、リストにfalseを追加する
-        dev: [ true ]
+        standalone: [ false, true ]
+        dev: [ false, true ]
     steps:
       - name: Set Zip File Name
         # ZIP_FILE_NAMEは、ビルドしたアプリケーションのファイル名を指定するための環境変数。ソフトによって変えると良さげ
@@ -75,7 +74,7 @@ jobs:
           else
             SERVER_ADDRESS=${{ secrets.SERVER_ADDRESS }}
           fi
-          echo "namespace ${{ env.NAMESPACE }}; public static class ServerAddress { public const string SignalAddress = \"${SERVER_ADDRESS}\"; }" > ./TatehamaCommanderTable/ServerAddress.cs
+          echo "namespace ${{ env.NAMESPACE }}; public static class ServerAddress { public const string SignalAddress = \"${SERVER_ADDRESS}\"; public static bool IsDebug = false; }" > ./TatehamaCommanderTable/ServerAddress.cs
       - name: Setup dotnet 8.0.x
         uses: actions/setup-dotnet@v4.3.1
         with:
