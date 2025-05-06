@@ -11,7 +11,6 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
-using TatehamaATS_v1;
 
 namespace TatehamaCommanderTable.Communications
 {
