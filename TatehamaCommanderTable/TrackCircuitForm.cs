@@ -82,7 +82,7 @@ namespace TatehamaCommanderTable
             Button button = sender as Button;
 
             // 正規表現パターンの定義
-            var pattern = @"^([回試臨]?)([0-9]{0,4})(A|B|C|K|X|AX|BX|CX|KX)?$";
+            var pattern = @"^([回試臨]?)([0-9]{0,4})(A|B|C|K|X|Y|Z|AX|BX|CX|KX|AY|BY|CY|KY|AZ|BZ|CZ|KZ)?$";
 
             switch (button.Name)
             {
