@@ -283,7 +283,7 @@ namespace TatehamaCommanderTable
                             case OperationNotificationType.Shuppatsu:
                             case OperationNotificationType.ShuppatsuJikoku:
                             case OperationNotificationType.Torikeshi:
-                                //点滅なし
+                                //点滅しないやつ
                                 SetLED(item);
                                 break;
                             case OperationNotificationType.Yokushi:
@@ -291,56 +291,68 @@ namespace TatehamaCommanderTable
                                 //1000+500点滅
                                 if (DeltaTime % 1500 < 1000)
                                 {
-                                    SetLED(item);
+                                    SetLED(item, 0);
                                 }
                                 else
                                 {
-                                    DisplayImageByPos(item.DisplayName, 50, 171);
+                                    SetLED(item, 1);
                                 }
                                 break;
                             case OperationNotificationType.TsuuchiKaijo:
                                 if (DeltaTime < 5 * 1000)
                                 {
-                                    //500+250点滅     
+                                    //500+250点滅    
                                     if (DeltaTime % 750 < 500)
                                     {
-                                        SetLED(item);
+                                        SetLED(item, 0);
                                     }
                                     else
                                     {
-                                        DisplayImageByPos(item.DisplayName, 50, 171);
+                                        SetLED(item, 1);
                                     }
                                 }
                                 else if (DeltaTime < 20 * 1000)
                                 {
-                                    //250+250点滅     
+                                    //250+250点滅      
                                     if (DeltaTime % 500 < 250)
                                     {
-                                        SetLED(item);
+                                        SetLED(item, 0);
                                     }
                                     else
                                     {
-                                        DisplayImageByPos(item.DisplayName, 50, 171);
+                                        SetLED(item, 1);
                                     }
                                 }
                                 else
                                 {
-                                    DisplayImageByPos(item.DisplayName, 50, 171);
+                                    SetLED(item, 1);
                                 }
                                 break;
                             case OperationNotificationType.Tenmatsusho:
+                                //1500+500点滅      
                                 if (DeltaTime % 2000 < 1500)
                                 {
-                                    //1500+500点滅   
-                                    SetLED(item);
+                                    SetLED(item, 0);
                                 }
                                 else
                                 {
-                                    DisplayImageByPos(item.DisplayName, 50, 171);
+                                    SetLED(item, 1);
+                                }
+                                break;
+                            case OperationNotificationType.Other:
+                            case OperationNotificationType.Class:
+                                //1000+1000点滅               
+                                if (DeltaTime % 2000 < 1000)
+                                {
+                                    SetLED(item, 0);
+                                }
+                                else
+                                {
+                                    SetLED(item, 1);
                                 }
                                 break;
                             default:
-                                DisplayImageByPos(item.DisplayName, 50, 171);
+                                DisplayImageByPos(item.DisplayName, 1, 222);
                                 break;
                         }
                     }
@@ -435,67 +447,159 @@ namespace TatehamaCommanderTable
         /// <summary>
         /// 運転告知器LEDデータを反映
         /// </summary>
-        private void SetLED(OperationNotificationData data)
+        private void SetLED(OperationNotificationData data, int index = 0)
         {
             try
             {
                 switch (data.Type)
                 {
-                    // 無表示
                     case OperationNotificationType.None:
-                        DisplayImageByPos(data.DisplayName, 1, 1);
+                        DisplayImageByPosNum(data.DisplayName, 0, 0);
                         break;
-                    // 抑止
                     case OperationNotificationType.Yokushi:
-                        DisplayImageByPos(data.DisplayName, 1, 18);
+                        DisplayImageByPosNum(data.DisplayName, 0, 1);
                         break;
-                    // 通知・通知解除
                     case OperationNotificationType.Tsuuchi:
                     case OperationNotificationType.TsuuchiKaijo:
-                        DisplayImageByPos(data.DisplayName, 1, 35);
+                        if (index == 1)
+                        {
+                            DisplayImageByPosNum(data.DisplayName, 2, 15);
+                            break;
+                        }
+                        DisplayImageByPosNum(data.DisplayName, 0, 2);
                         break;
-                    // 出発
                     case OperationNotificationType.Shuppatsu:
-                        DisplayImageByPos(data.DisplayName, 1, 52);
+                        DisplayImageByPosNum(data.DisplayName, 0, 3);
                         break;
-                    // 解除
                     case OperationNotificationType.Kaijo:
-                        DisplayImageByPos(data.DisplayName, 1, 69);
+                        DisplayImageByPosNum(data.DisplayName, 0, 4);
                         break;
-                    // 顛末書
-                    case OperationNotificationType.Tenmatsusho:
-                        if (data.Content == "MC")
-                        {
-                            DisplayImageByPos(data.DisplayName, 1, 86);
-                        }
-                        else if (data.Content == "M")
-                        {
-                            DisplayImageByPos(data.DisplayName, 1, 103);
-                        }
-                        else if (data.Content == "C")
-                        {
-                            DisplayImageByPos(data.DisplayName, 1, 120);
-                        }
-                        break;
-                    // 取消
                     case OperationNotificationType.Torikeshi:
-                        DisplayImageByPos(data.DisplayName, 1, 137);
+                        DisplayImageByPosNum(data.DisplayName, 0, 5);
                         break;
-                    // 出発時刻
+                    case OperationNotificationType.Tenmatsusho:
+                        if (index == 1)
+                        {
+                            DisplayImageByPosNum(data.DisplayName, 2, 15);
+                            break;
+                        }
+                        switch (data.Content)
+                        {
+                            case "MC":
+                                DisplayImageByPosNum(data.DisplayName, 2, 1);
+                                break;
+                            case "M":
+                                DisplayImageByPosNum(data.DisplayName, 2, 2);
+                                break;
+                            case "C":
+                                DisplayImageByPosNum(data.DisplayName, 2, 3);
+                                break;
+                            case "S":
+                                DisplayImageByPosNum(data.DisplayName, 2, 4);
+                                break;
+                            case "A":
+                                DisplayImageByPosNum(data.DisplayName, 2, 5);
+                                break;
+                            default:
+                                DisplayImageByPosNum(data.DisplayName, 2, 0);
+                                break;
+                        }
+                        break;
+                    case OperationNotificationType.Other:
+                        switch (data.Content)
+                        {
+                            case "Irekae":
+                                DisplayImageByPosNum(data.DisplayName, 0, 8);
+                                break;
+                            case "Orikaeshi":
+                                if (index == 1)
+                                {
+                                    DisplayImageByPosNum(data.DisplayName, 2, 15);
+                                    break;
+                                }
+                                DisplayImageByPosNum(data.DisplayName, 0, 9);
+                                break;
+                            case "Apology":
+                                if (index == 1)
+                                {
+                                    DisplayImageByPosNum(data.DisplayName, 1, 11);
+                                    break;
+                                }
+                                DisplayImageByPosNum(data.DisplayName, 0, 11);
+                                break;
+                            default:
+                                DisplayImageByPosNum(data.DisplayName, 0, 7);
+                                break;
+                        }
+                        break;
+                    case OperationNotificationType.Class:
+                        if (index == 1)
+                        {
+                            DisplayImageByPosNum(data.DisplayName, 0, 11);
+                            break;
+                        }
+                        switch (data.Content)
+                        {
+                            case "Local":
+                                DisplayImageByPosNum(data.DisplayName, 3, 0);
+                                break;
+                            case "SemiExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 1);
+                                break;
+                            case "Exp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 2);
+                                break;
+                            case "RapExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 3);
+                                break;
+                            case "SecExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 4);
+                                break;
+                            case "LtdExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 5);
+                                break;
+                            case "NiS":
+                                DisplayImageByPosNum(data.DisplayName, 3, 6);
+                                break;
+                            case "Po":
+                                DisplayImageByPosNum(data.DisplayName, 3, 7);
+                                break;
+                            case "DanExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 8);
+                                break;
+                            case "DanRapExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 9);
+                                break;
+                            case "DanLtdExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 10);
+                                break;
+                            case "FucExp":
+                                DisplayImageByPosNum(data.DisplayName, 3, 11);
+                                break;
+                            default:
+                                DisplayImageByPosNum(data.DisplayName, 3, 12);
+                                break;
+                        }
+                        break;
                     case OperationNotificationType.ShuppatsuJikoku:
                         DisplayTimeImage(data.DisplayName, data.Content);
                         break;
-                    // その他
                     default:
-                        DisplayImageByPos(data.DisplayName, 1, 171);
+                        DisplayImageByPosNum(data.DisplayName, 0, 7);
                         break;
                 }
             }
             catch
             {
-                DisplayImageByPos(data.DisplayName, 1, 171);
+                DisplayImageByPosNum(data.DisplayName, 0, 7);
             }
         }
+
+        private void DisplayImageByPosNum(string name, int x, int y)
+        {
+            DisplayImageByPos(name, x * 49 + 1, y * 17 + 1);
+        }
+
 
         /// <summary>
         /// 座標指定で画像出す

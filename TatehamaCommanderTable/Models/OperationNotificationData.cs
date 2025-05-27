@@ -7,7 +7,7 @@ namespace TatehamaCommanderTable.Models
     /// </summary>
     public class OperationNotificationData(string displayName, OperationNotificationType type, string content, DateTime operatedAt)
     {
-        public string DisplayName { get; init; } = displayName; 
+        public string DisplayName { get; init; } = displayName;
         public OperationNotificationType Type { get; set; } = type;
         public string Content { get; set; } = content;
         public DateTime OperatedAt { get; set; } = operatedAt;
@@ -23,6 +23,8 @@ namespace TatehamaCommanderTable.Models
         Shuppatsu,
         ShuppatsuJikoku,
         Torikeshi,
+        Other,
+        Class,
         Tenmatsusho
     }
 }
