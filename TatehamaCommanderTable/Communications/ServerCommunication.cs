@@ -11,6 +11,7 @@ using System.Windows;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
+using System.Linq;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -140,7 +141,8 @@ namespace TatehamaCommanderTable.Communications
             // HubConnectionの作成
             _connection = new HubConnectionBuilder()
                 .WithUrl($"{ServerAddress.SignalAddress}/hub/{HubConnectionName}?access_token={_token}")
-                .WithAutomaticReconnect() // 自動再接続
+                .WithAutomaticReconnect(Enumerable.Range(0, 721).Select(x => TimeSpan.FromSeconds(x == 0 ? 0 : 5))
+                    .ToArray()) // 自動再接続
                 .Build();
 
             // サーバー接続
