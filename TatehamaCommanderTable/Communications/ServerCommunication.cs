@@ -275,6 +275,7 @@ namespace TatehamaCommanderTable.Communications
             }
             catch (Exception ex)
             {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", ex);
                 Debug.WriteLine($"Failed to send constant data to server: {ex.Message}");
             }
         }
@@ -293,6 +294,7 @@ namespace TatehamaCommanderTable.Communications
             }
             catch (Exception exception)
             {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
         }
@@ -311,6 +313,7 @@ namespace TatehamaCommanderTable.Communications
             }
             catch (Exception exception)
             {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
         }
@@ -329,6 +332,7 @@ namespace TatehamaCommanderTable.Communications
             }
             catch (Exception exception)
             {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
         }
@@ -347,6 +351,7 @@ namespace TatehamaCommanderTable.Communications
             }
             catch (Exception exception)
             {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
             }
         }

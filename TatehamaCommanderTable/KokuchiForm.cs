@@ -65,13 +65,19 @@ namespace TatehamaCommanderTable
                     //ToolStripMenuItem item3 = new ToolStripMenuItem("通知");
                     //ToolStripMenuItem item4 = new ToolStripMenuItem("通知解除");
                     ToolStripMenuItem item5 = new ToolStripMenuItem("取消");
-                    ToolStripMenuItem item6 = new ToolStripMenuItem("削除");
+                    ToolStripMenuItem item6 = new ToolStripMenuItem("入換");
+                    ToolStripMenuItem item7 = new ToolStripMenuItem("折返");
+                    ToolStripMenuItem item8 = new ToolStripMenuItem("謝罪");
+                    ToolStripMenuItem item9 = new ToolStripMenuItem("削除");
                     contextMenu.Items.Add(item1);
                     contextMenu.Items.Add(item2);
                     //contextMenu.Items.Add(item3);
                     //contextMenu.Items.Add(item4);
                     contextMenu.Items.Add(item5);
                     contextMenu.Items.Add(item6);
+                    contextMenu.Items.Add(item7);
+                    contextMenu.Items.Add(item8);
+                    contextMenu.Items.Add(item9);
                     ctrl.ContextMenuStrip = contextMenu;
                     item1.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                     item2.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
@@ -79,6 +85,9 @@ namespace TatehamaCommanderTable
                     //item4.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                     item5.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
                     item6.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                    item7.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                    item8.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
+                    item9.Click += (sender, e) => Kokuchi_ContextMenuStrip_Click(sender, e, ctrl);
 
                     // 駅番線名を取得
                     var platformName = _dataManager.StationSettingList.FirstOrDefault(s => s.ControlName == ctrl.Name).PlatformName;
@@ -91,6 +100,9 @@ namespace TatehamaCommanderTable
                 // 駅選択コンボボックス初期化
                 Kokuchi_ComboBox_SelectPlatform.Items.AddRange(_dataManager.StationSettingList.Select(s => s.PlatformName).ToArray());
                 Kokuchi_ComboBox_SelectPlatform.SelectedIndex = 0;
+
+                // 種別選択コンボボックス初期化
+                Kokuchi_ComboBox_SelectClass.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -120,14 +132,39 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// カスタムチェックボックス変更イベント(MC)
+        /// カスタムチェックボックス変更イベント(顛末書A)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Kokuchi_CheckBox_MC_CheckedChanged(object sender, EventArgs e)
+        private void Kokuchi_CheckBox_A_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = sender as CheckBox;
             cb.Text = cb.Checked ? "✔" : "";
+        }
+
+        /// <summary>
+        /// カスタムチェックボックス変更イベント(顛末書B)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Kokuchi_CheckBox_B_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Kokuchi_GroupBox_TenmatsushoB == null) return;
+
+            var changedCheckBox = sender as CheckBox;
+            if (changedCheckBox == null) return;
+
+            // 他のチェックボックスをすべてOFFにする
+            foreach (var ctrl in Kokuchi_GroupBox_TenmatsushoB.Controls.OfType<CheckBox>())
+            {
+                if (ctrl != changedCheckBox)
+                {
+                    ctrl.Checked = false;
+                    ctrl.Text = "";
+                }
+            }
+            changedCheckBox.Checked = true;
+            changedCheckBox.Text = "✔";
         }
 
         /// <summary>
@@ -159,6 +196,15 @@ namespace TatehamaCommanderTable
                             break;
                         case "取消":
                             result = new OperationNotificationData(platformName, OperationNotificationType.Torikeshi, "", DateTime.Now);
+                            break;
+                        case "入換":
+                            result = new OperationNotificationData(platformName, OperationNotificationType.Other, "Irekae", DateTime.Now);
+                            break;
+                        case "折返":
+                            result = new OperationNotificationData(platformName, OperationNotificationType.Other, "Orikaeshi", DateTime.Now);
+                            break;
+                        case "謝罪":
+                            result = new OperationNotificationData(platformName, OperationNotificationType.Other, "Apology", DateTime.Now);
                             break;
                         case "削除":
                             result = new OperationNotificationData(platformName, OperationNotificationType.None, "", DateTime.Now);
@@ -399,8 +445,20 @@ namespace TatehamaCommanderTable
                     case "Kokuchi_RadioButton_TsuuchiKaijo":
                         result = new OperationNotificationData(ctrlName, OperationNotificationType.TsuuchiKaijo, "", DateTime.Now);
                         break;
-                    // 顛末書
-                    case "Kokuchi_RadioButton_Tenmatsusho":
+                    // 入換
+                    case "Kokuchi_RadioButton_Irekae":
+                        result = new OperationNotificationData(ctrlName, OperationNotificationType.Other, "Irekae", DateTime.Now);
+                        break;
+                    // 折返
+                    case "Kokuchi_RadioButton_Orikaeshi":
+                        result = new OperationNotificationData(ctrlName, OperationNotificationType.Other, "Orikaeshi", DateTime.Now);
+                        break;
+                    // 謝罪
+                    case "Kokuchi_RadioButton_Apology":
+                        result = new OperationNotificationData(ctrlName, OperationNotificationType.Other, "Apology", DateTime.Now);
+                        break;
+                    // 顛末書A
+                    case "Kokuchi_RadioButton_TenmatsushoA":
                         // MまたはCどちらかが選択されているかチェック
                         if (!Kokuchi_CheckBox_M.Checked && !Kokuchi_CheckBox_C.Checked)
                         {
@@ -412,6 +470,15 @@ namespace TatehamaCommanderTable
                             var charM = Kokuchi_CheckBox_M.Checked ? "M" : "";
                             var charC = Kokuchi_CheckBox_C.Checked ? "C" : "";
                             result = new OperationNotificationData(ctrlName, OperationNotificationType.Tenmatsusho, charM + charC, DateTime.Now);
+                        }
+                        break;
+                    // 顛末書B
+                    case "Kokuchi_RadioButton_TenmatsushoB":
+                        {
+                            var charCommander = Kokuchi_CheckBox_Commander.Checked ? "S" : "";
+                            var charMaker = Kokuchi_CheckBox_Maker.Checked ? "A" : "";
+                            var charSignal = Kokuchi_CheckBox_Signal.Checked ? "G" : "";
+                            result = new OperationNotificationData(ctrlName, OperationNotificationType.Tenmatsusho, charCommander + charMaker + charSignal, DateTime.Now);
                         }
                         break;
                     // 出発・出発時刻
@@ -432,6 +499,19 @@ namespace TatehamaCommanderTable
                         {
                             CustomMessage.Show("4ケタの数字を入力してください", "設定エラー");
                             return null;
+                        }
+                        break;
+                    // 種別指定
+                    case "Kokuchi_RadioButton_Class":
+                        {
+                            var selectClass = Kokuchi_ComboBox_SelectClass.SelectedItem.ToString();
+                            var context = GetClassContext(selectClass);
+                            if (string.IsNullOrEmpty(context))
+                            {
+                                CustomMessage.Show("種別を選択してください", "設定エラー");
+                                return null;
+                            }
+                            result = new OperationNotificationData(ctrlName, OperationNotificationType.Class, context, DateTime.Now);
                         }
                         break;
                 }
@@ -500,6 +580,9 @@ namespace TatehamaCommanderTable
                             case "A":
                                 DisplayImageByPosNum(data.DisplayName, 2, 5);
                                 break;
+                            case "G":
+                                DisplayImageByPosNum(data.DisplayName, 2, 6);
+                                break;
                             default:
                                 DisplayImageByPosNum(data.DisplayName, 2, 0);
                                 break;
@@ -522,10 +605,10 @@ namespace TatehamaCommanderTable
                             case "Apology":
                                 if (index == 1)
                                 {
-                                    DisplayImageByPosNum(data.DisplayName, 1, 11);
+                                    DisplayImageByPosNum(data.DisplayName, 1, 10);
                                     break;
                                 }
-                                DisplayImageByPosNum(data.DisplayName, 0, 11);
+                                DisplayImageByPosNum(data.DisplayName, 0, 10);
                                 break;
                             default:
                                 DisplayImageByPosNum(data.DisplayName, 0, 7);
@@ -664,6 +747,31 @@ namespace TatehamaCommanderTable
                 g.DrawImage(_sourceImage, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
             }
             return croppedImage;
+        }
+
+        /// <summary>
+        /// 種別名からcontext文字列を返す
+        /// </summary>
+        /// <param name="selectClass">種別名</param>
+        /// <returns>context文字列</returns>
+        private string GetClassContext(string selectClass)
+        {
+            return selectClass switch
+            {
+                "普通" => "Local",
+                "準急" => "SemiExp",
+                "急行" => "Exp",
+                "快急" => "RapExp",
+                "区急" => "SecExp",
+                "特急" => "LtdExp",
+                "回送" => "NiS",
+                "ポ" => "Po",
+                "だんじり急行" => "DanExp",
+                "だんじり快急" => "DanRapExp",
+                "だんじり特急" => "DanLtdExp",
+                "ファッ急行" => "FucExp",
+                _ => null
+            };
         }
     }
 }
