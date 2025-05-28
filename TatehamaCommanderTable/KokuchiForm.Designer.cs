@@ -371,7 +371,7 @@
             Kokuchi_ComboBox_SelectClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             Kokuchi_ComboBox_SelectClass.Font = new System.Drawing.Font("BIZ UDゴシック", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Kokuchi_ComboBox_SelectClass.FormattingEnabled = true;
-            Kokuchi_ComboBox_SelectClass.Items.AddRange(new object[] { "普通", "準急", "急行", "快急", "区急", "特急", "回送", "ポ", "だんじり急行", "だんじり快急", "だんじり特急", "ファッ急行" });
+            Kokuchi_ComboBox_SelectClass.Items.AddRange(new object[] { "種：普通", "種：準急", "種：急行", "種：快急", "種：区急", "種：特急", "種：回送", "種：ポ", "種：だんじり急行", "種：だんじり快急", "種：だんじり特急", "種：ファッ急行", "種：回送　行：駒野", "種：回送　行：江検", "行：江検" });
             Kokuchi_ComboBox_SelectClass.Location = new System.Drawing.Point(448, 178);
             Kokuchi_ComboBox_SelectClass.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Kokuchi_ComboBox_SelectClass.Name = "Kokuchi_ComboBox_SelectClass";
@@ -458,7 +458,7 @@
             Kokuchi_RadioButton_Class.Size = new System.Drawing.Size(100, 40);
             Kokuchi_RadioButton_Class.TabIndex = 22;
             Kokuchi_RadioButton_Class.TabStop = true;
-            Kokuchi_RadioButton_Class.Text = "種別指定";
+            Kokuchi_RadioButton_Class.Text = "運行指定";
             Kokuchi_RadioButton_Class.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             Kokuchi_RadioButton_Class.UseVisualStyleBackColor = false;
             // 

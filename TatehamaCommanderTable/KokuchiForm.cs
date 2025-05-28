@@ -386,7 +386,6 @@ namespace TatehamaCommanderTable
                                 }
                                 break;
                             case OperationNotificationType.Other:
-                            case OperationNotificationType.Class:
                                 //1000+1000点滅               
                                 if (DeltaTime % 2000 < 1000)
                                 {
@@ -395,6 +394,25 @@ namespace TatehamaCommanderTable
                                 else
                                 {
                                     SetLED(item, 1);
+                                }
+                                break;
+                            case OperationNotificationType.Class:
+                                //1000+1000点滅               
+                                if (DeltaTime % 4000 < 1000)
+                                {
+                                    SetLED(item, 0);
+                                }
+                                else if (DeltaTime % 4000 < 2000)
+                                {
+                                    SetLED(item, 1);
+                                }
+                                else if (DeltaTime % 4000 < 3000)
+                                {
+                                    SetLED(item, 2);
+                                }
+                                else
+                                {
+                                    SetLED(item, 3);
                                 }
                                 break;
                             default:
@@ -616,7 +634,72 @@ namespace TatehamaCommanderTable
                         }
                         break;
                     case OperationNotificationType.Class:
-                        if (index == 1)
+                        //回送行先指定あり
+                        if (data.Content == "TH75NiS")
+                        {
+                            switch (index)
+                            {
+                                case 0:
+                                    DisplayImageByPosNum(data.DisplayName, 3, 6);
+                                    break;
+                                case 1:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 12);
+                                    break;
+                                case 2:
+                                    DisplayImageByPosNum(data.DisplayName, 1, 11);
+                                    break;
+                                case 3:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 11);
+                                    break;
+                                default:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 7);
+                                    break;
+                            }
+                            break;
+                        }
+                        if (data.Content == "TH66NiS")
+                        {
+                            switch (index)
+                            {
+                                case 0:
+                                    DisplayImageByPosNum(data.DisplayName, 3, 6);
+                                    break;
+                                case 1:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 12);
+                                    break;
+                                case 2:
+                                    DisplayImageByPosNum(data.DisplayName, 1, 12);
+                                    break;
+                                case 3:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 11);
+                                    break;
+                                default:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 7);
+                                    break;
+                            }
+                            break;
+                        }
+                        if (data.Content == "TH66")
+                        {
+                            switch (index)
+                            {
+                                case 0:
+                                case 2:
+                                    DisplayImageByPosNum(data.DisplayName, 1, 12);
+                                    break;
+                                case 1:
+                                case 3:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 12);
+                                    break;
+                                default:
+                                    DisplayImageByPosNum(data.DisplayName, 0, 7);
+                                    break;
+                            }
+                            break;
+                        }
+
+                        //通常種別指定
+                        if (index == 1 || index == 3)
                         {
                             DisplayImageByPosNum(data.DisplayName, 0, 11);
                             break;
@@ -758,18 +841,21 @@ namespace TatehamaCommanderTable
         {
             return selectClass switch
             {
-                "普通" => "Local",
-                "準急" => "SemiExp",
-                "急行" => "Exp",
-                "快急" => "RapExp",
-                "区急" => "SecExp",
-                "特急" => "LtdExp",
-                "回送" => "NiS",
-                "ポ" => "Po",
-                "だんじり急行" => "DanExp",
-                "だんじり快急" => "DanRapExp",
-                "だんじり特急" => "DanLtdExp",
-                "ファッ急行" => "FucExp",
+                "種：普通" => "Local",
+                "種：準急" => "SemiExp",
+                "種：急行" => "Exp",
+                "種：快急" => "RapExp",
+                "種：区急" => "SecExp",
+                "種：特急" => "LtdExp",
+                "種：回送" => "NiS",
+                "種：ポ" => "Po",
+                "種：だんじり急行" => "DanExp",
+                "種：だんじり快急" => "DanRapExp",
+                "種：だんじり特急" => "DanLtdExp",
+                "種：ファッ急行" => "FucExp",
+                "種：回送　行：駒野" => "TH75NiS",
+                "種：回送　行：江検" => "TH66NiS",
+                "行：江検" => "TH66",
                 _ => null
             };
         }
