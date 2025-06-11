@@ -14,10 +14,12 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
-        
+
         private KokuchiForm _kokuchiForm;
         private TroubleForm _accidentForm;
         private TrackCircuitForm _trackCircuitForm;
+        private MessageForm _messageForm;
+        private DiaForm _diaForm;
 
         private readonly Timer _mainTimer;
 
@@ -40,6 +42,8 @@ namespace TatehamaCommanderTable
             _kokuchiForm = new KokuchiForm(serverCommunication);
             _accidentForm = new TroubleForm(serverCommunication);
             _trackCircuitForm = new TrackCircuitForm(serverCommunication);
+            _messageForm = new MessageForm(serverCommunication);
+            _diaForm = new DiaForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -129,6 +133,26 @@ namespace TatehamaCommanderTable
                                 _trackCircuitForm = new TrackCircuitForm(_serverCommunication);
                             }
                             _trackCircuitForm.Show();
+                        }
+                        break;
+                    // 運行メッセージ
+                    case "Button_Select_Message":
+                        {
+                            if (_messageForm.IsDisposed)
+                            {
+                                _messageForm = new MessageForm(_serverCommunication);
+                            }
+                            _messageForm.Show();
+                        }
+                        break;
+                    // 日時ダイヤ行先
+                    case "Button_Select_Dia":
+                        {
+                            if (_diaForm.IsDisposed)
+                            {
+                                _diaForm = new DiaForm(_serverCommunication);
+                            }
+                            _diaForm.Show();
                         }
                         break;
                     default:
