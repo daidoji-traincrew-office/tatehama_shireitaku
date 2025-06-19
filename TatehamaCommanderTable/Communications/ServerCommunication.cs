@@ -12,6 +12,8 @@ using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
 using System.Linq;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -34,6 +36,10 @@ namespace TatehamaCommanderTable.Communications
         /// TroubleDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<TroubleDataGridViewSetting>> TroubleDataGridViewUpdated;
+        /// <summary>
+        /// MessageDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<MessageDataGridViewSetting>> MessageDataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -61,12 +67,13 @@ namespace TatehamaCommanderTable.Communications
         {
             while (true)
             {
-                var timer = Task.Delay(100);
+                var timer = Task.Delay(200);
                 await timer;
 
                 // サーバー接続中ならデータ送信
                 if (_dataManager.ServerConnected)
                 {
+                    await GetAllOperationInformations();
                     await SendConstantDataRequestToServerAsync();
                 }
             }
@@ -212,6 +219,7 @@ namespace TatehamaCommanderTable.Communications
                         if (_dataManager.DataFromServer == null)
                         {
                             _dataManager.DataFromServer = data;
+                            _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                         }
                         else
                         {
@@ -225,6 +233,7 @@ namespace TatehamaCommanderTable.Communications
                                     property.SetValue(_dataManager.DataFromServer, newValue);
                                 }
                             }
+                            _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
                         var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
@@ -256,6 +265,21 @@ namespace TatehamaCommanderTable.Communications
                         }
                         _dataManager.TroubleDataGridViewSettingList = troubleDataGridViewList;
                         OnTroubleDataGridViewUpdated(troubleDataGridViewList);
+
+                        // MessageDataGridView設定リストデータを作成
+                        var messageDataGridViewList = new SortableBindingList<MessageDataGridViewSetting>();
+                        foreach (var message in _dataManager.DataFromServer.OperationInformationDataList)
+                        {
+                            messageDataGridViewList.Add(new MessageDataGridViewSetting
+                            {
+                                Type = OperationInformationStateConverter.ConversionOperationInformationType(message.Type),
+                                Content = message.Content,
+                                StartTime = message.StartTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                                EndTime = message.EndTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                            });
+                        }
+                        _dataManager.MessageDataGridViewSettingList = messageDataGridViewList;
+                        OnMessageDataGridViewUpdated(messageDataGridViewList);
 
                         // 運転告知器リストデータを更新
                         lock (_dataManager.OperationNotificationDataList)
@@ -357,6 +381,82 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへ運行情報の追加をリクエスト
+        /// </summary>
+        /// <param name="operationInformationData"></param>
+        /// <returns></returns>
+        public async Task AddOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("AddOperationInformation", operationInformationData);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ運行情報の更新をリクエスト
+        /// </summary>
+        /// <param name="operationInformationData"></param>
+        /// <returns></returns>
+        public async Task UpdateOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("UpdateOperationInformation", operationInformationData);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーから全ての運行情報を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<OperationInformationData>> GetAllOperationInformations()
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<OperationInformationData>>("GetAllOperationInformations");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ運行情報の削除をリクエスト
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteOperationInformationEventDataRequestToServerAsync(long id)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("DeleteOperationInformation", id);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
@@ -372,6 +472,15 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnTroubleDataGridViewUpdated(SortableBindingList<TroubleDataGridViewSetting> list)
         {
             TroubleDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// MessageDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnMessageDataGridViewUpdated(SortableBindingList<MessageDataGridViewSetting> list)
+        {
+            MessageDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>

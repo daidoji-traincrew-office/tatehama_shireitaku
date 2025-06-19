@@ -60,4 +60,31 @@ namespace TatehamaCommanderTable.Models
         [DisplayName("補足情報")]
         public string additionalData { get; set; } = "";
     }
+
+    /// <summary>
+    /// MessageDataGridView設定クラス
+    /// </summary>
+    public class MessageDataGridViewSetting
+    {
+        /// <summary>
+        /// 情報の種類
+        /// </summary>
+        [DisplayName("情報の種類")]
+        public string Type { get; set; } = "";
+        /// <summary>
+        /// 運行メッセージ
+        /// </summary>
+        [DisplayName("運行メッセージ")]
+        public string Content { get; set; } = "";
+        /// <summary>
+        /// 配信開始日時
+        /// </summary>
+        [DisplayName("配信開始日時")]
+        public string StartTime { get; set; } = "";
+        /// <summary>
+        /// 配信終了日時
+        /// </summary>
+        [DisplayName("配信終了日時")]
+        public string EndTime { get; set; } = "";
+    }
 }

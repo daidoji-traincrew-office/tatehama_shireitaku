@@ -29,6 +29,11 @@ namespace TatehamaCommanderTable.Models
             /// 軌道回路データリスト
             /// </summary>
             public List<TrackCircuitData> TrackCircuitDataList { get; set; }
+
+            /// <summary>
+            /// 運行メッセージデータリスト
+            /// </summary>
+            public List<OperationInformationData> OperationInformationDataList { get; set; }
         }
     }
 }

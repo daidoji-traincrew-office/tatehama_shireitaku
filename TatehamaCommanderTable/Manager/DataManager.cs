@@ -45,6 +45,11 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<TroubleDataGridViewSetting> TroubleDataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// MessageDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<MessageDataGridViewSetting> MessageDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// 運転告知器リストデータ
         /// </summary>
         public List<OperationNotificationData> OperationNotificationDataList { get; set; }
@@ -56,8 +61,14 @@ namespace TatehamaCommanderTable.Manager
         {
             ServerConnected = false;
             DataFromServer = new();
+            DataFromServer.TroubleDataList = new();
+            DataFromServer.OperationNotificationDataList = new();
+            DataFromServer.TrackCircuitDataList = new();
+            DataFromServer.OperationInformationDataList = new();
             StationSettingList = new();
             TrackCircuitDataGridViewSettingList = new();
+            TroubleDataGridViewSettingList = new();
+            MessageDataGridViewSettingList = new();
             OperationNotificationDataList = new();
         }
     }
