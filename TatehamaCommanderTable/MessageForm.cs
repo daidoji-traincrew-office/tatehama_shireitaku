@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -87,7 +88,7 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Message_Button_Click(object sender, EventArgs e)
+        private async void Message_Button_Click(object sender, EventArgs e)
         {
             Button button = sender as Button;
 
@@ -114,14 +115,14 @@ namespace TatehamaCommanderTable
                             return;
                         }
 
-                        var result = new OperationInformationData
+                        var sendData = new OperationInformationData
                         {
                             Type = (OperationInformationType)Message_ComboBox_Type.SelectedIndex,
                             Content = Message_TextBox_MessageText.Text,
                             StartTime = startTime,
                             EndTime = endTime
                         };
-                        _serverCommunication.AddOperationInformationEventDataRequestToServerAsync(result);
+                        var result = await _serverCommunication.AddOperationInformationEventDataRequestToServerAsync(sendData);
 
                         //CustomMessage.Show($"Type: {(OperationInformationType)Message_ComboBox_Type.SelectedIndex}\nContent: {Message_TextBox_MessageText.Text}\nStartTime: {startTime}\nEndTime: {endTime}", "設定完了");
                     }
@@ -139,7 +140,7 @@ namespace TatehamaCommanderTable
                             return;
                         }
 
-                        var result = new OperationInformationData
+                        var sendData = new OperationInformationData
                         {
                             Id = (long)Message_NumericUpDown_ID.Value,
                             Type = (OperationInformationType)Message_ComboBox_Type.SelectedIndex,
@@ -147,7 +148,7 @@ namespace TatehamaCommanderTable
                             StartTime = startTime,
                             EndTime = endTime
                         };
-                        _serverCommunication.UpdateOperationInformationEventDataRequestToServerAsync(result);
+                        var result = await _serverCommunication.UpdateOperationInformationEventDataRequestToServerAsync(sendData);
 
                         //CustomMessage.Show($"ID: {(long)Message_NumericUpDown_ID.Value}\nType: {(OperationInformationType)Message_ComboBox_Type.SelectedIndex}\nContent: {Message_TextBox_MessageText.Text}\nStartTime: {startTime}\nEndTime: {endTime}", "設定完了");
                     }

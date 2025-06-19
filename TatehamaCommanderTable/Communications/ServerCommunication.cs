@@ -73,7 +73,6 @@ namespace TatehamaCommanderTable.Communications
                 // サーバー接続中ならデータ送信
                 if (_dataManager.ServerConnected)
                 {
-                    await GetAllOperationInformations();
                     await SendConstantDataRequestToServerAsync();
                 }
             }
@@ -272,6 +271,7 @@ namespace TatehamaCommanderTable.Communications
                         {
                             messageDataGridViewList.Add(new MessageDataGridViewSetting
                             {
+                                ID = message.Id.ToString(),
                                 Type = OperationInformationStateConverter.ConversionOperationInformationType(message.Type),
                                 Content = message.Content,
                                 StartTime = message.StartTime.ToString("yyyy/MM/dd HH:mm:ss"),
@@ -385,17 +385,18 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationInformationData"></param>
         /// <returns></returns>
-        public async Task AddOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        public async Task<OperationInformationData> AddOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync("AddOperationInformation", operationInformationData);
+                return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation", operationInformationData);
             }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
             }
         }
 
@@ -404,17 +405,18 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationInformationData"></param>
         /// <returns></returns>
-        public async Task UpdateOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        public async Task<OperationInformationData> UpdateOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync("UpdateOperationInformation", operationInformationData);
+                return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation", operationInformationData);
             }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
             }
         }
 
