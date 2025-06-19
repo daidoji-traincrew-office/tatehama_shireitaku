@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Message_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
-            Message_DataGridView_MessageData = new System.Windows.Forms.DataGridView();
             ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
             StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             EndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Message_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
+            Message_DataGridView_MessageData = new System.Windows.Forms.DataGridView();
+            Message_BindingSource = new System.Windows.Forms.BindingSource(components);
             Message_TextBox_MessageText = new System.Windows.Forms.TextBox();
             Message_Label_MessageText = new System.Windows.Forms.Label();
             Message_DateTimePicker_StartDate = new System.Windows.Forms.DateTimePicker();
             Message_DateTimePicker_EndDate = new System.Windows.Forms.DateTimePicker();
             Message_Label_StartDate = new System.Windows.Forms.Label();
             Message_Label_EndDate = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
+            Message_Label_Hyphen = new System.Windows.Forms.Label();
             Message_Button_Add = new System.Windows.Forms.Button();
             Message_Button_Cansel = new System.Windows.Forms.Button();
-            Message_BindingSource = new System.Windows.Forms.BindingSource(components);
             Message_ComboBox_Type = new System.Windows.Forms.ComboBox();
             Message_NumericUpDown_ID = new System.Windows.Forms.NumericUpDown();
             Message_Label_ID = new System.Windows.Forms.Label();
@@ -54,6 +54,46 @@
             ((System.ComponentModel.ISupportInitialize)Message_BindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Message_NumericUpDown_ID).BeginInit();
             SuspendLayout();
+            // 
+            // ID
+            // 
+            ID.DataPropertyName = "ID";
+            ID.HeaderText = "ID";
+            ID.MaxInputLength = 10;
+            ID.Name = "ID";
+            ID.Width = 50;
+            // 
+            // Type
+            // 
+            Type.DataPropertyName = "Type";
+            Type.HeaderText = "情報の種類";
+            Type.MaxInputLength = 10;
+            Type.Name = "Type";
+            // 
+            // Content
+            // 
+            Content.DataPropertyName = "Content";
+            Content.HeaderText = "運行メッセージ";
+            Content.MaxInputLength = 10000;
+            Content.Name = "Content";
+            Content.ReadOnly = true;
+            Content.Width = 390;
+            // 
+            // StartTime
+            // 
+            StartTime.DataPropertyName = "StartTime";
+            StartTime.HeaderText = "配信開始日時";
+            StartTime.MaxInputLength = 20;
+            StartTime.Name = "StartTime";
+            StartTime.Width = 150;
+            // 
+            // EndTime
+            // 
+            EndTime.DataPropertyName = "EndTime";
+            EndTime.HeaderText = "配信終了日時";
+            EndTime.MaxInputLength = 20;
+            EndTime.Name = "EndTime";
+            EndTime.Width = 150;
             // 
             // Message_CheckBox_TopMost
             // 
@@ -74,48 +114,16 @@
             Message_DataGridView_MessageData.AllowUserToDeleteRows = false;
             Message_DataGridView_MessageData.AllowUserToResizeColumns = false;
             Message_DataGridView_MessageData.AllowUserToResizeRows = false;
+            Message_DataGridView_MessageData.AutoGenerateColumns = false;
             Message_DataGridView_MessageData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Message_DataGridView_MessageData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { ID, Type, Content, StartTime, EndTime });
+            Message_DataGridView_MessageData.DataSource = Message_BindingSource;
             Message_DataGridView_MessageData.Location = new System.Drawing.Point(12, 37);
             Message_DataGridView_MessageData.Name = "Message_DataGridView_MessageData";
             Message_DataGridView_MessageData.RowHeadersVisible = false;
+            Message_DataGridView_MessageData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             Message_DataGridView_MessageData.Size = new System.Drawing.Size(860, 260);
             Message_DataGridView_MessageData.TabIndex = 18;
-            // 
-            // ID
-            // 
-            ID.HeaderText = "ID";
-            ID.MaxInputLength = 10;
-            ID.Name = "ID";
-            ID.Width = 50;
-            // 
-            // Type
-            // 
-            Type.HeaderText = "情報の種類";
-            Type.MaxInputLength = 10;
-            Type.Name = "Type";
-            // 
-            // Content
-            // 
-            Content.HeaderText = "運行メッセージ";
-            Content.MaxInputLength = 10000;
-            Content.Name = "Content";
-            Content.ReadOnly = true;
-            Content.Width = 390;
-            // 
-            // StartTime
-            // 
-            StartTime.HeaderText = "配信開始日時";
-            StartTime.MaxInputLength = 20;
-            StartTime.Name = "StartTime";
-            StartTime.Width = 150;
-            // 
-            // EndTime
-            // 
-            EndTime.HeaderText = "配信終了日時";
-            EndTime.MaxInputLength = 20;
-            EndTime.Name = "EndTime";
-            EndTime.Width = 150;
             // 
             // Message_TextBox_MessageText
             // 
@@ -195,19 +203,19 @@
             Message_Label_EndDate.Text = "配信終了日時";
             Message_Label_EndDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label4
+            // Message_Label_Hyphen
             // 
-            label4.BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
-            label4.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label4.ForeColor = System.Drawing.Color.White;
-            label4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            label4.Location = new System.Drawing.Point(521, 348);
-            label4.Name = "label4";
-            label4.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            label4.Size = new System.Drawing.Size(39, 34);
-            label4.TabIndex = 25;
-            label4.Text = "～";
-            label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            Message_Label_Hyphen.BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
+            Message_Label_Hyphen.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            Message_Label_Hyphen.ForeColor = System.Drawing.Color.White;
+            Message_Label_Hyphen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            Message_Label_Hyphen.Location = new System.Drawing.Point(521, 348);
+            Message_Label_Hyphen.Name = "Message_Label_Hyphen";
+            Message_Label_Hyphen.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            Message_Label_Hyphen.Size = new System.Drawing.Size(39, 34);
+            Message_Label_Hyphen.TabIndex = 25;
+            Message_Label_Hyphen.Text = "～";
+            Message_Label_Hyphen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Message_Button_Add
             // 
@@ -306,7 +314,7 @@
             Controls.Add(Message_ComboBox_Type);
             Controls.Add(Message_Button_Cansel);
             Controls.Add(Message_Button_Add);
-            Controls.Add(label4);
+            Controls.Add(Message_Label_Hyphen);
             Controls.Add(Message_Label_EndDate);
             Controls.Add(Message_Label_StartDate);
             Controls.Add(Message_DateTimePicker_EndDate);
@@ -336,7 +344,7 @@
         private System.Windows.Forms.DateTimePicker Message_DateTimePicker_EndDate;
         private System.Windows.Forms.Label Message_Label_StartDate;
         private System.Windows.Forms.Label Message_Label_EndDate;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label Message_Label_Hyphen;
         private System.Windows.Forms.Button Message_Button_Add;
         private System.Windows.Forms.Button Message_Button_Cansel;
         private System.Windows.Forms.BindingSource Message_BindingSource;

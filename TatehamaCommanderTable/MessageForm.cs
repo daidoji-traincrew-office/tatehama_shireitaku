@@ -48,10 +48,14 @@ namespace TatehamaCommanderTable
             // DataGridViewの設定
             SetupDataGridView();
 
+            // NumericUpDownの初期値設定
+            Message_NumericUpDown_ID.Value = 0;
+
             // 現在時刻に初期化
             var now = DateTime.Now;
+            var nextTime = now.AddMinutes(1);
             Message_DateTimePicker_StartDate.Value = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
-            Message_DateTimePicker_EndDate.Value = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute + 1, 0);
+            Message_DateTimePicker_EndDate.Value = new DateTime(nextTime.Year, nextTime.Month, nextTime.Day, nextTime.Hour, nextTime.Minute, 0);
 
             // ComboBox初期値
             Message_ComboBox_Type.SelectedIndex = 0;
@@ -93,6 +97,8 @@ namespace TatehamaCommanderTable
                 case "Message_Button_Cansel":
                     {
                         _serverCommunication.DeleteOperationInformationEventDataRequestToServerAsync((long)Message_NumericUpDown_ID.Value);
+
+                        //CustomMessage.Show($"ID: {(long)Message_NumericUpDown_ID.Value}", "設定完了");
                     }
                     break;
                 // 追加ボタン
@@ -116,6 +122,8 @@ namespace TatehamaCommanderTable
                             EndTime = endTime
                         };
                         _serverCommunication.AddOperationInformationEventDataRequestToServerAsync(result);
+
+                        //CustomMessage.Show($"Type: {(OperationInformationType)Message_ComboBox_Type.SelectedIndex}\nContent: {Message_TextBox_MessageText.Text}\nStartTime: {startTime}\nEndTime: {endTime}", "設定完了");
                     }
                     break;
                 // 更新ボタン
@@ -140,6 +148,8 @@ namespace TatehamaCommanderTable
                             EndTime = endTime
                         };
                         _serverCommunication.UpdateOperationInformationEventDataRequestToServerAsync(result);
+
+                        //CustomMessage.Show($"ID: {(long)Message_NumericUpDown_ID.Value}\nType: {(OperationInformationType)Message_ComboBox_Type.SelectedIndex}\nContent: {Message_TextBox_MessageText.Text}\nStartTime: {startTime}\nEndTime: {endTime}", "設定完了");
                     }
                     break;
             }
@@ -155,7 +165,7 @@ namespace TatehamaCommanderTable
             if (e.RowIndex >= 0)
             {
                 var selectedRow = Message_DataGridView_MessageData.Rows[e.RowIndex];
-                string id = selectedRow.Cells["Id"].Value.ToString();
+                string id = selectedRow.Cells["ID"].Value.ToString();
                 string type = selectedRow.Cells["Type"].Value.ToString();
                 string content = selectedRow.Cells["Content"].Value.ToString();
                 string startTime = selectedRow.Cells["StartTime"].Value.ToString();
@@ -253,6 +263,12 @@ namespace TatehamaCommanderTable
             // 複数選択不可
             Message_DataGridView_MessageData.MultiSelect = false;
             Message_DataGridView_MessageData.AutoGenerateColumns = false;
+
+            // 中央揃え
+            Message_DataGridView_MessageData.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Message_DataGridView_MessageData.Columns["Type"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Message_DataGridView_MessageData.Columns["StartTime"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Message_DataGridView_MessageData.Columns["EndTime"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
     }
 }

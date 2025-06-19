@@ -67,6 +67,11 @@ namespace TatehamaCommanderTable.Models
     public class MessageDataGridViewSetting
     {
         /// <summary>
+        /// ID
+        /// </summary>
+        [DisplayName("ID")]
+        public string ID { get; set; } = "";
+        /// <summary>
         /// 情報の種類
         /// </summary>
         [DisplayName("情報の種類")]
