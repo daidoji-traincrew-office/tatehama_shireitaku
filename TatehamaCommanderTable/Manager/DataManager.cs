@@ -50,6 +50,11 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<MessageDataGridViewSetting> MessageDataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// DiaDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<DiaDataGridViewSetting> DiaDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// 運転告知器リストデータ
         /// </summary>
         public List<OperationNotificationData> OperationNotificationDataList { get; set; }
@@ -69,6 +74,7 @@ namespace TatehamaCommanderTable.Manager
             TrackCircuitDataGridViewSettingList = new();
             TroubleDataGridViewSettingList = new();
             MessageDataGridViewSettingList = new();
+            DiaDataGridViewSettingList = new();
             OperationNotificationDataList = new();
         }
     }

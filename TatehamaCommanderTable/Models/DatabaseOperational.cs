@@ -34,6 +34,11 @@ namespace TatehamaCommanderTable.Models
             /// 運行メッセージデータリスト
             /// </summary>
             public List<OperationInformationData> OperationInformationDataList { get; set; }
+
+            /// <summary>
+            /// ダイヤデータリスト
+            /// </summary>
+            public List<TrainDiagramData> TrainDiagramDataList { get; set; }
         }
     }
 }

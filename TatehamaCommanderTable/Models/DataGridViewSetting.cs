@@ -92,4 +92,41 @@ namespace TatehamaCommanderTable.Models
         [DisplayName("配信終了日時")]
         public string EndTime { get; set; } = "";
     }
+
+    /// <summary>
+    /// DiaDataGridView設定クラス
+    /// </summary>
+    public class DiaDataGridViewSetting
+    {
+        /// <summary>
+        /// 列車番号
+        /// </summary>
+        [DisplayName("列車番号")]
+        public string TrainNumber { get; set; } = "";
+        /// <summary>
+        /// 種別ID
+        /// </summary>
+        [DisplayName("種別ID")]
+        public string TypeId { get; set; } = "";
+        /// <summary>
+        /// 列車種別
+        /// </summary>
+        [DisplayName("列車種別")]
+        public string TrainType { get; set; } = "";
+        /// <summary>
+        /// 始発駅ID
+        /// </summary>
+        [DisplayName("始発駅ID")]
+        public string FromStationId { get; set; } = "";
+        /// <summary>
+        /// 行先駅ID
+        /// </summary>
+        [DisplayName("行先駅ID")]
+        public string ToStationId { get; set; } = "";
+        /// <summary>
+        /// ダイヤID
+        /// </summary>
+        [DisplayName("ダイヤID")]
+        public string DiaId { get; set; } = "";
+    }
 }

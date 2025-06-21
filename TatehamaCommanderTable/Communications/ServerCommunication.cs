@@ -40,6 +40,10 @@ namespace TatehamaCommanderTable.Communications
         /// MessageDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<MessageDataGridViewSetting>> MessageDataGridViewUpdated;
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<DiaDataGridViewSetting>> DiaDataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -219,6 +223,7 @@ namespace TatehamaCommanderTable.Communications
                         {
                             _dataManager.DataFromServer = data;
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
+                            _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         else
                         {
@@ -233,6 +238,7 @@ namespace TatehamaCommanderTable.Communications
                                 }
                             }
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
+                            _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
                         var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
@@ -280,6 +286,23 @@ namespace TatehamaCommanderTable.Communications
                         }
                         _dataManager.MessageDataGridViewSettingList = messageDataGridViewList;
                         OnMessageDataGridViewUpdated(messageDataGridViewList);
+
+                        // DiaDataGridView設定リストデータを作成
+                        var diaDataGridViewList = new SortableBindingList<DiaDataGridViewSetting>();
+                        foreach (var dia in _dataManager.DataFromServer.TrainDiagramDataList)
+                        {
+                            diaDataGridViewList.Add(new DiaDataGridViewSetting
+                            {
+                                TrainNumber = dia.TrainNumber.ToString(),
+                                TypeId = dia.TrainTypeId.ToString(),
+                                TrainType = dia.TrainType?.Name,
+                                FromStationId = dia.FromStationId.ToString(),
+                                ToStationId = dia.ToStationId.ToString(),
+                                DiaId = dia.DiaId.ToString(),
+                            });
+                        }
+                        _dataManager.DiaDataGridViewSettingList = diaDataGridViewList;
+                        OnDiaDataGridViewUpdated(diaDataGridViewList);
 
                         // 運転告知器リストデータを更新
                         lock (_dataManager.OperationNotificationDataList)
@@ -483,6 +506,15 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnMessageDataGridViewUpdated(SortableBindingList<MessageDataGridViewSetting> list)
         {
             MessageDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnDiaDataGridViewUpdated(SortableBindingList<DiaDataGridViewSetting> list)
+        {
+            DiaDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>
