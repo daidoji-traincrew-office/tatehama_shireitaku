@@ -168,6 +168,7 @@
             Button_Select_ProtectionRadio.TabIndex = 20;
             Button_Select_ProtectionRadio.Text = "防護無線";
             Button_Select_ProtectionRadio.UseVisualStyleBackColor = false;
+            Button_Select_ProtectionRadio.Click += ButtonClickEvent;
             // 
             // Button_Select_TrainInfo
             // 
@@ -184,6 +185,7 @@
             Button_Select_TrainInfo.TabIndex = 21;
             Button_Select_TrainInfo.Text = "列車情報";
             Button_Select_TrainInfo.UseVisualStyleBackColor = false;
+            Button_Select_TrainInfo.Click += ButtonClickEvent;
             // 
             // MainForm
             // 

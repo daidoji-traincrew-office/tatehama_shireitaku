@@ -42,6 +42,7 @@
             ProtectionRadio_CheckBox_TopMost.TabIndex = 18;
             ProtectionRadio_CheckBox_TopMost.Text = "最前面表示";
             ProtectionRadio_CheckBox_TopMost.UseVisualStyleBackColor = true;
+            ProtectionRadio_CheckBox_TopMost.CheckedChanged += ProtectionRadio_CheckBox_TopMost_CheckedChanged;
             // 
             // ProtectionRadioForm
             // 
