@@ -20,6 +20,7 @@ namespace TatehamaCommanderTable
         private TrackCircuitForm _trackCircuitForm;
         private MessageForm _messageForm;
         private DiaForm _diaForm;
+        private ProtectionRadioForm _protectionRadioForm;
 
         private readonly Timer _mainTimer;
 
@@ -44,6 +45,7 @@ namespace TatehamaCommanderTable
             _trackCircuitForm = new TrackCircuitForm(serverCommunication);
             _messageForm = new MessageForm(serverCommunication);
             _diaForm = new DiaForm(serverCommunication);
+            _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -153,6 +155,22 @@ namespace TatehamaCommanderTable
                                 _diaForm = new DiaForm(_serverCommunication);
                             }
                             _diaForm.Show();
+                        }
+                        break;
+                    // 防護無線
+                    case "Button_Select_ProtectionRadio":
+                        {
+                            if (_protectionRadioForm.IsDisposed)
+                            {
+                                _protectionRadioForm = new ProtectionRadioForm(_serverCommunication);
+                            }
+                            _protectionRadioForm.Show();
+                        }
+                        break;
+                    // 列車情報
+                    case "Button_Select_TrainInfo":
+                        {
+
                         }
                         break;
                     default:
