@@ -21,6 +21,7 @@ namespace TatehamaCommanderTable
         private MessageForm _messageForm;
         private DiaForm _diaForm;
         private ProtectionRadioForm _protectionRadioForm;
+        private TrainInfoForm _trainInfoForm;
 
         private readonly Timer _mainTimer;
 
@@ -46,6 +47,7 @@ namespace TatehamaCommanderTable
             _messageForm = new MessageForm(serverCommunication);
             _diaForm = new DiaForm(serverCommunication);
             _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
+            _trainInfoForm = new TrainInfoForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -170,7 +172,11 @@ namespace TatehamaCommanderTable
                     // 列車情報
                     case "Button_Select_TrainInfo":
                         {
-
+                            if (_trainInfoForm.IsDisposed)
+                            {
+                                _trainInfoForm = new TrainInfoForm(_serverCommunication);
+                            }
+                            _trainInfoForm.Show();
                         }
                         break;
                     default:
