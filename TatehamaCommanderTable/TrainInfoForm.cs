@@ -27,7 +27,7 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// MessageForm_Loadイベント
+        /// TrainInfoForm_Loadイベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
