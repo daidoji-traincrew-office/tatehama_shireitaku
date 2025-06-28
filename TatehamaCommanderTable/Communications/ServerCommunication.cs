@@ -227,7 +227,7 @@ namespace TatehamaCommanderTable.Communications
                         {
                             _dataManager.DataFromServer = data;
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
-                            _dataManager.DataFromServer.ProtectionRadioDataList = new List<ProtectionRadioData>();
+                            _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
                             _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
                         }
                         else
@@ -243,7 +243,7 @@ namespace TatehamaCommanderTable.Communications
                                 }
                             }
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
-                            _dataManager.DataFromServer.ProtectionRadioDataList = new List<ProtectionRadioData>();
+                            _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
                             _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
@@ -543,15 +543,15 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
-        /// サーバーから指定した列車番号の防護無線情報を取得
+        /// サーバーから全ての防護無線情報を取得
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ProtectionRadioData>> GetProtectionZones(string trainNumber)
+        public async Task<List<ProtectionRadioData>> GetAllProtectionZones()
         {
             try
             {
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetAllOperationInformations", trainNumber);
+                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetAllOperationInformations");
             }
             catch (Exception exception)
             {
