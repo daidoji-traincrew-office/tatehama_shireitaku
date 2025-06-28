@@ -56,6 +56,7 @@
             ID.HeaderText = "ID";
             ID.MaxInputLength = 10;
             ID.Name = "ID";
+            ID.ReadOnly = true;
             ID.Width = 150;
             // 
             // ProtectionZone
@@ -64,6 +65,7 @@
             ProtectionZone.HeaderText = "防護ゾーン";
             ProtectionZone.MaxInputLength = 10;
             ProtectionZone.Name = "ProtectionZone";
+            ProtectionZone.ReadOnly = true;
             ProtectionZone.Width = 150;
             // 
             // TrainNumber

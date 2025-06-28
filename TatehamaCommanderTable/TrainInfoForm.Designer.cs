@@ -69,6 +69,7 @@
             ID.HeaderText = "ID";
             ID.MaxInputLength = 10;
             ID.Name = "ID";
+            ID.ReadOnly = true;
             // 
             // TrainNumber
             // 
@@ -76,6 +77,7 @@
             TrainNumber.HeaderText = "列車番号";
             TrainNumber.MaxInputLength = 10;
             TrainNumber.Name = "TrainNumber";
+            TrainNumber.ReadOnly = true;
             // 
             // DiaNumber
             // 
@@ -91,6 +93,7 @@
             FromStationID.HeaderText = "始発駅ID";
             FromStationID.MaxInputLength = 10;
             FromStationID.Name = "FromStationID";
+            FromStationID.ReadOnly = true;
             // 
             // ToStationID
             // 
