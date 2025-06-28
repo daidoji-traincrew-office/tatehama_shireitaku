@@ -34,8 +34,12 @@ namespace TatehamaCommanderTable
         private void ProtectionRadioForm_Load(object sender, EventArgs e)
         {
             // イベントハンドラ設定
+            _serverCommunication.ProtectionRadioDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
             ProtectionRadio_DataGridView_ProtectionRadioData.CellClick += DataGridView_ProtectionRadioData_CellClick;
             ProtectionRadio_DataGridView_ProtectionRadioData.Scroll += DataGridView_ProtectionRadio_Scroll;
+
+            // DataGridViewのデータバインド
+            ProtectionRadio_BindingSource.DataSource = _dataManager.ProtectionRadioDataGridViewSettingList;
 
             // DataGridViewの設定
             SetupDataGridView();
@@ -83,19 +87,37 @@ namespace TatehamaCommanderTable
                 // 削除ボタン
                 case "ProtectionRadio_Button_Delete":
                     {
+                        _serverCommunication.DeleteProtectionRadioEventDataRequestToServerAsync((long)ProtectionRadio_NumericUpDown_ID.Value);
 
+                        //CustomMessage.Show($"ID: {(long)ProtectionRadio_NumericUpDown_ID.Value}", "設定完了");
                     }
                     break;
                 // 追加ボタン
                 case "ProtectionRadio_Button_Add":
                     {
+                        var sendData = new ProtectionRadioData
+                        {
+                            Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
+                            ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
+                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
+                        };
+                        var result = await _serverCommunication.AddProtectionRadioEventDataRequestToServerAsync(sendData);
 
+                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}", "設定完了");
                     }
                     break;
                 // 更新ボタン
                 case "ProtectionRadio_Button_Update":
                     {
+                        var sendData = new ProtectionRadioData
+                        {
+                            Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
+                            ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
+                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
+                        };
+                        var result = await _serverCommunication.UpdateProtectionRadioEventDataRequestToServerAsync(sendData);
 
+                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}", "設定完了");
                     }
                     break;
             }
@@ -139,7 +161,7 @@ namespace TatehamaCommanderTable
         /// DataGridView更新処理
         /// </summary>
         /// <param name="newDataSource"></param>
-        public void UpdateDataSource(SortableBindingList<MessageDataGridViewSetting> newDataSource)
+        public void UpdateDataSource(SortableBindingList<ProtectionRadioDataGridViewSetting> newDataSource)
         {
             try
             {

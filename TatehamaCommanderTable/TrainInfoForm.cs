@@ -34,8 +34,12 @@ namespace TatehamaCommanderTable
         private void TrainInfoForm_Load(object sender, EventArgs e)
         {
             // イベントハンドラ設定
+            _serverCommunication.TrainInfoDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
             TrainInfo_DataGridView_TrainInfoData.CellClick += DataGridView_TrainInfoData_CellClick;
             TrainInfo_DataGridView_TrainInfoData.Scroll += DataGridView_TrainInfo_Scroll;
+
+            // DataGridViewのデータバインド
+            TrainInfo_BindingSource.DataSource = _dataManager.TrainInfoDataGridViewSettingList;
 
             // DataGridViewの設定
             SetupDataGridView();
@@ -44,6 +48,12 @@ namespace TatehamaCommanderTable
             TrainInfo_NumericUpDown_ID.Value = 0;
             TrainInfo_NumericUpDown_DiaNumber.Value = 0;
             TrainInfo_NumericUpDown_Delay.Value = 0;
+
+            // TextBoxの初期値設定
+            TrainInfo_TextBox_TrainNumber.Text = string.Empty;
+            TrainInfo_TextBox_FromStationID.Text = string.Empty;
+            TrainInfo_TextBox_ToStationID.Text = string.Empty;
+            TrainInfo_TextBox_DriverID.Text = string.Empty;
         }
 
         /// <summary>
@@ -145,7 +155,7 @@ namespace TatehamaCommanderTable
         /// DataGridView更新処理
         /// </summary>
         /// <param name="newDataSource"></param>
-        public void UpdateDataSource(SortableBindingList<MessageDataGridViewSetting> newDataSource)
+        public void UpdateDataSource(SortableBindingList<TrainInfoDataGridViewSetting> newDataSource)
         {
             try
             {

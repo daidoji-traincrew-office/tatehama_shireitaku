@@ -50,6 +50,16 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<MessageDataGridViewSetting> MessageDataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// ProtectionRadioDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<ProtectionRadioDataGridViewSetting> ProtectionRadioDataGridViewSettingList { get; set; }
+
+        /// <summary>
+        /// TrainInfoDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<TrainInfoDataGridViewSetting> TrainInfoDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// 運転告知器リストデータ
         /// </summary>
         public List<OperationNotificationData> OperationNotificationDataList { get; set; }
@@ -69,6 +79,8 @@ namespace TatehamaCommanderTable.Manager
             TrackCircuitDataGridViewSettingList = new();
             TroubleDataGridViewSettingList = new();
             MessageDataGridViewSettingList = new();
+            ProtectionRadioDataGridViewSettingList = new();
+            TrainInfoDataGridViewSettingList = new();
             OperationNotificationDataList = new();
         }
     }
