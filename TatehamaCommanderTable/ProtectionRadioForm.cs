@@ -95,11 +95,18 @@ namespace TatehamaCommanderTable
                 // 追加ボタン
                 case "ProtectionRadio_Button_Add":
                     {
+                        string trainNumber = ProtectionRadio_TextBox_TrainNumber.Text;
+                        if (string.IsNullOrWhiteSpace(trainNumber))
+                        {
+                            CustomMessage.Show("列車番号を入力してください。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
                         var sendData = new ProtectionRadioData
                         {
                             Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
                             ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
-                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
+                            TrainNumber = trainNumber
                         };
                         var result = await _serverCommunication.AddProtectionRadioEventDataRequestToServerAsync(sendData);
 
@@ -109,11 +116,18 @@ namespace TatehamaCommanderTable
                 // 更新ボタン
                 case "ProtectionRadio_Button_Update":
                     {
+                        string trainNumber = ProtectionRadio_TextBox_TrainNumber.Text;
+                        if (string.IsNullOrWhiteSpace(trainNumber))
+                        {
+                            CustomMessage.Show("列車番号を入力してください。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
                         var sendData = new ProtectionRadioData
                         {
                             Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
                             ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
-                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
+                            TrainNumber = trainNumber
                         };
                         var result = await _serverCommunication.UpdateProtectionRadioEventDataRequestToServerAsync(sendData);
 
