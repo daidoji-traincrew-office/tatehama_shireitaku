@@ -379,7 +379,7 @@
             Controls.Add(TrainInfo_DataGridView_TrainInfoData);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Name = "TrainInfoForm";
-            Text = "TrainInfoForm";
+            Text = "列車情報設定 | 司令卓 - ダイヤ運転会";
             ((System.ComponentModel.ISupportInitialize)TrainInfo_DataGridView_TrainInfoData).EndInit();
             ((System.ComponentModel.ISupportInitialize)TrainInfo_BindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)TrainInfo_NumericUpDown_ID).EndInit();
