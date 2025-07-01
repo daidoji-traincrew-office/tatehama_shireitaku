@@ -20,14 +20,20 @@ namespace TatehamaCommanderTable.Communications
     /// <summary>
     /// サーバー通信クラス
     /// </summary>
-    public class ServerCommunication
+    public class ServerCommunication : IAsyncDisposable
     {
-        private string _token;
+        private readonly TimeSpan _renewMargin = TimeSpan.FromMinutes(1);
         private readonly OpenIddictClientService _openIddictClientService;
         private readonly DataManager _dataManager;
         private static HubConnection _connection;
         private static bool _isUpdateLoopRunning = false;
         private const string HubConnectionName = "commander_table";
+        
+        private string _token = "";
+        private string _refreshToken = "";
+        private DateTimeOffset _tokenExpiration = DateTimeOffset.MinValue;
+        private bool _eventHandlersSet = false;
+        private const int ReconnectIntervalMs = 500;
         /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
@@ -79,78 +85,120 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
-        /// ユーザー認証
+        /// インタラクティブ認証を行い、SignalR接続を試みる
         /// </summary>
         /// <returns></returns>
-        public async Task AuthenticateAsync()
+        public async Task Authorize()
+        {
+            // 認証を行う
+            var isAuthenticated = await InteractiveAuthenticateAsync();
+            if (!isAuthenticated)
+            {
+                return;
+            }
+
+            await DisposeAndStopConnectionAsync(CancellationToken.None); // 古いクライアントを破棄
+            InitializeConnection(); // 新しいクライアントを初期化
+            // 接続を試みる
+            var isActionNeeded = await ConnectAsync();
+            if (isActionNeeded)
+            {
+                return;
+            }
+
+            SetEventHandlers(); // イベントハンドラを設定
+        }
+
+        /// <summary>
+        /// ユーザー認証（インタラクティブ認証のみ）
+        /// </summary>
+        /// <returns>認証に成功した場合true、失敗した場合false</returns>
+        private async Task<bool> InteractiveAuthenticateAsync()
+        {
+            using var source = new CancellationTokenSource(TimeSpan.FromSeconds(90));
+            return await InteractiveAuthenticateAsync(source.Token);
+        }
+
+        /// <summary>
+        /// ユーザー認証（インタラクティブ認証のみ、キャンセラブル）
+        /// </summary>
+        /// <param name="cancellationToken">キャンセラレーショントークン</param>
+        /// <returns>認証に成功した場合true、失敗した場合false</returns>
+        private async Task<bool> InteractiveAuthenticateAsync(CancellationToken cancellationToken)
         {
             if (ServerAddress.IsDebug)
             {
-                InitializeConnection();
-                return;
+                _token = "";
+                _tokenExpiration = DateTimeOffset.MaxValue;
+                _refreshToken = "";
+                return true;
             }
+            
             try
             {
-                using var source = new CancellationTokenSource(TimeSpan.FromSeconds(90));
-
                 // ブラウザで認証要求
                 var result = await _openIddictClientService.ChallengeInteractivelyAsync(new()
                 {
-                    CancellationToken = source.Token
+                    CancellationToken = cancellationToken,
+                    Scopes = [OpenIddictConstants.Scopes.OfflineAccess]
                 });
 
                 // 認証完了まで待機
                 var resultAuth = await _openIddictClientService.AuthenticateInteractivelyAsync(new()
                 {
-                    CancellationToken = source.Token,
+                    CancellationToken = cancellationToken,
                     Nonce = result.Nonce
                 });
 
                 // 認証成功(トークン取得)
                 _token = resultAuth.BackchannelAccessToken;
-
-                // サーバー接続初期化
-                await InitializeConnection();
+                _tokenExpiration = resultAuth.BackchannelAccessTokenExpirationDate ?? DateTimeOffset.MinValue;
+                _refreshToken = resultAuth.RefreshToken;
+                return true;
             }
             catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.AccessDenied)
             {
                 // ログインしたユーザーがサーバーにいないか、入鋏ロールがついてない
                 CustomMessage.Show("認証が拒否されました。\n司令主任に連絡してください。", "認証拒否", exception, MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
             catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.ServerError)
             {
                 // サーバーでトラブル発生
-                var result = CustomMessage.Show("認証時にサーバーでエラーが発生しました。\\n再認証しますか？", "サーバーエラー", exception, MessageBoxButton.YesNo, MessageBoxImage.Error);
-                if (result == MessageBoxResult.Yes)
-                {
-                    _ = AuthenticateAsync();
-                }
+                CustomMessage.Show("認証時にサーバーでエラーが発生しました。", "サーバーエラー", exception, MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
-            catch
+            catch (Exception exception)
             {
                 // その他別な理由で認証失敗
-                var result = CustomMessage.Show("認証に失敗しました。\n再認証しますか？", "認証失敗", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                if (result == MessageBoxResult.Yes)
-                {
-                    _ = AuthenticateAsync();
-                }
+                CustomMessage.Show("認証に失敗しました。", "認証失敗", exception, MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
         }
 
         /// <summary>
-        /// サーバー接続初期化
+        /// HubConnection初期化
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task InitializeConnection()
+        private void InitializeConnection()
         {
+            if (_connection != null)
+            {
+                throw new InvalidOperationException("_connection is already initialized.");
+            }
+
             // HubConnectionの作成
             _connection = new HubConnectionBuilder()
                 .WithUrl($"{ServerAddress.SignalAddress}/hub/{HubConnectionName}?access_token={_token}")
-                .WithAutomaticReconnect(Enumerable.Range(0, 721).Select(x => TimeSpan.FromSeconds(x == 0 ? 0 : 5))
-                    .ToArray()) // 自動再接続
                 .Build();
+            _eventHandlersSet = false;
+        }
 
+        /// <summary>
+        /// サーバー接続
+        /// </summary>
+        /// <returns>ユーザーのアクションが必要かどうか</returns>
+        private async Task<bool> ConnectAsync()
+        {
             // サーバー接続
             while (!_dataManager.ServerConnected)
             {
@@ -163,15 +211,26 @@ namespace TatehamaCommanderTable.Communications
                 catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Forbidden)
                 {
                     // 該当Hubにアクセスするためのロールが無い
-                    CustomMessage.Show("接続が拒否されました。\n付与されたロールを確認の上、司令主任に連絡してください。", "ロール不一致", exception, MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    CustomMessage.Show("接続が拒否されました。\n付与されたロールを確認の上、司令主任に連絡してください。", "ロール不一致", exception,
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return true;
+                }
+                // Disposeされた接続を使用しようとした場合のエラー
+                catch (InvalidOperationException)
+                {
+                    Debug.WriteLine("Maybe using disposed connection");
+                    _dataManager.ServerConnected = false;
+                    // 一旦接続を破棄して再初期化
+                    await DisposeAndStopConnectionAsync(CancellationToken.None);
+                    InitializeConnection();
                 }
                 catch (Exception exception)
                 {
                     Debug.WriteLine($"Connection Error!! {exception.Message}");
                     _dataManager.ServerConnected = false;
 
-                    var result = CustomMessage.Show("接続に失敗しました。\n再接続しますか？", "接続失敗", exception, MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    var result = CustomMessage.Show("接続に失敗しました。\n再接続しますか？", "接続失敗", exception, MessageBoxButton.YesNo,
+                        MessageBoxImage.Error);
                     if (result == MessageBoxResult.Yes)
                     {
                         continue;
@@ -182,22 +241,195 @@ namespace TatehamaCommanderTable.Communications
                     }
                 }
             }
+            return false;
+        }
+
+        /// <summary>
+        /// イベントハンドラ設定
+        /// </summary>
+        private void SetEventHandlers()
+        {
+            if (_connection == null)
+            {
+                throw new InvalidOperationException("_connection is not initialized.");
+            }
+            if (_eventHandlersSet)
+            {
+                return; // イベントハンドラは一度だけ設定する
+            }
 
             // 再接続イベントのハンドリング
-            _connection.Reconnecting += exception =>
+            _connection.Closed += async(exception) =>
             {
+                Debug.WriteLine("Disconnected");
                 _dataManager.ServerConnected = false;
-                Debug.WriteLine("Reconnecting");
-                return Task.CompletedTask;
-            };
+                
+                // 例外が発生していない場合(=正常終了時)は何もしない
+                if (exception == null)
+                {
+                    return;
+                }
 
-            _connection.Reconnected += exeption =>
-            {
-                _dataManager.ServerConnected = true;
-                Debug.WriteLine("Connected");
-                return Task.CompletedTask;
+                // 例外が発生した場合はログに出力し再接続
+                Debug.WriteLine($"Exception: {exception.Message}\nStackTrace: {exception.StackTrace}");
+                
+                // 再接続処理を開始
+                await TryReconnectAsync();
             };
-            await Task.Delay(Timeout.Infinite);
+            _eventHandlersSet = true;
+        }
+
+        /// <summary>
+        /// 再接続処理
+        /// </summary>
+        /// <returns></returns>
+        private async Task TryReconnectAsync()
+        {
+            while (!_dataManager.ServerConnected)
+            {
+                try
+                {
+                    var isActionNeeded = await TryReconnectOnceAsync();
+                    if (isActionNeeded)
+                    {
+                        Debug.WriteLine("Action needed after reconnection.");
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Reconnect failed: {ex.Message}");
+                }
+
+                if (_connection != null && _connection.State == HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Reconnected successfully.");
+                    _dataManager.ServerConnected = true;
+                    break;
+                }
+
+                await Task.Delay(ReconnectIntervalMs);
+            }
+        }
+
+        /// <summary>
+        /// 1回の再接続試行
+        /// </summary>
+        /// <returns>ユーザーによるアクションが必要かどうか</returns>
+        private async Task<bool> TryReconnectOnceAsync()
+        {
+            // トークンが切れていない場合 かつ 切れるまで余裕がある場合はそのまま再接続
+            if (_tokenExpiration > DateTimeOffset.UtcNow + _renewMargin)
+            {
+                Debug.WriteLine("Try reconnect with current token...");
+                var isActionNeeded = await ConnectAsync();
+                if (isActionNeeded)
+                {
+                    Debug.WriteLine("Action needed after reconnect.");
+                    return true;
+                }
+                SetEventHandlers();
+                Debug.WriteLine("Reconnected with current token.");
+                return false;
+            }
+
+            // トークンが切れていてリフレッシュトークンが有効な場合はリフレッシュ
+            try
+            {
+                Debug.WriteLine("Try refresh token...");
+                await RefreshTokenAsync(CancellationToken.None);
+                await DisposeAndStopConnectionAsync(CancellationToken.None);
+                InitializeConnection();
+                var isActionNeeded = await ConnectAsync();
+                if (isActionNeeded)
+                {
+                    Debug.WriteLine("Action needed after reconnect.");
+                    return true;
+                }
+                SetEventHandlers();
+                Debug.WriteLine("Reconnected with refreshed token.");
+                return false;
+            }
+            catch (OpenIddictExceptions.ProtocolException ex)
+                when (ex.Error is
+                          OpenIddictConstants.Errors.InvalidToken
+                          or OpenIddictConstants.Errors.InvalidGrant
+                          or OpenIddictConstants.Errors.ExpiredToken)
+            {
+                // ignore: リフレッシュトークンが無効な場合
+            }
+            catch (InvalidOperationException)
+            {
+                // ignore: リフレッシュトークンが設定されていない場合
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error during token refresh: {ex.Message}");
+                throw;
+            }
+
+            // リフレッシュトークンが無効な場合、再認証が必要
+            Debug.WriteLine("Refresh token is invalid or expired.");
+            var result = CustomMessage.Show("トークンが切れました。\n再認証してください。", "認証失敗", 
+                MessageBoxButton.YesNo, MessageBoxImage.Error);
+            if (result == MessageBoxResult.Yes)
+            {
+                await Authorize();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// リフレッシュトークンを使用してトークンを更新
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task RefreshTokenAsync(CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(_refreshToken))
+            {
+                throw new InvalidOperationException("Refresh token is not set.");
+            }
+
+            var result = await _openIddictClientService.AuthenticateWithRefreshTokenAsync(new()
+            {
+                CancellationToken = cancellationToken,
+                RefreshToken = _refreshToken
+            });
+
+            _token = result.AccessToken;
+            _tokenExpiration = result.AccessTokenExpirationDate ?? DateTimeOffset.MinValue;
+            _refreshToken = result.RefreshToken;
+            Debug.WriteLine("Token refreshed successfully");
+        }
+
+        /// <summary>
+        /// 接続の破棄と停止
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task DisposeAndStopConnectionAsync(CancellationToken cancellationToken)
+        {
+            if (_connection == null)
+            {
+                return;
+            }
+
+            try
+            {
+                await _connection.StopAsync(cancellationToken);
+                await _connection.DisposeAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error disposing connection: {ex.Message}");
+            }
+            finally
+            {
+                _connection = null;
+                _eventHandlersSet = false;
+            }
         }
 
         /// <summary>
@@ -491,12 +723,17 @@ namespace TatehamaCommanderTable.Communications
         /// <returns></returns>
         public async Task DisconnectAsync()
         {
-            if (_connection != null)
-            {
-                _dataManager.ServerConnected = false;
-                await _connection.StopAsync();
-                await _connection.DisposeAsync();
-            }
+            await DisposeAndStopConnectionAsync(CancellationToken.None);
+            _dataManager.ServerConnected = false;
+        }
+
+        /// <summary>
+        /// IAsyncDisposable実装
+        /// </summary>
+        /// <returns></returns>
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAndStopConnectionAsync(CancellationToken.None);
         }
     }
 }
