@@ -64,7 +64,7 @@ namespace TatehamaCommanderTable
         private async void MainForm_Load(object sender, EventArgs e)
         {
             // ユーザー認証・初期化
-            await _serverCommunication.AuthenticateAsync();
+            await _serverCommunication.Authorize();
         }
 
         /// <summary>
