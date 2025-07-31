@@ -1,7 +1,9 @@
 using Dapplo.Microsoft.Extensions.Hosting.WinForms;
 using OpenIddict.Client;
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
@@ -53,6 +55,9 @@ namespace TatehamaCommanderTable
             Load += MainForm_Load;
             FormClosing += MainForm_FormClosing;
 
+            // コントロール設定
+            Label_ServerType.Text = ServerAddress.SignalAddress.Contains("dev") ? "Dev" : "Prod";
+
             // Timer設定
             _mainTimer = new();
             _mainTimer.Interval = 100;
@@ -69,6 +74,9 @@ namespace TatehamaCommanderTable
         {
             // ユーザー認証・初期化
             await _serverCommunication.Authorize();
+
+            // 定時処理を開始
+            await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Public);
         }
 
         /// <summary>
@@ -186,6 +194,32 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// RadioButton変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is RadioButton radioButton && radioButton.Checked)
+            {
+                switch (radioButton.Name)
+                {
+                    case "RadioButton_OFF":
+                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Off);
+                        break;
+                    case "RadioButton_ON_Public":
+                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Public);
+                        break;
+                    case "RadioButton_ON_Private":
+                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Private);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// MainTimer_Tickイベント
         /// </summary>
         /// <param name="sender"></param>
@@ -207,12 +241,18 @@ namespace TatehamaCommanderTable
                 Label_ServerConectionState.Text = "オンライン";
                 Label_ServerConectionState.ForeColor = ColorTranslator.FromHtml("#FF000000");
                 Label_ServerConectionState.BackColor = ColorTranslator.FromHtml("#FF67FF4C");
+
+                Label_ServerType.ForeColor = ColorTranslator.FromHtml("#FF000000");
+                Label_ServerType.BackColor = ColorTranslator.FromHtml("#FF67FF4C");
             }
             else if (!_dataManager.ServerConnected && (Label_ServerConectionState.Text != "オフライン"))
             {
                 Label_ServerConectionState.Text = "オフライン";
                 Label_ServerConectionState.ForeColor = ColorTranslator.FromHtml("#FF888888");
                 Label_ServerConectionState.BackColor = ColorTranslator.FromHtml("#FF555555");
+
+                Label_ServerType.ForeColor = ColorTranslator.FromHtml("#FF888888");
+                Label_ServerType.BackColor = ColorTranslator.FromHtml("#FF555555");
             }
         }
 

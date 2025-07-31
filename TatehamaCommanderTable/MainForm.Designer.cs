@@ -38,6 +38,12 @@
             Button_Select_Dia = new System.Windows.Forms.Button();
             Button_Select_ProtectionRadio = new System.Windows.Forms.Button();
             Button_Select_TrainInfo = new System.Windows.Forms.Button();
+            GroupBox_Schedule = new System.Windows.Forms.GroupBox();
+            RadioButton_ON_Private = new System.Windows.Forms.RadioButton();
+            RadioButton_ON_Public = new System.Windows.Forms.RadioButton();
+            RadioButton_OFF = new System.Windows.Forms.RadioButton();
+            Label_ServerType = new System.Windows.Forms.Label();
+            GroupBox_Schedule.SuspendLayout();
             SuspendLayout();
             // 
             // Label_ServerConectionState
@@ -187,12 +193,105 @@
             Button_Select_TrainInfo.UseVisualStyleBackColor = false;
             Button_Select_TrainInfo.Click += ButtonClickEvent;
             // 
+            // GroupBox_Schedule
+            // 
+            GroupBox_Schedule.Controls.Add(RadioButton_ON_Private);
+            GroupBox_Schedule.Controls.Add(RadioButton_ON_Public);
+            GroupBox_Schedule.Controls.Add(RadioButton_OFF);
+            GroupBox_Schedule.ForeColor = System.Drawing.Color.White;
+            GroupBox_Schedule.Location = new System.Drawing.Point(12, 9);
+            GroupBox_Schedule.Name = "GroupBox_Schedule";
+            GroupBox_Schedule.Size = new System.Drawing.Size(335, 59);
+            GroupBox_Schedule.TabIndex = 22;
+            GroupBox_Schedule.TabStop = false;
+            GroupBox_Schedule.Text = "定時処理";
+            // 
+            // RadioButton_ON_Private
+            // 
+            RadioButton_ON_Private.Appearance = System.Windows.Forms.Appearance.Button;
+            RadioButton_ON_Private.BackColor = System.Drawing.Color.White;
+            RadioButton_ON_Private.FlatAppearance.BorderSize = 0;
+            RadioButton_ON_Private.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Private.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Private.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Private.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            RadioButton_ON_Private.Font = new System.Drawing.Font("Yu Gothic UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            RadioButton_ON_Private.ForeColor = System.Drawing.Color.Black;
+            RadioButton_ON_Private.Location = new System.Drawing.Point(227, 18);
+            RadioButton_ON_Private.Margin = new System.Windows.Forms.Padding(5);
+            RadioButton_ON_Private.Name = "RadioButton_ON_Private";
+            RadioButton_ON_Private.Size = new System.Drawing.Size(100, 30);
+            RadioButton_ON_Private.TabIndex = 24;
+            RadioButton_ON_Private.Text = "ON (Private)";
+            RadioButton_ON_Private.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            RadioButton_ON_Private.UseVisualStyleBackColor = false;
+            RadioButton_ON_Private.CheckedChanged += RadioButton_CheckedChanged;
+            // 
+            // RadioButton_ON_Public
+            // 
+            RadioButton_ON_Public.Appearance = System.Windows.Forms.Appearance.Button;
+            RadioButton_ON_Public.BackColor = System.Drawing.Color.White;
+            RadioButton_ON_Public.Checked = true;
+            RadioButton_ON_Public.FlatAppearance.BorderSize = 0;
+            RadioButton_ON_Public.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Public.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Public.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gold;
+            RadioButton_ON_Public.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            RadioButton_ON_Public.Font = new System.Drawing.Font("Yu Gothic UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            RadioButton_ON_Public.ForeColor = System.Drawing.Color.Black;
+            RadioButton_ON_Public.Location = new System.Drawing.Point(117, 18);
+            RadioButton_ON_Public.Margin = new System.Windows.Forms.Padding(5);
+            RadioButton_ON_Public.Name = "RadioButton_ON_Public";
+            RadioButton_ON_Public.Size = new System.Drawing.Size(100, 30);
+            RadioButton_ON_Public.TabIndex = 23;
+            RadioButton_ON_Public.TabStop = true;
+            RadioButton_ON_Public.Text = "ON (Public)";
+            RadioButton_ON_Public.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            RadioButton_ON_Public.UseVisualStyleBackColor = false;
+            RadioButton_ON_Public.CheckedChanged += RadioButton_CheckedChanged;
+            // 
+            // RadioButton_OFF
+            // 
+            RadioButton_OFF.Appearance = System.Windows.Forms.Appearance.Button;
+            RadioButton_OFF.BackColor = System.Drawing.Color.White;
+            RadioButton_OFF.FlatAppearance.BorderSize = 0;
+            RadioButton_OFF.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold;
+            RadioButton_OFF.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold;
+            RadioButton_OFF.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gold;
+            RadioButton_OFF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            RadioButton_OFF.Font = new System.Drawing.Font("Yu Gothic UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            RadioButton_OFF.ForeColor = System.Drawing.Color.Black;
+            RadioButton_OFF.Location = new System.Drawing.Point(7, 18);
+            RadioButton_OFF.Margin = new System.Windows.Forms.Padding(5);
+            RadioButton_OFF.Name = "RadioButton_OFF";
+            RadioButton_OFF.Size = new System.Drawing.Size(100, 30);
+            RadioButton_OFF.TabIndex = 22;
+            RadioButton_OFF.Text = "OFF";
+            RadioButton_OFF.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            RadioButton_OFF.UseVisualStyleBackColor = false;
+            RadioButton_OFF.CheckedChanged += RadioButton_CheckedChanged;
+            // 
+            // Label_ServerType
+            // 
+            Label_ServerType.BackColor = System.Drawing.Color.FromArgb(85, 85, 85);
+            Label_ServerType.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            Label_ServerType.ForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            Label_ServerType.Location = new System.Drawing.Point(564, 9);
+            Label_ServerType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            Label_ServerType.Name = "Label_ServerType";
+            Label_ServerType.Size = new System.Drawing.Size(70, 30);
+            Label_ServerType.TabIndex = 23;
+            Label_ServerType.Text = "Prod";
+            Label_ServerType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Label_ServerType);
+            Controls.Add(GroupBox_Schedule);
             Controls.Add(Button_Select_TrainInfo);
             Controls.Add(Button_Select_ProtectionRadio);
             Controls.Add(Button_Select_Dia);
@@ -209,6 +308,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             Text = "項目選択 | 司令卓 - ダイヤ運転会";
+            GroupBox_Schedule.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -224,5 +324,10 @@
         private System.Windows.Forms.Button Button_Select_Dia;
         private System.Windows.Forms.Button Button_Select_ProtectionRadio;
         private System.Windows.Forms.Button Button_Select_TrainInfo;
+        private System.Windows.Forms.GroupBox GroupBox_Schedule;
+        private System.Windows.Forms.RadioButton RadioButton_ON_Private;
+        private System.Windows.Forms.RadioButton RadioButton_ON_Public;
+        private System.Windows.Forms.RadioButton RadioButton_OFF;
+        private System.Windows.Forms.Label Label_ServerType;
     }
 }

@@ -836,6 +836,25 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへ定時処理をリクエスト
+        /// </summary>
+        /// <param name="serverMode"></param>
+        /// <returns></returns>
+        public async Task SetServerStateEventDataRequestToServerAsync(ServerMode serverMode)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("SetServerState", serverMode);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
