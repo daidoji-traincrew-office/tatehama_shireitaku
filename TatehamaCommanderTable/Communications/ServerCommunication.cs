@@ -845,7 +845,7 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                await _connection.InvokeAsync("SetServerState", serverMode);
+                await _connection.InvokeAsync("SetServerMode", serverMode);
             }
             catch (Exception exception)
             {
