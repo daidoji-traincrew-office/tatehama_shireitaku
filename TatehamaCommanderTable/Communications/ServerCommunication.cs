@@ -28,7 +28,7 @@ namespace TatehamaCommanderTable.Communications
         private static HubConnection _connection;
         private static bool _isUpdateLoopRunning = false;
         private const string HubConnectionName = "commander_table";
-        
+
         private string _token = "";
         private string _refreshToken = "";
         private DateTimeOffset _tokenExpiration = DateTimeOffset.MinValue;
@@ -54,6 +54,10 @@ namespace TatehamaCommanderTable.Communications
         /// TrainInfoDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<TrainInfoDataGridViewSetting>> TrainInfoDataGridViewUpdated;
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<DiaDataGridViewSetting>> DiaDataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -141,7 +145,7 @@ namespace TatehamaCommanderTable.Communications
                 _refreshToken = "";
                 return true;
             }
-            
+
             try
             {
                 // ブラウザで認証要求
@@ -267,11 +271,11 @@ namespace TatehamaCommanderTable.Communications
             }
 
             // 再接続イベントのハンドリング
-            _connection.Closed += async(exception) =>
+            _connection.Closed += async (exception) =>
             {
                 Debug.WriteLine("Disconnected");
                 _dataManager.ServerConnected = false;
-                
+
                 // 例外が発生していない場合(=正常終了時)は何もしない
                 if (exception == null)
                 {
@@ -280,7 +284,7 @@ namespace TatehamaCommanderTable.Communications
 
                 // 例外が発生した場合はログに出力し再接続
                 Debug.WriteLine($"Exception: {exception.Message}\nStackTrace: {exception.StackTrace}");
-                
+
                 // 再接続処理を開始
                 await TryReconnectAsync();
             };
@@ -378,7 +382,7 @@ namespace TatehamaCommanderTable.Communications
 
             // リフレッシュトークンが無効な場合、再認証が必要
             Debug.WriteLine("Refresh token is invalid or expired.");
-            var result = CustomMessage.Show("トークンが切れました。\n再認証してください。", "認証失敗", 
+            var result = CustomMessage.Show("トークンが切れました。\n再認証してください。", "認証失敗",
                 MessageBoxButton.YesNo, MessageBoxImage.Error);
             if (result == MessageBoxResult.Yes)
             {
@@ -461,6 +465,7 @@ namespace TatehamaCommanderTable.Communications
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                             _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
                             _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
+                            _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         else
                         {
@@ -477,6 +482,7 @@ namespace TatehamaCommanderTable.Communications
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                             _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
                             _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
+                            _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
                         var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
@@ -556,6 +562,23 @@ namespace TatehamaCommanderTable.Communications
                         }
                         _dataManager.TrainInfoDataGridViewSettingList = trainInfoDataGridViewList;
                         OnTrainInfoDataGridViewUpdated(trainInfoDataGridViewList);
+
+                        // DiaDataGridView設定リストデータを作成
+                        var diaDataGridViewList = new SortableBindingList<DiaDataGridViewSetting>();
+                        foreach (var dia in _dataManager.DataFromServer.TrainDiagramDataList)
+                        {
+                            diaDataGridViewList.Add(new DiaDataGridViewSetting
+                            {
+                                TrainNumber = dia.TrainNumber.ToString(),
+                                TypeId = dia.TrainTypeId.ToString(),
+                                TrainType = dia.TrainType?.Name,
+                                FromStationId = dia.FromStationId.ToString(),
+                                ToStationId = dia.ToStationId.ToString(),
+                                DiaId = dia.DiaId.ToString(),
+                            });
+                        }
+                        _dataManager.DiaDataGridViewSettingList = diaDataGridViewList;
+                        OnDiaDataGridViewUpdated(diaDataGridViewList);
 
                         // 運転告知器リストデータを更新
                         lock (_dataManager.OperationNotificationDataList)
@@ -855,6 +878,15 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnTrainInfoDataGridViewUpdated(SortableBindingList<TrainInfoDataGridViewSetting> list)
         {
             TrainInfoDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnDiaDataGridViewUpdated(SortableBindingList<DiaDataGridViewSetting> list)
+        {
+            DiaDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>

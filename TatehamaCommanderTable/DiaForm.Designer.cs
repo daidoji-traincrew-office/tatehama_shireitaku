@@ -1,4 +1,7 @@
-﻿namespace TatehamaCommanderTable
+﻿using System;
+using TatehamaCommanderTable.Models;
+
+namespace TatehamaCommanderTable
 {
     partial class DiaForm
     {
@@ -30,16 +33,16 @@
         {
             components = new System.ComponentModel.Container();
             Dia_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
-            Dia_DataGridView_DiaData = new System.Windows.Forms.DataGridView();
             Dia_BindingSource = new System.Windows.Forms.BindingSource(components);
+            Dia_DataGridView_DiaData = new System.Windows.Forms.DataGridView();
             TrainNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             TrainType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             FromStationId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ToStationId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             DiaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)Dia_DataGridView_DiaData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Dia_BindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Dia_DataGridView_DiaData).BeginInit();
             SuspendLayout();
             // 
             // Dia_CheckBox_TopMost
@@ -132,8 +135,8 @@
             MinimizeBox = false;
             Name = "DiaForm";
             Text = "日時ダイヤ行先設定 | 司令卓 - ダイヤ運転会";
-            ((System.ComponentModel.ISupportInitialize)Dia_DataGridView_DiaData).EndInit();
             ((System.ComponentModel.ISupportInitialize)Dia_BindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Dia_DataGridView_DiaData).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -141,8 +144,8 @@
         #endregion
 
         private System.Windows.Forms.CheckBox Dia_CheckBox_TopMost;
-        private System.Windows.Forms.DataGridView Dia_DataGridView_DiaData;
         private System.Windows.Forms.BindingSource Dia_BindingSource;
+        private System.Windows.Forms.DataGridView Dia_DataGridView_DiaData;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrainNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn TypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrainType;
