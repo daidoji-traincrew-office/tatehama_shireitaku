@@ -46,6 +46,14 @@ namespace TatehamaCommanderTable.Communications
         /// MessageDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<MessageDataGridViewSetting>> MessageDataGridViewUpdated;
+        /// <summary>
+        /// ProtectionRadioDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<ProtectionRadioDataGridViewSetting>> ProtectionRadioDataGridViewUpdated;
+        /// <summary>
+        /// TrainInfoDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<TrainInfoDataGridViewSetting>> TrainInfoDataGridViewUpdated;
 
         /// <summary>
         /// コンストラクタ
@@ -451,6 +459,8 @@ namespace TatehamaCommanderTable.Communications
                         {
                             _dataManager.DataFromServer = data;
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
+                            _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
+                            _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
                         }
                         else
                         {
@@ -465,6 +475,8 @@ namespace TatehamaCommanderTable.Communications
                                 }
                             }
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
+                            _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
+                            _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
                         var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
@@ -512,6 +524,38 @@ namespace TatehamaCommanderTable.Communications
                         }
                         _dataManager.MessageDataGridViewSettingList = messageDataGridViewList;
                         OnMessageDataGridViewUpdated(messageDataGridViewList);
+
+                        // ProtectionRadioDataGridView設定リストデータを作成
+                        var protectionRadioDataGridViewList = new SortableBindingList<ProtectionRadioDataGridViewSetting>();
+                        foreach (var protectionRadio in _dataManager.DataFromServer.ProtectionRadioDataList)
+                        {
+                            protectionRadioDataGridViewList.Add(new ProtectionRadioDataGridViewSetting
+                            {
+                                ID = protectionRadio.Id.ToString(),
+                                ProtectionZone = protectionRadio.ProtectionZone.ToString(),
+                                TrainNumber = protectionRadio.TrainNumber ?? string.Empty
+                            });
+                        }
+                        _dataManager.ProtectionRadioDataGridViewSettingList = protectionRadioDataGridViewList;
+                        OnProtectionRadioDataGridViewUpdated(protectionRadioDataGridViewList);
+
+                        // TrainInfoDataGridView設定リストデータを作成
+                        var trainInfoDataGridViewList = new SortableBindingList<TrainInfoDataGridViewSetting>();
+                        foreach (var trainInfo in _dataManager.DataFromServer.TrainInfoDataList)
+                        {
+                            trainInfoDataGridViewList.Add(new TrainInfoDataGridViewSetting
+                            {
+                                ID = trainInfo.Id.ToString(),
+                                TrainNumber = trainInfo.TrainNumber,
+                                DiaNumber = trainInfo.DiaNumber.ToString(),
+                                FromStationID = trainInfo.FromStationId.ToString(),
+                                ToStationID = trainInfo.ToStationId.ToString(),
+                                Delay = trainInfo.Delay.ToString(),
+                                DriverID = trainInfo.DriverId?.ToString() ?? string.Empty,
+                            });
+                        }
+                        _dataManager.TrainInfoDataGridViewSettingList = trainInfoDataGridViewList;
+                        OnTrainInfoDataGridViewUpdated(trainInfoDataGridViewList);
 
                         // 運転告知器リストデータを更新
                         lock (_dataManager.OperationNotificationDataList)
@@ -691,6 +735,84 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへ防護無線情報の追加をリクエスト
+        /// </summary>
+        /// <param name="protectionRadioData"></param>
+        /// <returns></returns>
+        public async Task<ProtectionRadioData> AddProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState", protectionRadioData);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ防護無線情報の更新をリクエスト
+        /// </summary>
+        /// <param name="protectionRadioData"></param>
+        /// <returns></returns>
+        public async Task<ProtectionRadioData> UpdateProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState", protectionRadioData);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーから全ての防護無線情報を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ProtectionRadioData>> GetAllProtectionZones()
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetAllOperationInformations");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ防護無線情報の削除をリクエスト
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteProtectionRadioEventDataRequestToServerAsync(long id)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("DeleteProtectionZoneState", id);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
@@ -715,6 +837,24 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnMessageDataGridViewUpdated(SortableBindingList<MessageDataGridViewSetting> list)
         {
             MessageDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// ProtectionRadioDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnProtectionRadioDataGridViewUpdated(SortableBindingList<ProtectionRadioDataGridViewSetting> list)
+        {
+            ProtectionRadioDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// TrainInfoDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnTrainInfoDataGridViewUpdated(SortableBindingList<TrainInfoDataGridViewSetting> list)
+        {
+            TrainInfoDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>
