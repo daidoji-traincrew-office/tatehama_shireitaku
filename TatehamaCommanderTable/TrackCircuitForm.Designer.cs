@@ -89,6 +89,7 @@
             TrackCircuit_DataGridView_TrackCircuitData.DataSource = TrackCircuit_BindingSource;
             TrackCircuit_DataGridView_TrackCircuitData.Location = new System.Drawing.Point(12, 12);
             TrackCircuit_DataGridView_TrackCircuitData.Name = "TrackCircuit_DataGridView_TrackCircuitData";
+            TrackCircuit_DataGridView_TrackCircuitData.ReadOnly = true;
             TrackCircuit_DataGridView_TrackCircuitData.RowHeadersVisible = false;
             TrackCircuit_DataGridView_TrackCircuitData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             TrackCircuit_DataGridView_TrackCircuitData.Size = new System.Drawing.Size(520, 705);

@@ -70,6 +70,7 @@ namespace TatehamaCommanderTable
             Dia_DataGridView_DiaData.DataSource = Dia_BindingSource;
             Dia_DataGridView_DiaData.Location = new System.Drawing.Point(12, 37);
             Dia_DataGridView_DiaData.Name = "Dia_DataGridView_DiaData";
+            Dia_DataGridView_DiaData.ReadOnly = true;
             Dia_DataGridView_DiaData.RowHeadersVisible = false;
             Dia_DataGridView_DiaData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             Dia_DataGridView_DiaData.Size = new System.Drawing.Size(860, 260);

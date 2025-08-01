@@ -143,6 +143,7 @@
             Trouble_DataGridView_TroubleData.DataSource = Trouble_BindingSource;
             Trouble_DataGridView_TroubleData.Location = new System.Drawing.Point(13, 40);
             Trouble_DataGridView_TroubleData.Name = "Trouble_DataGridView_TroubleData";
+            Trouble_DataGridView_TroubleData.ReadOnly = true;
             Trouble_DataGridView_TroubleData.RowHeadersVisible = false;
             Trouble_DataGridView_TroubleData.Size = new System.Drawing.Size(760, 244);
             Trouble_DataGridView_TroubleData.TabIndex = 16;

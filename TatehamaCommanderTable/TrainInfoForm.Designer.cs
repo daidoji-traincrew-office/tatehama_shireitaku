@@ -132,6 +132,7 @@
             TrainInfo_DataGridView_TrainInfoData.DataSource = TrainInfo_BindingSource;
             TrainInfo_DataGridView_TrainInfoData.Location = new System.Drawing.Point(12, 37);
             TrainInfo_DataGridView_TrainInfoData.Name = "TrainInfo_DataGridView_TrainInfoData";
+            TrainInfo_DataGridView_TrainInfoData.ReadOnly = true;
             TrainInfo_DataGridView_TrainInfoData.RowHeadersVisible = false;
             TrainInfo_DataGridView_TrainInfoData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             TrainInfo_DataGridView_TrainInfoData.Size = new System.Drawing.Size(860, 360);

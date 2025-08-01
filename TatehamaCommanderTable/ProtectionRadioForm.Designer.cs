@@ -102,6 +102,7 @@
             ProtectionRadio_DataGridView_ProtectionRadioData.DataSource = ProtectionRadio_BindingSource;
             ProtectionRadio_DataGridView_ProtectionRadioData.Location = new System.Drawing.Point(12, 37);
             ProtectionRadio_DataGridView_ProtectionRadioData.Name = "ProtectionRadio_DataGridView_ProtectionRadioData";
+            ProtectionRadio_DataGridView_ProtectionRadioData.ReadOnly = true;
             ProtectionRadio_DataGridView_ProtectionRadioData.RowHeadersVisible = false;
             ProtectionRadio_DataGridView_ProtectionRadioData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             ProtectionRadio_DataGridView_ProtectionRadioData.Size = new System.Drawing.Size(470, 360);
