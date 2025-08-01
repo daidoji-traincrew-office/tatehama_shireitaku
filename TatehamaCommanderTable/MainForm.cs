@@ -250,9 +250,12 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                // 定時処理モード取得・反映
-                ServerMode serverMode = await _serverCommunication.GetServerModeEventDataRequestToServerAsync();
-                UpdateRadioButtonState(serverMode);
+                if (_dataManager.ServerConnected)
+                {
+                    // 定時処理モード取得・反映
+                    ServerMode serverMode = await _serverCommunication.GetServerModeEventDataRequestToServerAsync();
+                    UpdateRadioButtonState(serverMode);
+                }
             }
             catch (Exception ex)
             {
