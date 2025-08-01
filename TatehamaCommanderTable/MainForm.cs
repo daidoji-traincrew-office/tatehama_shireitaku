@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
+using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
 
 namespace TatehamaCommanderTable
@@ -26,6 +27,7 @@ namespace TatehamaCommanderTable
         private TrainInfoForm _trainInfoForm;
 
         private readonly Timer _mainTimer;
+        private readonly Timer _scheduleTimer;
 
         /// <summary>
         /// コンストラクタ
@@ -63,6 +65,11 @@ namespace TatehamaCommanderTable
             _mainTimer.Interval = 100;
             _mainTimer.Tick += MainTimer_Tick;
             _mainTimer.Start();
+
+            _scheduleTimer = new();
+            _scheduleTimer.Interval = 1000;
+            _scheduleTimer.Tick += ScheduleTimer_Tick;
+            _scheduleTimer.Start();
         }
 
         /// <summary>
@@ -74,9 +81,6 @@ namespace TatehamaCommanderTable
         {
             // ユーザー認証・初期化
             await _serverCommunication.Authorize();
-
-            // 定時処理を開始
-            await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Public);
         }
 
         /// <summary>
@@ -205,13 +209,13 @@ namespace TatehamaCommanderTable
                 switch (radioButton.Name)
                 {
                     case "RadioButton_OFF":
-                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Off);
+                        await _serverCommunication.SetServerModeEventDataRequestToServerAsync(ServerMode.Off);
                         break;
                     case "RadioButton_ON_Public":
-                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Public);
+                        await _serverCommunication.SetServerModeEventDataRequestToServerAsync(ServerMode.Public);
                         break;
                     case "RadioButton_ON_Private":
-                        await _serverCommunication.SetServerStateEventDataRequestToServerAsync(Models.ServerMode.Private);
+                        await _serverCommunication.SetServerModeEventDataRequestToServerAsync(ServerMode.Private);
                         break;
                     default:
                         break;
@@ -226,8 +230,34 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            // サーバー接続状態の表示を更新
-            UpdateServerConnectionState();
+            try
+            {
+                // サーバー接続状態の表示を更新
+                UpdateServerConnectionState();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"MainTimer_Tick Error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// ScheduleTimer_Tickイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ScheduleTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                // 定時処理モード取得・反映
+                ServerMode serverMode = await _serverCommunication.GetServerModeEventDataRequestToServerAsync();
+                UpdateRadioButtonState(serverMode);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ScheduleTimer_Tick Error: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -257,6 +287,26 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// RadioButtonの状態を更新
+        /// </summary>
+        /// <param name="serverMode"></param>
+        private void UpdateRadioButtonState(ServerMode serverMode)
+        {
+            switch (serverMode)
+            {
+                case ServerMode.Public:
+                    RadioButton_ON_Public.Checked = true;
+                    break;
+                case ServerMode.Private:
+                    RadioButton_ON_Private.Checked = true;
+                    break;
+                default:
+                    RadioButton_OFF.Checked = true;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// ウィンドウを閉じる際の確認処理
         /// </summary>
         /// <returns>ウィンドウを閉じて良い場合はtrue、それ以外はfalse</returns>
@@ -274,6 +324,7 @@ namespace TatehamaCommanderTable
 
             // タイマー停止
             _mainTimer.Stop();
+            _scheduleTimer.Stop();
 
             return true;
         }

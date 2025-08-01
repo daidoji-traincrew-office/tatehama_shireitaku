@@ -217,7 +217,7 @@
             RadioButton_ON_Private.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             RadioButton_ON_Private.Font = new System.Drawing.Font("Yu Gothic UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             RadioButton_ON_Private.ForeColor = System.Drawing.Color.Black;
-            RadioButton_ON_Private.Location = new System.Drawing.Point(227, 18);
+            RadioButton_ON_Private.Location = new System.Drawing.Point(117, 18);
             RadioButton_ON_Private.Margin = new System.Windows.Forms.Padding(5);
             RadioButton_ON_Private.Name = "RadioButton_ON_Private";
             RadioButton_ON_Private.Size = new System.Drawing.Size(100, 30);
@@ -239,7 +239,7 @@
             RadioButton_ON_Public.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             RadioButton_ON_Public.Font = new System.Drawing.Font("Yu Gothic UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             RadioButton_ON_Public.ForeColor = System.Drawing.Color.Black;
-            RadioButton_ON_Public.Location = new System.Drawing.Point(117, 18);
+            RadioButton_ON_Public.Location = new System.Drawing.Point(227, 18);
             RadioButton_ON_Public.Margin = new System.Windows.Forms.Padding(5);
             RadioButton_ON_Public.Name = "RadioButton_ON_Public";
             RadioButton_ON_Public.Size = new System.Drawing.Size(100, 30);

@@ -840,7 +840,7 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="serverMode"></param>
         /// <returns></returns>
-        public async Task SetServerStateEventDataRequestToServerAsync(ServerMode serverMode)
+        public async Task SetServerModeEventDataRequestToServerAsync(ServerMode serverMode)
         {
             try
             {
@@ -851,6 +851,25 @@ namespace TatehamaCommanderTable.Communications
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーから現在の定時処理モードを取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ServerMode> GetServerModeEventDataRequestToServerAsync()
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ServerMode>("GetServerMode");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return ServerMode.Off;
             }
         }
 
