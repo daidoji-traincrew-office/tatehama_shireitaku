@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -91,13 +92,89 @@ namespace TatehamaCommanderTable
                 // 削除ボタン
                 case "TrainState_Button_Delete":
                     {
+                        // 入力チェック
+                        StringBuilder errorMessage = new StringBuilder();
+                        if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_ID.Text) ||
+                            !long.TryParse(TrainState_NumericUpDown_ID.Text, out var id) || id < 0)
+                        {
+                            errorMessage.AppendLine("IDは0以上の数値を入力してください。");
+                        }
+                        if (errorMessage.Length > 0)
+                        {
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
 
+                        _serverCommunication.DeleteTrainStateEventDataRequestToServerAsync((long)TrainState_NumericUpDown_ID.Value);
+
+                        //CustomMessage.Show($"ID: {(long)TrainState_NumericUpDown_ID.Value}", "設定完了");
                     }
                     break;
                 // 更新ボタン
                 case "TrainState_Button_Update":
                     {
+                        // 入力チェック
+                        StringBuilder errorMessage = new StringBuilder();
 
+                        if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_ID.Text) ||
+                            !long.TryParse(TrainState_NumericUpDown_ID.Text, out var id) || id < 0)
+                        {
+                            errorMessage.AppendLine("IDは0以上の数値を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(TrainState_TextBox_TrainNumber.Text))
+                        {
+                            errorMessage.AppendLine("列車番号を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_DiaNumber.Text) ||
+                            !int.TryParse(TrainState_NumericUpDown_DiaNumber.Text, out var diaNumber) || diaNumber < 0)
+                        {
+                            errorMessage.AppendLine("ダイヤ番号は0以上の数値を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(TrainState_TextBox_FromStationID.Text))
+                        {
+                            errorMessage.AppendLine("始発駅IDを入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(TrainState_TextBox_ToStationID.Text))
+                        {
+                            errorMessage.AppendLine("行先駅IDを入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_Delay.Text) ||
+                            !int.TryParse(TrainState_NumericUpDown_Delay.Text, out var delay) || delay < 0)
+                        {
+                            errorMessage.AppendLine("遅延は0以上の数値を入力してください。");
+                        }
+                        if (!string.IsNullOrWhiteSpace(TrainState_TextBox_DriverID.Text) &&
+                            (!ulong.TryParse(TrainState_TextBox_DriverID.Text, out var driverId) || driverId < 0))
+                        {
+                            errorMessage.AppendLine("運転士IDは空欄, または0以上の数値を入力してください。");
+                        }
+                        if (errorMessage.Length > 0)
+                        {
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var sendData = new TrainStateData
+                        {
+                            Id = (long)TrainState_NumericUpDown_ID.Value,
+                            TrainNumber = TrainState_TextBox_TrainNumber.Text,
+                            DiaNumber = (int)TrainState_NumericUpDown_DiaNumber.Value,
+                            FromStationId = TrainState_TextBox_FromStationID.Text,
+                            ToStationId = TrainState_TextBox_ToStationID.Text,
+                            Delay = (int)TrainState_NumericUpDown_Delay.Value,
+                            DriverId = TrainState_TextBox_DriverID.Text == string.Empty ? null : Convert.ToUInt64(TrainState_TextBox_DriverID.Text)
+                        };
+                        var result = await _serverCommunication.UpdateTrainStateEventDataRequestToServerAsync(sendData);
+
+                        //CustomMessage.Show($"ID: {(long)TrainState_NumericUpDown_ID.Value}" +
+                        //    $"\nTrainNumber: {TrainState_TextBox_TrainNumber.Text}" +
+                        //    $"\nDiaNumber: {(int)TrainState_NumericUpDown_DiaNumber.Value}" +
+                        //    $"\nFromStationId: {TrainState_TextBox_FromStationID.Text}" +
+                        //    $"\nToStationId: {TrainState_TextBox_ToStationID.Text}" +
+                        //    $"\nDelay: {(int)TrainState_NumericUpDown_Delay.Value}" +
+                        //    $"\nDriverId: {(TrainState_TextBox_DriverID.Text == string.Empty ? null : Convert.ToUInt64(TrainState_TextBox_DriverID.Text))}",
+                        //    "設定完了",
+                        //    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                     }
                     break;
             }
