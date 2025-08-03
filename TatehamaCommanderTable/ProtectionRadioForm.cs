@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -87,6 +88,19 @@ namespace TatehamaCommanderTable
                 // 削除ボタン
                 case "ProtectionRadio_Button_Delete":
                     {
+                        // 入力チェック
+                        StringBuilder errorMessage = new();
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_NumericUpDown_ID.Text) ||
+                            !long.TryParse(ProtectionRadio_NumericUpDown_ID.Text, out var id) || id < 0)
+                        {
+                            errorMessage.AppendLine("IDは0以上の数値を入力してください。");
+                        }
+                        if (errorMessage.Length > 0)
+                        {
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
                         _serverCommunication.DeleteProtectionRadioEventDataRequestToServerAsync((long)ProtectionRadio_NumericUpDown_ID.Value);
 
                         //CustomMessage.Show($"ID: {(long)ProtectionRadio_NumericUpDown_ID.Value}", "設定完了");
@@ -95,31 +109,61 @@ namespace TatehamaCommanderTable
                 // 追加ボタン
                 case "ProtectionRadio_Button_Add":
                     {
-                        string trainNumber = ProtectionRadio_TextBox_TrainNumber.Text;
-                        if (string.IsNullOrWhiteSpace(trainNumber))
+                        // 入力チェック
+                        StringBuilder errorMessage = new();
+
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_NumericUpDown_ProtectionZone.Text) ||
+                            !int.TryParse(ProtectionRadio_NumericUpDown_ProtectionZone.Text, out var protectionZone) || protectionZone < 0)
                         {
-                            CustomMessage.Show("列車番号を入力してください。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            errorMessage.AppendLine("防護ゾーンは0以上の数値を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_TextBox_TrainNumber.Text))
+                        {
+                            errorMessage.AppendLine("列車番号を入力してください。");
+                        }
+                        if (errorMessage.Length > 0)
+                        {
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                             return;
                         }
 
                         var sendData = new ProtectionRadioData
                         {
-                            Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
                             ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
-                            TrainNumber = trainNumber
+                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
                         };
                         var result = await _serverCommunication.AddProtectionRadioEventDataRequestToServerAsync(sendData);
 
-                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}", "設定完了");
+                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}" +
+                        //    $"\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}" +
+                        //    $"\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}",
+                        //    "設定完了",
+                        //    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                     }
                     break;
                 // 更新ボタン
                 case "ProtectionRadio_Button_Update":
                     {
-                        string trainNumber = ProtectionRadio_TextBox_TrainNumber.Text;
-                        if (string.IsNullOrWhiteSpace(trainNumber))
+                        // 入力チェック
+                        StringBuilder errorMessage = new();
+
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_NumericUpDown_ID.Text) ||
+                            !long.TryParse(ProtectionRadio_NumericUpDown_ID.Text, out var id) || id < 0)
                         {
-                            CustomMessage.Show("列車番号を入力してください。", "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            errorMessage.AppendLine("IDは0以上の数値を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_NumericUpDown_ProtectionZone.Text) ||
+                            !int.TryParse(ProtectionRadio_NumericUpDown_ProtectionZone.Text, out var protectionZone) || protectionZone < 0)
+                        {
+                            errorMessage.AppendLine("防護ゾーンは0以上の数値を入力してください。");
+                        }
+                        if (string.IsNullOrWhiteSpace(ProtectionRadio_TextBox_TrainNumber.Text))
+                        {
+                            errorMessage.AppendLine("列車番号を入力してください。");
+                        }
+                        if (errorMessage.Length > 0)
+                        {
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                             return;
                         }
 
@@ -127,11 +171,15 @@ namespace TatehamaCommanderTable
                         {
                             Id = (ulong)ProtectionRadio_NumericUpDown_ID.Value,
                             ProtectionZone = (int)ProtectionRadio_NumericUpDown_ProtectionZone.Value,
-                            TrainNumber = trainNumber
+                            TrainNumber = ProtectionRadio_TextBox_TrainNumber.Text
                         };
                         var result = await _serverCommunication.UpdateProtectionRadioEventDataRequestToServerAsync(sendData);
 
-                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}", "設定完了");
+                        //CustomMessage.Show($"ID: {(ulong)ProtectionRadio_NumericUpDown_ID.Value}" +
+                        //    $"\nProtectionZone: {(int)ProtectionRadio_NumericUpDown_ProtectionZone.Value}" +
+                        //    $"\nTrainNumber: {ProtectionRadio_TextBox_TrainNumber.Text}",
+                        //    "設定完了",
+                        //    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                     }
                     break;
             }

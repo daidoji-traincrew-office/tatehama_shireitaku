@@ -114,10 +114,10 @@
             ProtectionRadio_Label_ID.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Label_ID.ForeColor = System.Drawing.Color.White;
             ProtectionRadio_Label_ID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            ProtectionRadio_Label_ID.Location = new System.Drawing.Point(33, 409);
+            ProtectionRadio_Label_ID.Location = new System.Drawing.Point(39, 409);
             ProtectionRadio_Label_ID.Name = "ProtectionRadio_Label_ID";
             ProtectionRadio_Label_ID.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            ProtectionRadio_Label_ID.Size = new System.Drawing.Size(86, 31);
+            ProtectionRadio_Label_ID.Size = new System.Drawing.Size(120, 31);
             ProtectionRadio_Label_ID.TabIndex = 33;
             ProtectionRadio_Label_ID.Text = "ID";
             ProtectionRadio_Label_ID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -125,9 +125,10 @@
             // ProtectionRadio_NumericUpDown_ID
             // 
             ProtectionRadio_NumericUpDown_ID.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            ProtectionRadio_NumericUpDown_ID.Location = new System.Drawing.Point(33, 443);
+            ProtectionRadio_NumericUpDown_ID.Location = new System.Drawing.Point(39, 443);
+            ProtectionRadio_NumericUpDown_ID.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             ProtectionRadio_NumericUpDown_ID.Name = "ProtectionRadio_NumericUpDown_ID";
-            ProtectionRadio_NumericUpDown_ID.Size = new System.Drawing.Size(86, 34);
+            ProtectionRadio_NumericUpDown_ID.Size = new System.Drawing.Size(120, 34);
             ProtectionRadio_NumericUpDown_ID.TabIndex = 32;
             ProtectionRadio_NumericUpDown_ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -137,10 +138,10 @@
             ProtectionRadio_Label_ProtectionZone.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Label_ProtectionZone.ForeColor = System.Drawing.Color.White;
             ProtectionRadio_Label_ProtectionZone.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            ProtectionRadio_Label_ProtectionZone.Location = new System.Drawing.Point(135, 409);
+            ProtectionRadio_Label_ProtectionZone.Location = new System.Drawing.Point(185, 409);
             ProtectionRadio_Label_ProtectionZone.Name = "ProtectionRadio_Label_ProtectionZone";
             ProtectionRadio_Label_ProtectionZone.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            ProtectionRadio_Label_ProtectionZone.Size = new System.Drawing.Size(86, 31);
+            ProtectionRadio_Label_ProtectionZone.Size = new System.Drawing.Size(120, 31);
             ProtectionRadio_Label_ProtectionZone.TabIndex = 35;
             ProtectionRadio_Label_ProtectionZone.Text = "防護ゾーン";
             ProtectionRadio_Label_ProtectionZone.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -148,19 +149,20 @@
             // ProtectionRadio_NumericUpDown_ProtectionZone
             // 
             ProtectionRadio_NumericUpDown_ProtectionZone.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            ProtectionRadio_NumericUpDown_ProtectionZone.Location = new System.Drawing.Point(135, 443);
+            ProtectionRadio_NumericUpDown_ProtectionZone.Location = new System.Drawing.Point(185, 443);
+            ProtectionRadio_NumericUpDown_ProtectionZone.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             ProtectionRadio_NumericUpDown_ProtectionZone.Name = "ProtectionRadio_NumericUpDown_ProtectionZone";
-            ProtectionRadio_NumericUpDown_ProtectionZone.Size = new System.Drawing.Size(86, 34);
+            ProtectionRadio_NumericUpDown_ProtectionZone.Size = new System.Drawing.Size(120, 34);
             ProtectionRadio_NumericUpDown_ProtectionZone.TabIndex = 34;
             ProtectionRadio_NumericUpDown_ProtectionZone.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ProtectionRadio_TextBox_TrainNumber
             // 
             ProtectionRadio_TextBox_TrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            ProtectionRadio_TextBox_TrainNumber.Location = new System.Drawing.Point(237, 442);
+            ProtectionRadio_TextBox_TrainNumber.Location = new System.Drawing.Point(331, 443);
             ProtectionRadio_TextBox_TrainNumber.MaxLength = 7;
             ProtectionRadio_TextBox_TrainNumber.Name = "ProtectionRadio_TextBox_TrainNumber";
-            ProtectionRadio_TextBox_TrainNumber.Size = new System.Drawing.Size(220, 34);
+            ProtectionRadio_TextBox_TrainNumber.Size = new System.Drawing.Size(120, 34);
             ProtectionRadio_TextBox_TrainNumber.TabIndex = 37;
             ProtectionRadio_TextBox_TrainNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -169,9 +171,9 @@
             ProtectionRadio_Label_Title_TrainNumber.BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ProtectionRadio_Label_Title_TrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Label_Title_TrainNumber.ForeColor = System.Drawing.Color.White;
-            ProtectionRadio_Label_Title_TrainNumber.Location = new System.Drawing.Point(237, 412);
+            ProtectionRadio_Label_Title_TrainNumber.Location = new System.Drawing.Point(331, 412);
             ProtectionRadio_Label_Title_TrainNumber.Name = "ProtectionRadio_Label_Title_TrainNumber";
-            ProtectionRadio_Label_Title_TrainNumber.Size = new System.Drawing.Size(220, 28);
+            ProtectionRadio_Label_Title_TrainNumber.Size = new System.Drawing.Size(120, 28);
             ProtectionRadio_Label_Title_TrainNumber.TabIndex = 36;
             ProtectionRadio_Label_Title_TrainNumber.Text = "列車番号";
             ProtectionRadio_Label_Title_TrainNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -184,7 +186,7 @@
             ProtectionRadio_Button_Update.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             ProtectionRadio_Button_Update.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Button_Update.ForeColor = System.Drawing.Color.Black;
-            ProtectionRadio_Button_Update.Location = new System.Drawing.Point(356, 498);
+            ProtectionRadio_Button_Update.Location = new System.Drawing.Point(376, 498);
             ProtectionRadio_Button_Update.Margin = new System.Windows.Forms.Padding(5);
             ProtectionRadio_Button_Update.Name = "ProtectionRadio_Button_Update";
             ProtectionRadio_Button_Update.Size = new System.Drawing.Size(75, 40);
@@ -201,7 +203,7 @@
             ProtectionRadio_Button_Delete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             ProtectionRadio_Button_Delete.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Button_Delete.ForeColor = System.Drawing.Color.White;
-            ProtectionRadio_Button_Delete.Location = new System.Drawing.Point(38, 498);
+            ProtectionRadio_Button_Delete.Location = new System.Drawing.Point(62, 498);
             ProtectionRadio_Button_Delete.Margin = new System.Windows.Forms.Padding(5);
             ProtectionRadio_Button_Delete.Name = "ProtectionRadio_Button_Delete";
             ProtectionRadio_Button_Delete.Size = new System.Drawing.Size(75, 40);
@@ -218,7 +220,7 @@
             ProtectionRadio_Button_Add.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             ProtectionRadio_Button_Add.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             ProtectionRadio_Button_Add.ForeColor = System.Drawing.Color.Black;
-            ProtectionRadio_Button_Add.Location = new System.Drawing.Point(256, 498);
+            ProtectionRadio_Button_Add.Location = new System.Drawing.Point(276, 498);
             ProtectionRadio_Button_Add.Margin = new System.Windows.Forms.Padding(5);
             ProtectionRadio_Button_Add.Name = "ProtectionRadio_Button_Add";
             ProtectionRadio_Button_Add.Size = new System.Drawing.Size(75, 40);

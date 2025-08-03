@@ -93,7 +93,7 @@ namespace TatehamaCommanderTable
                 case "TrainState_Button_Delete":
                     {
                         // 入力チェック
-                        StringBuilder errorMessage = new StringBuilder();
+                        StringBuilder errorMessage = new();
                         if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_ID.Text) ||
                             !long.TryParse(TrainState_NumericUpDown_ID.Text, out var id) || id < 0)
                         {
@@ -114,7 +114,7 @@ namespace TatehamaCommanderTable
                 case "TrainState_Button_Update":
                     {
                         // 入力チェック
-                        StringBuilder errorMessage = new StringBuilder();
+                        StringBuilder errorMessage = new();
 
                         if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_ID.Text) ||
                             !long.TryParse(TrainState_NumericUpDown_ID.Text, out var id) || id < 0)
