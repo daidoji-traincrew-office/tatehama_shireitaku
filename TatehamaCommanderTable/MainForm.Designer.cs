@@ -37,7 +37,7 @@
             Button_Select_Message = new System.Windows.Forms.Button();
             Button_Select_Dia = new System.Windows.Forms.Button();
             Button_Select_ProtectionRadio = new System.Windows.Forms.Button();
-            Button_Select_TrainInfo = new System.Windows.Forms.Button();
+            Button_Select_TrainState = new System.Windows.Forms.Button();
             GroupBox_Schedule = new System.Windows.Forms.GroupBox();
             RadioButton_ON_Private = new System.Windows.Forms.RadioButton();
             RadioButton_ON_Public = new System.Windows.Forms.RadioButton();
@@ -176,22 +176,22 @@
             Button_Select_ProtectionRadio.UseVisualStyleBackColor = false;
             Button_Select_ProtectionRadio.Click += ButtonClickEvent;
             // 
-            // Button_Select_TrainInfo
+            // Button_Select_TrainState
             // 
-            Button_Select_TrainInfo.BackColor = System.Drawing.Color.LightBlue;
-            Button_Select_TrainInfo.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            Button_Select_TrainInfo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
-            Button_Select_TrainInfo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
-            Button_Select_TrainInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            Button_Select_TrainInfo.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_TrainInfo.Location = new System.Drawing.Point(66, 380);
-            Button_Select_TrainInfo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            Button_Select_TrainInfo.Name = "Button_Select_TrainInfo";
-            Button_Select_TrainInfo.Size = new System.Drawing.Size(200, 100);
-            Button_Select_TrainInfo.TabIndex = 21;
-            Button_Select_TrainInfo.Text = "列車情報";
-            Button_Select_TrainInfo.UseVisualStyleBackColor = false;
-            Button_Select_TrainInfo.Click += ButtonClickEvent;
+            Button_Select_TrainState.BackColor = System.Drawing.Color.LightBlue;
+            Button_Select_TrainState.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            Button_Select_TrainState.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
+            Button_Select_TrainState.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
+            Button_Select_TrainState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Button_Select_TrainState.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Button_Select_TrainState.Location = new System.Drawing.Point(66, 380);
+            Button_Select_TrainState.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            Button_Select_TrainState.Name = "Button_Select_TrainState";
+            Button_Select_TrainState.Size = new System.Drawing.Size(200, 100);
+            Button_Select_TrainState.TabIndex = 21;
+            Button_Select_TrainState.Text = "列車情報";
+            Button_Select_TrainState.UseVisualStyleBackColor = false;
+            Button_Select_TrainState.Click += ButtonClickEvent;
             // 
             // GroupBox_Schedule
             // 
@@ -292,7 +292,7 @@
             ClientSize = new System.Drawing.Size(784, 561);
             Controls.Add(Label_ServerType);
             Controls.Add(GroupBox_Schedule);
-            Controls.Add(Button_Select_TrainInfo);
+            Controls.Add(Button_Select_TrainState);
             Controls.Add(Button_Select_ProtectionRadio);
             Controls.Add(Button_Select_Dia);
             Controls.Add(Button_Select_Message);
@@ -323,7 +323,7 @@
         private System.Windows.Forms.Button Button_Select_Message;
         private System.Windows.Forms.Button Button_Select_Dia;
         private System.Windows.Forms.Button Button_Select_ProtectionRadio;
-        private System.Windows.Forms.Button Button_Select_TrainInfo;
+        private System.Windows.Forms.Button Button_Select_TrainState;
         private System.Windows.Forms.GroupBox GroupBox_Schedule;
         private System.Windows.Forms.RadioButton RadioButton_ON_Private;
         private System.Windows.Forms.RadioButton RadioButton_ON_Public;

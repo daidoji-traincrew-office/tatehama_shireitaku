@@ -3,7 +3,7 @@
     /// <summary>
     /// 列車情報データクラス
     /// </summary>
-    public class TrainInfoData
+    public class TrainStateData
     {
         public long Id { get; set; }
         public string TrainNumber { get; set; }
@@ -13,7 +13,7 @@
         public int Delay { get; set; }
         public ulong? DriverId { get; set; }
 
-        public TrainInfoData()
+        public TrainStateData()
         {
             Id = 0;
             TrainNumber = string.Empty;

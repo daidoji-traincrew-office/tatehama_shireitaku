@@ -51,9 +51,9 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         public event Action<SortableBindingList<ProtectionRadioDataGridViewSetting>> ProtectionRadioDataGridViewUpdated;
         /// <summary>
-        /// TrainInfoDataGridView更新通知イベント
+        /// TrainStateDataGridView更新通知イベント
         /// </summary>
-        public event Action<SortableBindingList<TrainInfoDataGridViewSetting>> TrainInfoDataGridViewUpdated;
+        public event Action<SortableBindingList<TrainStateDataGridViewSetting>> TrainStateDataGridViewUpdated;
         /// <summary>
         /// DiaDataGridView更新通知イベント
         /// </summary>
@@ -464,7 +464,7 @@ namespace TatehamaCommanderTable.Communications
                             _dataManager.DataFromServer = data;
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                             _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
-                            _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
+                            _dataManager.DataFromServer.TrainStateDataList = await GetAllTrainStates();
                             _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         else
@@ -481,7 +481,7 @@ namespace TatehamaCommanderTable.Communications
                             }
                             _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
                             _dataManager.DataFromServer.ProtectionRadioDataList = await GetAllProtectionZones();
-                            _dataManager.DataFromServer.TrainInfoDataList = new List<TrainInfoData>();
+                            _dataManager.DataFromServer.TrainStateDataList = await GetAllTrainStates();
                             _dataManager.DataFromServer.TrainDiagramDataList = new();
                         }
                         // TrackCircuitDataGridView設定リストデータを作成
@@ -545,23 +545,23 @@ namespace TatehamaCommanderTable.Communications
                         _dataManager.ProtectionRadioDataGridViewSettingList = protectionRadioDataGridViewList;
                         OnProtectionRadioDataGridViewUpdated(protectionRadioDataGridViewList);
 
-                        // TrainInfoDataGridView設定リストデータを作成
-                        var trainInfoDataGridViewList = new SortableBindingList<TrainInfoDataGridViewSetting>();
-                        foreach (var trainInfo in _dataManager.DataFromServer.TrainInfoDataList)
+                        // TrainStateDataGridView設定リストデータを作成
+                        var trainStateDataGridViewList = new SortableBindingList<TrainStateDataGridViewSetting>();
+                        foreach (var trainState in _dataManager.DataFromServer.TrainStateDataList)
                         {
-                            trainInfoDataGridViewList.Add(new TrainInfoDataGridViewSetting
+                            trainStateDataGridViewList.Add(new TrainStateDataGridViewSetting
                             {
-                                ID = trainInfo.Id.ToString(),
-                                TrainNumber = trainInfo.TrainNumber,
-                                DiaNumber = trainInfo.DiaNumber.ToString(),
-                                FromStationID = trainInfo.FromStationId.ToString(),
-                                ToStationID = trainInfo.ToStationId.ToString(),
-                                Delay = trainInfo.Delay.ToString(),
-                                DriverID = trainInfo.DriverId?.ToString() ?? string.Empty,
+                                ID = trainState.Id.ToString(),
+                                TrainNumber = trainState.TrainNumber,
+                                DiaNumber = trainState.DiaNumber.ToString(),
+                                FromStationID = trainState.FromStationId.ToString(),
+                                ToStationID = trainState.ToStationId.ToString(),
+                                Delay = trainState.Delay.ToString(),
+                                DriverID = trainState.DriverId?.ToString() ?? string.Empty,
                             });
                         }
-                        _dataManager.TrainInfoDataGridViewSettingList = trainInfoDataGridViewList;
-                        OnTrainInfoDataGridViewUpdated(trainInfoDataGridViewList);
+                        _dataManager.TrainStateDataGridViewSettingList = trainStateDataGridViewList;
+                        OnTrainStateDataGridViewUpdated(trainStateDataGridViewList);
 
                         // DiaDataGridView設定リストデータを作成
                         var diaDataGridViewList = new SortableBindingList<DiaDataGridViewSetting>();
@@ -836,6 +836,64 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへ列車情報の更新をリクエスト
+        /// </summary>
+        /// <param name="trainStateData"></param>
+        /// <returns></returns>
+        public async Task<TrainStateData> UpdateTrainStateEventDataRequestToServerAsync(TrainStateData trainStateData)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<TrainStateData>("UpdateTrainStateData", trainStateData);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーから全ての列車情報を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TrainStateData>> GetAllTrainStates()
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<TrainStateData>>("GetAllTrainState");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ列車情報の削除をリクエスト
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteTrainStateEventDataRequestToServerAsync(long id)
+        {
+            try
+            {
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("DeleteTrainState", id);
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// サーバーへ定時処理をリクエスト
         /// </summary>
         /// <param name="serverMode"></param>
@@ -858,7 +916,7 @@ namespace TatehamaCommanderTable.Communications
         /// サーバーから現在の定時処理モードを取得
         /// </summary>
         /// <returns></returns>
-        public async Task<ServerMode> GetServerModeEventDataRequestToServerAsync()
+        public async Task<ServerMode> GetServerMode()
         {
             try
             {
@@ -910,12 +968,12 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
-        /// TrainInfoDataGridView更新通知イベント
+        /// TrainStateDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
-        protected virtual void OnTrainInfoDataGridViewUpdated(SortableBindingList<TrainInfoDataGridViewSetting> list)
+        protected virtual void OnTrainStateDataGridViewUpdated(SortableBindingList<TrainStateDataGridViewSetting> list)
         {
-            TrainInfoDataGridViewUpdated?.Invoke(list);
+            TrainStateDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>

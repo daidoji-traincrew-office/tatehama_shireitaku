@@ -24,7 +24,7 @@ namespace TatehamaCommanderTable
         private MessageForm _messageForm;
         private DiaForm _diaForm;
         private ProtectionRadioForm _protectionRadioForm;
-        private TrainInfoForm _trainInfoForm;
+        private TrainStateForm _trainStateForm;
 
         private readonly Timer _mainTimer;
         private readonly Timer _scheduleTimer;
@@ -51,7 +51,7 @@ namespace TatehamaCommanderTable
             _messageForm = new MessageForm(serverCommunication);
             _diaForm = new DiaForm(serverCommunication);
             _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
-            _trainInfoForm = new TrainInfoForm(serverCommunication);
+            _trainStateForm = new TrainStateForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -182,13 +182,13 @@ namespace TatehamaCommanderTable
                         }
                         break;
                     // 列車情報
-                    case "Button_Select_TrainInfo":
+                    case "Button_Select_TrainState":
                         {
-                            if (_trainInfoForm.IsDisposed)
+                            if (_trainStateForm.IsDisposed)
                             {
-                                _trainInfoForm = new TrainInfoForm(_serverCommunication);
+                                _trainStateForm = new TrainStateForm(_serverCommunication);
                             }
-                            _trainInfoForm.Show();
+                            _trainStateForm.Show();
                         }
                         break;
                     default:
@@ -253,7 +253,7 @@ namespace TatehamaCommanderTable
                 if (_dataManager.ServerConnected)
                 {
                     // 定時処理モード取得・反映
-                    ServerMode serverMode = await _serverCommunication.GetServerModeEventDataRequestToServerAsync();
+                    ServerMode serverMode = await _serverCommunication.GetServerMode();
                     UpdateRadioButtonState(serverMode);
                 }
             }

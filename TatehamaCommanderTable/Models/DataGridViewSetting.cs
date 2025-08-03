@@ -116,9 +116,9 @@ namespace TatehamaCommanderTable.Models
     }
 
     /// <summary>
-    /// TrainInfoDataGridView設定クラス
+    /// TrainStateDataGridView設定クラス
     /// </summary>
-    public class TrainInfoDataGridViewSetting
+    public class TrainStateDataGridViewSetting
     {
         /// <summary>
         /// ID

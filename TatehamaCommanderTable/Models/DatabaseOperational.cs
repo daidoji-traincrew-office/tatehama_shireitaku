@@ -43,7 +43,7 @@ namespace TatehamaCommanderTable.Models
             /// <summary>
             /// 列車情報データリスト
             /// </summary>
-            public List<TrainInfoData> TrainInfoDataList { get; set; }
+            public List<TrainStateData> TrainStateDataList { get; set; }
 
             /// <summary>
             /// ダイヤデータリスト
