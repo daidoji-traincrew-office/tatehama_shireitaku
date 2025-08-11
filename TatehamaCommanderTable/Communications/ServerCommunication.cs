@@ -806,7 +806,7 @@ namespace TatehamaCommanderTable.Communications
             try
             {
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetAllOperationInformations");
+                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetProtectionZoneStates");
             }
             catch (Exception exception)
             {
