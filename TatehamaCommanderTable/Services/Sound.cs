@@ -38,9 +38,9 @@ namespace TatehamaCommanderTable.Services
                 CreateLoopSoundList();
                 PlayAllSounds();
             }
-            catch
+            catch (Exception ex)
             {
-
+                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }
 
@@ -91,9 +91,9 @@ namespace TatehamaCommanderTable.Services
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }
 
@@ -114,8 +114,6 @@ namespace TatehamaCommanderTable.Services
             SoundSource.Clear();
             SoundBuffer.Clear();
         }
-
-
 
         /// <summary>
         /// 音声再生メソッド
