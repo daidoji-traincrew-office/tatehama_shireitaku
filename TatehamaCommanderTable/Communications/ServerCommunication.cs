@@ -31,6 +31,7 @@ namespace TatehamaCommanderTable.Communications
 
         private string _token = "";
         private string _refreshToken = "";
+        private CancellationTokenSource _cts = new();
         private DateTimeOffset _tokenExpiration = DateTimeOffset.MinValue;
         private bool _eventHandlersSet = false;
         private const int ReconnectIntervalMs = 500;
@@ -83,16 +84,23 @@ namespace TatehamaCommanderTable.Communications
         /// <returns></returns>
         private async Task UpdateLoop()
         {
-            while (true)
+            try
             {
-                var timer = Task.Delay(200);
-                await timer;
-
-                // サーバー接続中ならデータ送信
-                if (_dataManager.ServerConnected)
+                while (!_cts.IsCancellationRequested)
                 {
-                    await SendConstantDataRequestToServerAsync();
+                    var timer = Task.Delay(200, _cts.Token);
+                    await timer;
+
+                    // サーバー接続中ならデータ送信
+                    if (_dataManager.ServerConnected)
+                    {
+                        await SendConstantDataRequestToServerAsync();
+                    }
                 }
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("UpdateLoop: キャンセルされました。正常終了です。");
             }
         }
 
@@ -591,6 +599,10 @@ namespace TatehamaCommanderTable.Communications
                         Debug.WriteLine("Failed to receive Data.");
                     }
                 }
+                catch (TaskCanceledException)
+                {
+                    Debug.WriteLine("SendConstantDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                }
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error server receiving: {ex.Message}");
@@ -615,6 +627,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTroubleData", troubleData);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("SendTroubleEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -633,6 +649,10 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendOperationNotificationData", operationNotificationData);
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("SendOperationNotificationDataRequestToServer: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
@@ -653,6 +673,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTrackCircuitData", trackCircuitData);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("SendTrackCircuitEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -672,6 +696,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrain", trainName);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("SendDeleteTrainRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -690,6 +718,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation", operationInformationData);
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("AddOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
             }
             catch (Exception exception)
             {
@@ -711,6 +744,11 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation", operationInformationData);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("UpdateOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -729,6 +767,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<OperationInformationData>>("GetAllOperationInformations");
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("GetAllOperationInformations: キャンセルされました。正常終了です。");
+                return new();
             }
             catch (Exception exception)
             {
@@ -750,6 +793,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteOperationInformation", id);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("DeleteOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -768,6 +815,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState", protectionRadioData);
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("AddProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
             }
             catch (Exception exception)
             {
@@ -789,6 +841,11 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState", protectionRadioData);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("UpdateProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -807,6 +864,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetProtectionZoneStates");
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("GetAllProtectionZones: キャンセルされました。正常終了です。");
+                return new();
             }
             catch (Exception exception)
             {
@@ -828,6 +890,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteProtectionZoneState", id);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("DeleteProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -847,6 +913,11 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<TrainStateData>("UpdateTrainStateData", trainStateData);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("UpdateTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -865,6 +936,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<TrainStateData>>("GetAllTrainState");
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("GetAllTrainStates: キャンセルされました。正常終了です。");
+                return new();
             }
             catch (Exception exception)
             {
@@ -886,6 +962,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrainState", id);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("DeleteTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -905,6 +985,10 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SetServerMode", serverMode);
             }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("SetServerModeEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
@@ -922,6 +1006,11 @@ namespace TatehamaCommanderTable.Communications
             {
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ServerMode>("GetServerMode");
+            }
+            catch (TaskCanceledException)
+            {
+                Debug.WriteLine("GetServerMode: キャンセルされました。正常終了です。");
+                return ServerMode.Off;
             }
             catch (Exception exception)
             {
@@ -991,6 +1080,7 @@ namespace TatehamaCommanderTable.Communications
         /// <returns></returns>
         public async Task DisconnectAsync()
         {
+            _cts.Cancel();
             await DisposeAndStopConnectionAsync(CancellationToken.None);
             _dataManager.ServerConnected = false;
         }

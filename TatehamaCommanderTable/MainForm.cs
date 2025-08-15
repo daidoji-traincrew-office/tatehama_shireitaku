@@ -96,8 +96,9 @@ namespace TatehamaCommanderTable
                 e.Cancel = true;
                 return;
             }
-            // サーバー切断
+            // サーバー切断とリソース解放
             await _serverCommunication.DisconnectAsync();
+            await _serverCommunication.DisposeAsync();
         }
 
         /// <summary>
@@ -328,6 +329,9 @@ namespace TatehamaCommanderTable
             // タイマー停止
             _mainTimer.Stop();
             _scheduleTimer.Stop();
+            // 音声停止
+            Sound.Instance.SoundAllStop();
+            Sound.Instance.Dispose();
 
             return true;
         }

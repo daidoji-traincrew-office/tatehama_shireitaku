@@ -44,6 +44,7 @@
             ProtectionRadio_Button_Update = new System.Windows.Forms.Button();
             ProtectionRadio_Button_Delete = new System.Windows.Forms.Button();
             ProtectionRadio_Button_Add = new System.Windows.Forms.Button();
+            ProtectionRadio_Label_ReceivingState = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_DataGridView_ProtectionRadioData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_BindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_NumericUpDown_ID).BeginInit();
@@ -229,12 +230,26 @@
             ProtectionRadio_Button_Add.UseVisualStyleBackColor = false;
             ProtectionRadio_Button_Add.Click += ProtectionRadio_Button_Click;
             // 
+            // ProtectionRadio_Label_ReceivingState
+            // 
+            ProtectionRadio_Label_ReceivingState.BackColor = System.Drawing.Color.FromArgb(85, 85, 85);
+            ProtectionRadio_Label_ReceivingState.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            ProtectionRadio_Label_ReceivingState.ForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            ProtectionRadio_Label_ReceivingState.Location = new System.Drawing.Point(190, 9);
+            ProtectionRadio_Label_ReceivingState.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            ProtectionRadio_Label_ReceivingState.Name = "ProtectionRadio_Label_ReceivingState";
+            ProtectionRadio_Label_ReceivingState.Size = new System.Drawing.Size(100, 25);
+            ProtectionRadio_Label_ReceivingState.TabIndex = 41;
+            ProtectionRadio_Label_ReceivingState.Text = "受報中";
+            ProtectionRadio_Label_ReceivingState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ProtectionRadioForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(494, 561);
+            Controls.Add(ProtectionRadio_Label_ReceivingState);
             Controls.Add(ProtectionRadio_Button_Update);
             Controls.Add(ProtectionRadio_Button_Delete);
             Controls.Add(ProtectionRadio_Button_Add);
@@ -249,6 +264,7 @@
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Name = "ProtectionRadioForm";
             Text = "防護無線設定 | 司令卓 - ダイヤ運転会";
+            VisibleChanged += ProtectionRadioForm_VisibleChanged;
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_DataGridView_ProtectionRadioData).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_BindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProtectionRadio_NumericUpDown_ID).EndInit();
@@ -274,5 +290,6 @@
         private System.Windows.Forms.Button ProtectionRadio_Button_Update;
         private System.Windows.Forms.Button ProtectionRadio_Button_Delete;
         private System.Windows.Forms.Button ProtectionRadio_Button_Add;
+        private System.Windows.Forms.Label ProtectionRadio_Label_ReceivingState;
     }
 }
