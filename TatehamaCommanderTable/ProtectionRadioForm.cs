@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
@@ -14,9 +12,7 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
-        private readonly Sound _sound;
         private bool _isScrolling = false;
-        private bool _isFormVisible = false;
 
         public ProtectionRadioForm(ServerCommunication serverCommunication)
         {
@@ -24,7 +20,6 @@ namespace TatehamaCommanderTable
 
             // インスタンス取得
             _dataManager = DataManager.Instance;
-            _sound = Sound.Instance;
             _serverCommunication = serverCommunication;
 
             // イベント設定
@@ -56,21 +51,6 @@ namespace TatehamaCommanderTable
 
             // TextBoxの初期値設定
             ProtectionRadio_TextBox_TrainNumber.Text = string.Empty;
-
-            // 防護無線受報状態の初期値設定
-            ProtectionRadio_Label_ReceivingState.ForeColor = ColorTranslator.FromHtml("#FF888888");
-            ProtectionRadio_Label_ReceivingState.BackColor = ColorTranslator.FromHtml("#FF555555");
-            ProtectionRadio_Label_ReceivingState.Font = new Font(ProtectionRadio_Label_ReceivingState.Font, FontStyle.Regular);
-        }
-
-        /// <summary>
-        /// ProtectionRadioForm_VisibleChangedイベント
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ProtectionRadioForm_VisibleChanged(object sender, EventArgs e)
-        {
-            _isFormVisible = this.Visible;
         }
 
         /// <summary>
@@ -82,7 +62,6 @@ namespace TatehamaCommanderTable
         {
             Hide();
             e.Cancel = true;
-            _isFormVisible = false;
         }
 
         /// <summary>
@@ -301,22 +280,6 @@ namespace TatehamaCommanderTable
                         ResumeLayout();
                     }
                     _isScrolling = false;
-
-                    // 防護無線受報状態の更新
-                    this.Invoke(new Action(() =>
-                    {
-                        UpdateProtectionRadioReceivingState(rowsCount);
-                    }));
-
-                    // 防護無線音声更新処理
-                    if (_isFormVisible && this.Visible)
-                    {
-                        UpdateProtectionRadioSound(rowsCount);
-                    }
-                    else
-                    {
-                        UpdateProtectionRadioSound(0);
-                    }
                 }
             }
             catch (Exception ex)
@@ -338,49 +301,6 @@ namespace TatehamaCommanderTable
             ProtectionRadio_DataGridView_ProtectionRadioData.Columns["ID"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             ProtectionRadio_DataGridView_ProtectionRadioData.Columns["ProtectionZone"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             ProtectionRadio_DataGridView_ProtectionRadioData.Columns["TrainNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        /// <summary>
-        /// 防護無線音声更新処理
-        /// </summary>
-        private void UpdateProtectionRadioSound(int dataCount)
-        {
-            try
-            {
-                if (dataCount > 0)
-                {
-                    // 音量設定
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 1.0f);
-                }
-                else
-                {
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 0.0f);
-                }
-            }
-            catch (Exception ex)
-            {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// 防護無線受報状態の表示を更新
-        /// </summary>
-        private void UpdateProtectionRadioReceivingState(int dataCount)
-        {
-            // 防護無線受報状態の表示を更新
-            if (dataCount > 0)
-            {
-                ProtectionRadio_Label_ReceivingState.ForeColor = ColorTranslator.FromHtml("#FFFFFFFF");
-                ProtectionRadio_Label_ReceivingState.BackColor = ColorTranslator.FromHtml("#FFFF4500");
-                ProtectionRadio_Label_ReceivingState.Font = new Font(ProtectionRadio_Label_ReceivingState.Font, FontStyle.Bold);
-            }
-            else
-            {
-                ProtectionRadio_Label_ReceivingState.ForeColor = ColorTranslator.FromHtml("#FF888888");
-                ProtectionRadio_Label_ReceivingState.BackColor = ColorTranslator.FromHtml("#FF555555");
-                ProtectionRadio_Label_ReceivingState.Font = new Font(ProtectionRadio_Label_ReceivingState.Font, FontStyle.Regular);
-            }
         }
     }
 }

@@ -46,6 +46,7 @@
             GroupBox_Volume = new System.Windows.Forms.GroupBox();
             Label_Volume = new System.Windows.Forms.Label();
             TrackBar_Volume = new System.Windows.Forms.TrackBar();
+            Label_ProtectionRadioReceivingState = new System.Windows.Forms.Label();
             GroupBox_Schedule.SuspendLayout();
             GroupBox_Volume.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
@@ -296,7 +297,7 @@
             GroupBox_Volume.ForeColor = System.Drawing.Color.White;
             GroupBox_Volume.Location = new System.Drawing.Point(353, 9);
             GroupBox_Volume.Name = "GroupBox_Volume";
-            GroupBox_Volume.Size = new System.Drawing.Size(145, 59);
+            GroupBox_Volume.Size = new System.Drawing.Size(89, 59);
             GroupBox_Volume.TabIndex = 25;
             GroupBox_Volume.TabStop = false;
             GroupBox_Volume.Text = "音量";
@@ -317,9 +318,23 @@
             TrackBar_Volume.LargeChange = 1;
             TrackBar_Volume.Location = new System.Drawing.Point(6, 18);
             TrackBar_Volume.Name = "TrackBar_Volume";
-            TrackBar_Volume.Size = new System.Drawing.Size(133, 30);
+            TrackBar_Volume.Size = new System.Drawing.Size(77, 30);
             TrackBar_Volume.TabIndex = 26;
+            TrackBar_Volume.TickFrequency = 5;
             TrackBar_Volume.Value = 10;
+            // 
+            // Label_ProtectionRadioReceivingState
+            // 
+            Label_ProtectionRadioReceivingState.BackColor = System.Drawing.Color.FromArgb(85, 85, 85);
+            Label_ProtectionRadioReceivingState.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            Label_ProtectionRadioReceivingState.ForeColor = System.Drawing.Color.FromArgb(136, 136, 136);
+            Label_ProtectionRadioReceivingState.Location = new System.Drawing.Point(486, 9);
+            Label_ProtectionRadioReceivingState.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            Label_ProtectionRadioReceivingState.Name = "Label_ProtectionRadioReceivingState";
+            Label_ProtectionRadioReceivingState.Size = new System.Drawing.Size(70, 30);
+            Label_ProtectionRadioReceivingState.TabIndex = 26;
+            Label_ProtectionRadioReceivingState.Text = "防護";
+            Label_ProtectionRadioReceivingState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -327,6 +342,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Label_ProtectionRadioReceivingState);
             Controls.Add(GroupBox_Volume);
             Controls.Add(Label_ServerType);
             Controls.Add(GroupBox_Schedule);
@@ -372,5 +388,6 @@
         private System.Windows.Forms.GroupBox GroupBox_Volume;
         private System.Windows.Forms.TrackBar TrackBar_Volume;
         private System.Windows.Forms.Label Label_Volume;
+        private System.Windows.Forms.Label Label_ProtectionRadioReceivingState;
     }
 }

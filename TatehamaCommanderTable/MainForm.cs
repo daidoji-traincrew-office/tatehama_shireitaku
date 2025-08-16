@@ -3,6 +3,7 @@ using OpenIddict.Client;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -64,6 +65,9 @@ namespace TatehamaCommanderTable
             Label_ServerType.Text = ServerAddress.SignalAddress.Contains("dev") ? "Dev" : "Prod";
             TrackBar_Volume.Value = 10;
             Label_Volume.Text = "100%";
+            Label_ProtectionRadioReceivingState.ForeColor = ColorTranslator.FromHtml("#FF888888");
+            Label_ProtectionRadioReceivingState.BackColor = ColorTranslator.FromHtml("#FF555555");
+            Label_ProtectionRadioReceivingState.Font = new Font(Label_ProtectionRadioReceivingState.Font, System.Drawing.FontStyle.Regular);
 
             // 音量設定
             _sound.fMasterVolume = 1.0f;
@@ -254,6 +258,13 @@ namespace TatehamaCommanderTable
             {
                 // サーバー接続状態の表示を更新
                 UpdateServerConnectionState();
+
+                // 防護無線情報取得
+                var dataCount = _dataManager.DataFromServer.ProtectionRadioDataList.Count;
+                // 防護無線受報状態の表示を更新
+                UpdateProtectionRadioReceivingState(dataCount);
+                // 防護無線音声更新処理
+                UpdateProtectionRadioSound(dataCount);
             }
             catch (Exception ex)
             {
@@ -306,6 +317,49 @@ namespace TatehamaCommanderTable
 
                 Label_ServerType.ForeColor = ColorTranslator.FromHtml("#FF888888");
                 Label_ServerType.BackColor = ColorTranslator.FromHtml("#FF555555");
+            }
+        }
+
+        /// <summary>
+        /// 防護無線受報状態の表示を更新
+        /// </summary>
+        private void UpdateProtectionRadioReceivingState(int dataCount)
+        {
+            // 防護無線受報状態の表示を更新
+            if (dataCount > 0)
+            {
+                Label_ProtectionRadioReceivingState.ForeColor = ColorTranslator.FromHtml("#FFFFFFFF");
+                Label_ProtectionRadioReceivingState.BackColor = ColorTranslator.FromHtml("#FFFF4500");
+                Label_ProtectionRadioReceivingState.Font = new Font(Label_ProtectionRadioReceivingState.Font, System.Drawing.FontStyle.Bold);
+            }
+            else
+            {
+                Label_ProtectionRadioReceivingState.ForeColor = ColorTranslator.FromHtml("#FF888888");
+                Label_ProtectionRadioReceivingState.BackColor = ColorTranslator.FromHtml("#FF555555");
+                Label_ProtectionRadioReceivingState.Font = new Font(Label_ProtectionRadioReceivingState.Font, System.Drawing.FontStyle.Regular);
+            }
+        }
+
+        /// <summary>
+        /// 防護無線音声更新処理
+        /// </summary>
+        private void UpdateProtectionRadioSound(int dataCount)
+        {
+            try
+            {
+                if (dataCount > 0)
+                {
+                    // 音量設定
+                    _sound.SetVolume(_sound.LoopSoundList.First(), 1.0f);
+                }
+                else
+                {
+                    _sound.SetVolume(_sound.LoopSoundList.First(), 0.0f);
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }
 
