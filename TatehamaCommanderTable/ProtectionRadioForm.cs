@@ -315,7 +315,7 @@ namespace TatehamaCommanderTable
                     }
                     else
                     {
-                        UpdateProtectionRadioSound(-1);
+                        UpdateProtectionRadioSound(0);
                     }
                 }
             }
@@ -347,7 +347,7 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                if (dataCount >= 0)
+                if (dataCount > 0)
                 {
                     // 音量設定
                     _sound.SetVolume(_sound.LoopSoundList.First(), 1.0f);
