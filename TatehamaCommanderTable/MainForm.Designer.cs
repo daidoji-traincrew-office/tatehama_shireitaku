@@ -43,7 +43,12 @@
             RadioButton_ON_Public = new System.Windows.Forms.RadioButton();
             RadioButton_OFF = new System.Windows.Forms.RadioButton();
             Label_ServerType = new System.Windows.Forms.Label();
+            GroupBox_Volume = new System.Windows.Forms.GroupBox();
+            Label_Volume = new System.Windows.Forms.Label();
+            TrackBar_Volume = new System.Windows.Forms.TrackBar();
             GroupBox_Schedule.SuspendLayout();
+            GroupBox_Volume.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
             SuspendLayout();
             // 
             // Label_ServerConectionState
@@ -284,12 +289,45 @@
             Label_ServerType.Text = "Prod";
             Label_ServerType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // GroupBox_Volume
+            // 
+            GroupBox_Volume.Controls.Add(Label_Volume);
+            GroupBox_Volume.Controls.Add(TrackBar_Volume);
+            GroupBox_Volume.ForeColor = System.Drawing.Color.White;
+            GroupBox_Volume.Location = new System.Drawing.Point(353, 9);
+            GroupBox_Volume.Name = "GroupBox_Volume";
+            GroupBox_Volume.Size = new System.Drawing.Size(145, 59);
+            GroupBox_Volume.TabIndex = 25;
+            GroupBox_Volume.TabStop = false;
+            GroupBox_Volume.Text = "音量";
+            // 
+            // Label_Volume
+            // 
+            Label_Volume.ForeColor = System.Drawing.Color.White;
+            Label_Volume.Location = new System.Drawing.Point(33, -2);
+            Label_Volume.Name = "Label_Volume";
+            Label_Volume.Size = new System.Drawing.Size(36, 18);
+            Label_Volume.TabIndex = 26;
+            Label_Volume.Text = "100%";
+            Label_Volume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TrackBar_Volume
+            // 
+            TrackBar_Volume.AutoSize = false;
+            TrackBar_Volume.LargeChange = 1;
+            TrackBar_Volume.Location = new System.Drawing.Point(6, 18);
+            TrackBar_Volume.Name = "TrackBar_Volume";
+            TrackBar_Volume.Size = new System.Drawing.Size(133, 30);
+            TrackBar_Volume.TabIndex = 26;
+            TrackBar_Volume.Value = 10;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(GroupBox_Volume);
             Controls.Add(Label_ServerType);
             Controls.Add(GroupBox_Schedule);
             Controls.Add(Button_Select_TrainState);
@@ -309,6 +347,8 @@
             Name = "MainForm";
             Text = "項目選択 | 司令卓 - ダイヤ運転会";
             GroupBox_Schedule.ResumeLayout(false);
+            GroupBox_Volume.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -329,5 +369,8 @@
         private System.Windows.Forms.RadioButton RadioButton_ON_Public;
         private System.Windows.Forms.RadioButton RadioButton_OFF;
         private System.Windows.Forms.Label Label_ServerType;
+        private System.Windows.Forms.GroupBox GroupBox_Volume;
+        private System.Windows.Forms.TrackBar TrackBar_Volume;
+        private System.Windows.Forms.Label Label_Volume;
     }
 }

@@ -17,6 +17,7 @@ namespace TatehamaCommanderTable
     {
         private readonly DataManager _dataManager;
         private readonly ServerCommunication _serverCommunication;
+        private readonly Sound _sound;
 
         private KokuchiForm _kokuchiForm;
         private TroubleForm _accidentForm;
@@ -39,6 +40,7 @@ namespace TatehamaCommanderTable
             // インスタンス生成
             _serverCommunication = serverCommunication;
             _dataManager = DataManager.Instance;
+            _sound = Sound.Instance;
 
             // 駅設定データをリストに格納
             var tsvFolderPath = "TSV";
@@ -56,9 +58,15 @@ namespace TatehamaCommanderTable
             // イベント設定
             Load += MainForm_Load;
             FormClosing += MainForm_FormClosing;
+            TrackBar_Volume.ValueChanged += TrackBar_Volume_ValueChanged;
 
             // コントロール設定
             Label_ServerType.Text = ServerAddress.SignalAddress.Contains("dev") ? "Dev" : "Prod";
+            TrackBar_Volume.Value = 10;
+            Label_Volume.Text = "100%";
+
+            // 音量設定
+            _sound.fMasterVolume = 1.0f;
 
             // Timer設定
             _mainTimer = new();
@@ -109,6 +117,17 @@ namespace TatehamaCommanderTable
         private void Main_CheckBox_TopMost_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = Main_CheckBox_TopMost.Checked;
+        }
+
+        /// <summary>
+        /// TrackBar_Volume_ValueChangedイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TrackBar_Volume_ValueChanged(object sender, EventArgs e)
+        {
+            _sound.fMasterVolume = TrackBar_Volume.Value / 10.0f;
+            Label_Volume.Text = $"{TrackBar_Volume.Value * 10.0f}%";
         }
 
         /// <summary>
