@@ -16,6 +16,11 @@ namespace TatehamaCommanderTable.Manager
         /// </summary>
         public bool ServerConnected { get; set; }
 
+        /// <summary>
+        /// 防護無線受報データ数
+        /// </summary>
+        public int ProtectionRadioDataCount { get; set; }
+
         private DatabaseOperational.DataFromServer _dataFromServer;
         /// <summary>
         /// サーバー受信データ
@@ -75,6 +80,7 @@ namespace TatehamaCommanderTable.Manager
         private DataManager()
         {
             ServerConnected = false;
+            ProtectionRadioDataCount = 0;
             DataFromServer = new();
             DataFromServer.TroubleDataList = new();
             DataFromServer.OperationNotificationDataList = new();

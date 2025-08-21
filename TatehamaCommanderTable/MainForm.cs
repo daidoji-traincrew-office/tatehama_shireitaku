@@ -260,7 +260,7 @@ namespace TatehamaCommanderTable
                 UpdateServerConnectionState();
 
                 // 防護無線情報取得
-                var dataCount = _dataManager.DataFromServer.ProtectionRadioDataList.Count;
+                var dataCount = _dataManager.ProtectionRadioDataCount;
                 // 防護無線受報状態の表示を更新
                 UpdateProtectionRadioReceivingState(dataCount);
                 // 防護無線音声更新処理

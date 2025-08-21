@@ -551,6 +551,7 @@ namespace TatehamaCommanderTable.Communications
                             });
                         }
                         _dataManager.ProtectionRadioDataGridViewSettingList = protectionRadioDataGridViewList;
+                        _dataManager.ProtectionRadioDataCount = protectionRadioDataGridViewList.Count;
                         OnProtectionRadioDataGridViewUpdated(protectionRadioDataGridViewList);
 
                         // TrainStateDataGridView設定リストデータを作成
