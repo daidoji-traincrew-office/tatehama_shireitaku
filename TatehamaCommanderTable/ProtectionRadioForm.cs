@@ -225,8 +225,6 @@ namespace TatehamaCommanderTable
         /// <param name="newDataSource"></param>
         public void UpdateDataSource(SortableBindingList<ProtectionRadioDataGridViewSetting> newDataSource)
         {
-            int rowsCount = 0;
-            int columnsCount = 0;
             try
             {
                 if (!this.IsDisposed)
@@ -234,10 +232,6 @@ namespace TatehamaCommanderTable
                     if (this.IsHandleCreated && !this.IsDisposed)
                     {
                         SuspendLayout();
-
-                        // DataGridViewの行数と列数を取得
-                        rowsCount = ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count;
-                        columnsCount = ProtectionRadio_DataGridView_ProtectionRadioData.Columns.Count;
 
                         // スクロール位置を保持
                         int firstDisplayedScrollingRowIndex = ProtectionRadio_DataGridView_ProtectionRadioData.FirstDisplayedScrollingRowIndex;
@@ -257,10 +251,10 @@ namespace TatehamaCommanderTable
                                 if (!this.IsDisposed)
                                 {
                                     ProtectionRadio_BindingSource.DataSource = newDataSource;
-                                    if (rowsCount > 0)
+                                    if (ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count > 0)
                                     {
-                                        ProtectionRadio_DataGridView_ProtectionRadioData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, rowsCount - 1);
-                                        ProtectionRadio_DataGridView_ProtectionRadioData.CurrentCell = ProtectionRadio_DataGridView_ProtectionRadioData.Rows[Math.Min(selectedRowIndex, rowsCount - 1)].Cells[Math.Min(selectedColumnIndex, columnsCount - 1)];
+                                        ProtectionRadio_DataGridView_ProtectionRadioData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count - 1);
+                                        ProtectionRadio_DataGridView_ProtectionRadioData.CurrentCell = ProtectionRadio_DataGridView_ProtectionRadioData.Rows[Math.Min(selectedRowIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Columns.Count - 1)];
                                     }
                                 }
                             }));
@@ -270,10 +264,10 @@ namespace TatehamaCommanderTable
                             if (!this.IsDisposed)
                             {
                                 ProtectionRadio_BindingSource.DataSource = newDataSource;
-                                if (rowsCount > 0)
+                                if (ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count > 0)
                                 {
-                                    ProtectionRadio_DataGridView_ProtectionRadioData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, rowsCount - 1);
-                                    ProtectionRadio_DataGridView_ProtectionRadioData.CurrentCell = ProtectionRadio_DataGridView_ProtectionRadioData.Rows[Math.Min(selectedRowIndex, rowsCount - 1)].Cells[Math.Min(selectedColumnIndex, columnsCount - 1)];
+                                    ProtectionRadio_DataGridView_ProtectionRadioData.FirstDisplayedScrollingRowIndex = Math.Min(firstDisplayedScrollingRowIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count - 1);
+                                    ProtectionRadio_DataGridView_ProtectionRadioData.CurrentCell = ProtectionRadio_DataGridView_ProtectionRadioData.Rows[Math.Min(selectedRowIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Rows.Count - 1)].Cells[Math.Min(selectedColumnIndex, ProtectionRadio_DataGridView_ProtectionRadioData.Columns.Count - 1)];
                                 }
                             }
                         }
