@@ -460,6 +460,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 var data = await _connection.InvokeAsync<DatabaseOperational.DataFromServer>("SendData_CommanderTable");
                 try
@@ -625,6 +631,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTroubleData", troubleData);
             }
@@ -648,6 +660,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendOperationNotificationData", operationNotificationData);
             }
@@ -671,6 +689,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTrackCircuitData", trackCircuitData);
             }
@@ -694,6 +718,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrain", trainName);
             }
@@ -717,6 +747,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation", operationInformationData);
             }
@@ -742,6 +778,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation", operationInformationData);
             }
@@ -766,6 +808,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return new();
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<OperationInformationData>>("GetAllOperationInformations");
             }
@@ -791,6 +839,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteOperationInformation", id);
             }
@@ -814,6 +868,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState", protectionRadioData);
             }
@@ -839,6 +899,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState", protectionRadioData);
             }
@@ -863,6 +929,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return new();
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetProtectionZoneStates");
             }
@@ -888,6 +960,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteProtectionZoneState", id);
             }
@@ -911,6 +989,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<TrainStateData>("UpdateTrainStateData", trainStateData);
             }
@@ -935,6 +1019,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return new();
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<TrainStateData>>("GetAllTrainState");
             }
@@ -960,6 +1050,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrainState", id);
             }
@@ -983,6 +1079,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SetServerMode", serverMode);
             }
@@ -1005,6 +1107,12 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection == null || _connection.State != HubConnectionState.Connected)
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return ServerMode.Off;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ServerMode>("GetServerMode");
             }

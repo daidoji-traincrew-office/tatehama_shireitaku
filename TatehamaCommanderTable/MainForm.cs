@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
@@ -281,15 +282,18 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void ScheduleTimer_Tick(object sender, EventArgs e)
+        private void ScheduleTimer_Tick(object sender, EventArgs e)
         {
             try
             {
                 if (_dataManager.ServerConnected)
                 {
-                    // 定時処理モード取得・反映
-                    ServerMode serverMode = await _serverCommunication.GetServerMode();
-                    UpdateRadioButtonState(serverMode);
+                    Task.Run(async () =>
+                    {
+                        // 定時処理モード取得・反映
+                        ServerMode serverMode = await _serverCommunication.GetServerMode();
+                        UpdateRadioButtonState(serverMode);
+                    });
                 }
             }
             catch (Exception ex)
