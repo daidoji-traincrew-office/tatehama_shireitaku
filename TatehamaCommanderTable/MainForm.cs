@@ -226,11 +226,17 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void RadioButton_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (sender is RadioButton radioButton && radioButton.Checked)
+            if (sender is not RadioButton { Checked: true } radioButton)
             {
-                switch (radioButton.Name)
+                return;
+            }
+
+            var name = radioButton.Name;
+            Task.Run(async () =>
+            {
+                switch (name)
                 {
                     case "RadioButton_OFF":
                         await _serverCommunication.SetServerModeEventDataRequestToServerAsync(ServerMode.Off);
@@ -241,10 +247,8 @@ namespace TatehamaCommanderTable
                     case "RadioButton_ON_Private":
                         await _serverCommunication.SetServerModeEventDataRequestToServerAsync(ServerMode.Private);
                         break;
-                    default:
-                        break;
                 }
-            }
+            });
         }
 
         /// <summary>
