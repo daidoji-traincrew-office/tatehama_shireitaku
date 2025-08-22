@@ -610,6 +610,10 @@ namespace TatehamaCommanderTable.Communications
                     Debug.WriteLine($"Error server receiving: {ex.Message}");
                 }
             }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendConstantDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
             catch (Exception ex)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", ex);
