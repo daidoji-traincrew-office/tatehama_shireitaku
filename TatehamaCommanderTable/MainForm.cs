@@ -292,7 +292,10 @@ namespace TatehamaCommanderTable
                     {
                         // 定時処理モード取得・反映
                         ServerMode serverMode = await _serverCommunication.GetServerMode();
-                        UpdateRadioButtonState(serverMode);
+                        this.Invoke(new Action(() =>
+                        {
+                            UpdateRadioButtonState(serverMode);
+                        }));
                     });
                 }
             }
