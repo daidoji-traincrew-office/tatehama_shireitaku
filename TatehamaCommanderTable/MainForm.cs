@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
@@ -30,7 +29,6 @@ namespace TatehamaCommanderTable
         private TrainStateForm _trainStateForm;
 
         private readonly Timer _mainTimer;
-        private readonly Timer _scheduleTimer;
 
         /// <summary>
         /// コンストラクタ
@@ -61,6 +59,17 @@ namespace TatehamaCommanderTable
             Load += MainForm_Load;
             FormClosing += MainForm_FormClosing;
             TrackBar_Volume.ValueChanged += TrackBar_Volume_ValueChanged;
+            serverCommunication.ReceiveServerMode += serverMode =>
+            {
+                if (InvokeRequired)
+                {
+                   Invoke(() => UpdateRadioButtonState(serverMode)); 
+                }
+                else
+                {
+                    UpdateRadioButtonState(serverMode);
+                }
+            };
 
             // コントロール設定
             Label_ServerType.Text = ServerAddress.SignalAddress.Contains("dev") ? "Dev" : "Prod";
@@ -78,11 +87,6 @@ namespace TatehamaCommanderTable
             _mainTimer.Interval = 100;
             _mainTimer.Tick += MainTimer_Tick;
             _mainTimer.Start();
-
-            _scheduleTimer = new();
-            _scheduleTimer.Interval = 1000;
-            _scheduleTimer.Tick += ScheduleTimer_Tick;
-            _scheduleTimer.Start();
         }
 
         /// <summary>
@@ -278,34 +282,6 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
-        /// ScheduleTimer_Tickイベント
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ScheduleTimer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                if (_dataManager.ServerConnected)
-                {
-                    Task.Run(async () =>
-                    {
-                        // 定時処理モード取得・反映
-                        ServerMode serverMode = await _serverCommunication.GetServerMode();
-                        this.Invoke(new Action(() =>
-                        {
-                            UpdateRadioButtonState(serverMode);
-                        }));
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"ScheduleTimer_Tick Error: {ex.Message}");
-            }
-        }
-
-        /// <summary>
         /// サーバー接続状態の表示を更新
         /// </summary>
         private void UpdateServerConnectionState()
@@ -412,7 +388,6 @@ namespace TatehamaCommanderTable
 
             // タイマー停止
             _mainTimer.Stop();
-            _scheduleTimer.Stop();
             // 音声停止
             Sound.Instance.SoundAllStop();
             Sound.Instance.Dispose();
