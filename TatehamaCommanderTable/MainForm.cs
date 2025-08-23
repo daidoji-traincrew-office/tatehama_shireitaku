@@ -29,6 +29,7 @@ namespace TatehamaCommanderTable
         private TrainStateForm _trainStateForm;
 
         private readonly Timer _mainTimer;
+        private bool _onReceivingServerMode = false;
 
         /// <summary>
         /// コンストラクタ
@@ -237,8 +238,15 @@ namespace TatehamaCommanderTable
             {
                 return;
             }
-
             var name = radioButton.Name;
+
+            if (_onReceivingServerMode)
+            {
+                Debug.WriteLine($"Radio button {name} changed from on receiving server mode");
+                return;
+            }
+
+            Debug.WriteLine($"Radio button {name} changed by user click - sending server request");
             Task.Run(async () =>
             {
                 switch (name)
@@ -356,6 +364,7 @@ namespace TatehamaCommanderTable
         /// <param name="serverMode"></param>
         private void UpdateRadioButtonState(ServerMode serverMode)
         {
+            _onReceivingServerMode = true;
             switch (serverMode)
             {
                 case ServerMode.Public:
@@ -368,6 +377,7 @@ namespace TatehamaCommanderTable
                     RadioButton_OFF.Checked = true;
                     break;
             }
+            _onReceivingServerMode = false;
         }
 
         /// <summary>
