@@ -61,6 +61,7 @@
             ID.HeaderText = "ID";
             ID.MaxInputLength = 10;
             ID.Name = "ID";
+            ID.ReadOnly = true;
             ID.Width = 50;
             // 
             // Type
@@ -69,6 +70,7 @@
             Type.HeaderText = "情報の種類";
             Type.MaxInputLength = 10;
             Type.Name = "Type";
+            Type.ReadOnly = true;
             // 
             // Content
             // 
@@ -85,6 +87,7 @@
             StartTime.HeaderText = "配信開始日時";
             StartTime.MaxInputLength = 20;
             StartTime.Name = "StartTime";
+            StartTime.ReadOnly = true;
             StartTime.Width = 150;
             // 
             // EndTime
@@ -93,6 +96,7 @@
             EndTime.HeaderText = "配信終了日時";
             EndTime.MaxInputLength = 20;
             EndTime.Name = "EndTime";
+            EndTime.ReadOnly = true;
             EndTime.Width = 150;
             // 
             // Message_CheckBox_TopMost
@@ -120,6 +124,7 @@
             Message_DataGridView_MessageData.DataSource = Message_BindingSource;
             Message_DataGridView_MessageData.Location = new System.Drawing.Point(12, 37);
             Message_DataGridView_MessageData.Name = "Message_DataGridView_MessageData";
+            Message_DataGridView_MessageData.ReadOnly = true;
             Message_DataGridView_MessageData.RowHeadersVisible = false;
             Message_DataGridView_MessageData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             Message_DataGridView_MessageData.Size = new System.Drawing.Size(860, 260);

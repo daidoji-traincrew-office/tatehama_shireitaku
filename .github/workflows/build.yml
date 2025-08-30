@@ -91,6 +91,7 @@ jobs:
         run: |
           cp -r ./exe/Image ./out/
           cp -r ./exe/TSV ./out/
+          cp -r ./exe/Sound ./out/
       - name: Zip binaries
         run: |
           cd out

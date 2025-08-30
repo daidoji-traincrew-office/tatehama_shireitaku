@@ -18,22 +18,37 @@ namespace TatehamaCommanderTable.Models
             /// <summary>
             /// 運転支障データリスト
             /// </summary>
-            public List<TroubleData> TroubleDataList { get; set; }
+            public List<TroubleData> TroubleDataList { get; set; } = new();
 
             /// <summary>
             /// 運転告知器データリスト
             /// </summary>
-            public List<OperationNotificationData> OperationNotificationDataList { get; set; }
+            public List<OperationNotificationData> OperationNotificationDataList { get; set; } = new();
 
             /// <summary>
             /// 軌道回路データリスト
             /// </summary>
-            public List<TrackCircuitData> TrackCircuitDataList { get; set; }
+            public List<TrackCircuitData> TrackCircuitDataList { get; set; } = new();
 
             /// <summary>
             /// 運行メッセージデータリスト
             /// </summary>
-            public List<OperationInformationData> OperationInformationDataList { get; set; }
+            public List<OperationInformationData> OperationInformationDataList { get; set; } = new();
+
+            /// <summary>
+            /// 防護無線データリスト
+            /// </summary>
+            public List<ProtectionRadioData> ProtectionRadioDataList { get; set; } = new();
+
+            /// <summary>
+            /// 列車情報データリスト
+            /// </summary>
+            public List<TrainStateData> TrainStateDataList { get; set; } = new();
+
+            /// <summary>
+            /// ダイヤデータリスト
+            /// </summary>
+            public List<TrainDiagramData> TrainDiagramDataList { get; set; } = new();
         }
     }
 }

@@ -2,18 +2,19 @@ using Microsoft.AspNetCore.SignalR.Client;
 using OpenIddict.Abstractions;
 using OpenIddict.Client;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Http;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
-using System.Linq;
-using System.Windows.Documents;
-using System.Collections.Generic;
 
 namespace TatehamaCommanderTable.Communications
 {
@@ -26,11 +27,11 @@ namespace TatehamaCommanderTable.Communications
         private readonly OpenIddictClientService _openIddictClientService;
         private readonly DataManager _dataManager;
         private static HubConnection _connection;
-        private static bool _isUpdateLoopRunning = false;
         private const string HubConnectionName = "commander_table";
-        
+
         private string _token = "";
         private string _refreshToken = "";
+        private CancellationTokenSource _cts = new();
         private DateTimeOffset _tokenExpiration = DateTimeOffset.MinValue;
         private bool _eventHandlersSet = false;
         private const int ReconnectIntervalMs = 500;
@@ -46,6 +47,26 @@ namespace TatehamaCommanderTable.Communications
         /// MessageDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<MessageDataGridViewSetting>> MessageDataGridViewUpdated;
+        /// <summary>
+        /// ProtectionRadioDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<ProtectionRadioDataGridViewSetting>> ProtectionRadioDataGridViewUpdated;
+        /// <summary>
+        /// TrainStateDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<TrainStateDataGridViewSetting>> TrainStateDataGridViewUpdated;
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<DiaDataGridViewSetting>> DiaDataGridViewUpdated;
+        /// <summary>
+        /// DataFromServer受信イベント
+        /// </summary>
+        public event Action<DatabaseOperational.DataFromServer> ReceiveData;
+        /// <summary>
+        /// ServerMode受信イベント
+        /// </summary>
+        public event Action<ServerMode> ReceiveServerMode;
 
         /// <summary>
         /// コンストラクタ
@@ -56,32 +77,6 @@ namespace TatehamaCommanderTable.Communications
             _openIddictClientService = openIddictClientService;
             _dataManager = DataManager.Instance;
 
-            if (!_isUpdateLoopRunning)
-            {
-                _isUpdateLoopRunning = true;
-
-                // ループ処理開始
-                Task.Run(() => UpdateLoop());
-            }
-        }
-
-        /// <summary>
-        /// ループ処理
-        /// </summary>
-        /// <returns></returns>
-        private async Task UpdateLoop()
-        {
-            while (true)
-            {
-                var timer = Task.Delay(200);
-                await timer;
-
-                // サーバー接続中ならデータ送信
-                if (_dataManager.ServerConnected)
-                {
-                    await SendConstantDataRequestToServerAsync();
-                }
-            }
         }
 
         /// <summary>
@@ -133,7 +128,7 @@ namespace TatehamaCommanderTable.Communications
                 _refreshToken = "";
                 return true;
             }
-            
+
             try
             {
                 // ブラウザで認証要求
@@ -259,11 +254,11 @@ namespace TatehamaCommanderTable.Communications
             }
 
             // 再接続イベントのハンドリング
-            _connection.Closed += async(exception) =>
+            _connection.Closed += async (exception) =>
             {
                 Debug.WriteLine("Disconnected");
                 _dataManager.ServerConnected = false;
-                
+
                 // 例外が発生していない場合(=正常終了時)は何もしない
                 if (exception == null)
                 {
@@ -272,10 +267,24 @@ namespace TatehamaCommanderTable.Communications
 
                 // 例外が発生した場合はログに出力し再接続
                 Debug.WriteLine($"Exception: {exception.Message}\nStackTrace: {exception.StackTrace}");
-                
+
                 // 再接続処理を開始
                 await TryReconnectAsync();
             };
+
+            // サーバーからのデータ受信イベントハンドラ
+            _connection.On<DatabaseOperational.DataFromServer>("ReceiveData", async (data) =>
+            {
+                await ProcessReceivedDataAsync(data);
+                ReceiveData?.Invoke(data);
+            });
+
+            // サーバーからのServerMode受信イベントハンドラ
+            _connection.On<ServerMode>("ReceiveServerMode", (serverMode) =>
+            {
+                ReceiveServerMode?.Invoke(serverMode);
+            });
+
             _eventHandlersSet = true;
         }
 
@@ -370,7 +379,7 @@ namespace TatehamaCommanderTable.Communications
 
             // リフレッシュトークンが無効な場合、再認証が必要
             Debug.WriteLine("Refresh token is invalid or expired.");
-            var result = CustomMessage.Show("トークンが切れました。\n再認証してください。", "認証失敗", 
+            var result = CustomMessage.Show("トークンが切れました。\n再認証してください。", "認証失敗",
                 MessageBoxButton.YesNo, MessageBoxImage.Error);
             if (result == MessageBoxResult.Yes)
             {
@@ -433,106 +442,160 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
-        /// サーバーへ常時送信用データをリクエスト
+        /// 受信したデータを処理する
         /// </summary>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public async Task SendConstantDataRequestToServerAsync()
+        private async Task ProcessReceivedDataAsync(DatabaseOperational.DataFromServer data)
         {
             try
             {
-                // サーバーメソッドの呼び出し
-                var data = await _connection.InvokeAsync<DatabaseOperational.DataFromServer>("SendData_CommanderTable");
-                try
+                if (data == null)
                 {
-                    if (data != null)
+                    Debug.WriteLine("Failed to receive Data.");
+                    return;
+                }
+
+                // 運用クラスに代入
+                if (_dataManager.DataFromServer == null)
+                {
+                    _dataManager.DataFromServer = data;
+                }
+                else
+                {
+                    // 変更があれば更新
+                    foreach (var property in typeof(DatabaseOperational.DataFromServer).GetProperties())
                     {
-                        // 運用クラスに代入
-                        if (_dataManager.DataFromServer == null)
+                        var newValue = property.GetValue(data);
+                        var oldValue = property.GetValue(_dataManager.DataFromServer);
+                        if (newValue != null && !newValue.Equals(oldValue))
                         {
-                            _dataManager.DataFromServer = data;
-                            _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
-                        }
-                        else
-                        {
-                            // 変更があれば更新
-                            foreach (var property in typeof(DatabaseOperational.DataFromServer).GetProperties())
-                            {
-                                var newValue = property.GetValue(data);
-                                var oldValue = property.GetValue(_dataManager.DataFromServer);
-                                if (newValue != null && !newValue.Equals(oldValue))
-                                {
-                                    property.SetValue(_dataManager.DataFromServer, newValue);
-                                }
-                            }
-                            _dataManager.DataFromServer.OperationInformationDataList = await GetAllOperationInformations();
-                        }
-                        // TrackCircuitDataGridView設定リストデータを作成
-                        var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
-                        foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuitDataList)
-                        {
-                            trackCircuitDataGridViewList.Add(new TrackCircuitDataGridViewSetting
-                            {
-                                trackCircuit = trackCircuit.Name,
-                                trainNumber = trackCircuit.Last,
-                                shortCircuitStatus = trackCircuit.On ? "〇" : "",
-                                lockingStatus = trackCircuit.Lock ? "〇" : ""
-                            });
-                        }
-                        _dataManager.TrackCircuitDataGridViewSettingList = trackCircuitDataGridViewList;
-                        OnTrackCircuitDataGridViewUpdated(trackCircuitDataGridViewList);
-
-                        // TroubleDataGridView設定リストデータを作成
-                        var troubleDataGridViewList = new SortableBindingList<TroubleDataGridViewSetting>();
-                        foreach (var trouble in _dataManager.DataFromServer.TroubleDataList)
-                        {
-                            troubleDataGridViewList.Add(new TroubleDataGridViewSetting
-                            {
-                                troubleType = TroubleDataConverter.ConversionTroubleType(trouble.TroubleType),
-                                placeType = TroubleDataConverter.ConversionPlaceType(trouble.PlaceType),
-                                placeName = trouble.PlaceName,
-                                occuredAt = trouble.OccuredAt.ToString("yyyy/MM/dd HH:mm:ss"),
-                                additionalData = trouble.AdditionalData
-                            });
-                        }
-                        _dataManager.TroubleDataGridViewSettingList = troubleDataGridViewList;
-                        OnTroubleDataGridViewUpdated(troubleDataGridViewList);
-
-                        // MessageDataGridView設定リストデータを作成
-                        var messageDataGridViewList = new SortableBindingList<MessageDataGridViewSetting>();
-                        foreach (var message in _dataManager.DataFromServer.OperationInformationDataList)
-                        {
-                            messageDataGridViewList.Add(new MessageDataGridViewSetting
-                            {
-                                ID = message.Id.ToString(),
-                                Type = OperationInformationStateConverter.ConversionOperationInformationType(message.Type),
-                                Content = message.Content,
-                                StartTime = message.StartTime.ToString("yyyy/MM/dd HH:mm:ss"),
-                                EndTime = message.EndTime.ToString("yyyy/MM/dd HH:mm:ss"),
-                            });
-                        }
-                        _dataManager.MessageDataGridViewSettingList = messageDataGridViewList;
-                        OnMessageDataGridViewUpdated(messageDataGridViewList);
-
-                        // 運転告知器リストデータを更新
-                        lock (_dataManager.OperationNotificationDataList)
-                        {
-                            _dataManager.OperationNotificationDataList = _dataManager.DataFromServer.OperationNotificationDataList;
+                            property.SetValue(_dataManager.DataFromServer, newValue);
                         }
                     }
-                    else
-                    {
-                        Debug.WriteLine("Failed to receive Data.");
-                    }
                 }
-                catch (Exception ex)
+
+                // TrackCircuitDataGridView設定リストデータを作成
+                var trackCircuitDataGridViewList = new SortableBindingList<TrackCircuitDataGridViewSetting>();
+                foreach (var trackCircuit in _dataManager.DataFromServer.TrackCircuitDataList)
                 {
-                    Debug.WriteLine($"Error server receiving: {ex.Message}");
+                    trackCircuitDataGridViewList.Add(new TrackCircuitDataGridViewSetting
+                    {
+                        trackCircuit = trackCircuit.Name,
+                        trainNumber = trackCircuit.Last,
+                        shortCircuitStatus = trackCircuit.On ? "〇" : "",
+                        lockingStatus = trackCircuit.Lock ? "〇" : ""
+                    });
                 }
+
+                _dataManager.TrackCircuitDataGridViewSettingList = trackCircuitDataGridViewList;
+                OnTrackCircuitDataGridViewUpdated(trackCircuitDataGridViewList);
+
+                // TroubleDataGridView設定リストデータを作成
+                var troubleDataGridViewList = new SortableBindingList<TroubleDataGridViewSetting>();
+                foreach (var trouble in _dataManager.DataFromServer.TroubleDataList)
+                {
+                    troubleDataGridViewList.Add(new TroubleDataGridViewSetting
+                    {
+                        troubleType = TroubleDataConverter.ConversionTroubleType(trouble.TroubleType),
+                        placeType = TroubleDataConverter.ConversionPlaceType(trouble.PlaceType),
+                        placeName = trouble.PlaceName,
+                        occuredAt = trouble.OccuredAt.ToString("yyyy/MM/dd HH:mm:ss"),
+                        additionalData = trouble.AdditionalData
+                    });
+                }
+
+                _dataManager.TroubleDataGridViewSettingList = troubleDataGridViewList;
+                OnTroubleDataGridViewUpdated(troubleDataGridViewList);
+
+                // MessageDataGridView設定リストデータを作成
+                var messageDataGridViewList = new SortableBindingList<MessageDataGridViewSetting>();
+                foreach (var message in _dataManager.DataFromServer.OperationInformationDataList)
+                {
+                    messageDataGridViewList.Add(new MessageDataGridViewSetting
+                    {
+                        ID = message.Id.ToString(),
+                        Type = OperationInformationStateConverter.ConversionOperationInformationType(message.Type),
+                        Content = message.Content,
+                        StartTime = message.StartTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                        EndTime = message.EndTime.ToString("yyyy/MM/dd HH:mm:ss"),
+                    });
+                }
+
+                _dataManager.MessageDataGridViewSettingList = messageDataGridViewList;
+                OnMessageDataGridViewUpdated(messageDataGridViewList);
+
+                // ProtectionRadioDataGridView設定リストデータを作成
+                var protectionRadioDataGridViewList = new SortableBindingList<ProtectionRadioDataGridViewSetting>();
+                foreach (var protectionRadio in _dataManager.DataFromServer.ProtectionRadioDataList)
+                {
+                    protectionRadioDataGridViewList.Add(new ProtectionRadioDataGridViewSetting
+                    {
+                        ID = protectionRadio.Id.ToString(),
+                        ProtectionZone = protectionRadio.ProtectionZone.ToString(),
+                        TrainNumber = protectionRadio.TrainNumber ?? string.Empty
+                    });
+                }
+
+                _dataManager.ProtectionRadioDataGridViewSettingList = protectionRadioDataGridViewList;
+                _dataManager.ProtectionRadioDataCount = protectionRadioDataGridViewList.Count;
+                OnProtectionRadioDataGridViewUpdated(protectionRadioDataGridViewList);
+
+                // TrainStateDataGridView設定リストデータを作成
+                var trainStateDataGridViewList = new SortableBindingList<TrainStateDataGridViewSetting>();
+                foreach (var trainState in _dataManager.DataFromServer.TrainStateDataList)
+                {
+                    trainStateDataGridViewList.Add(new TrainStateDataGridViewSetting
+                    {
+                        ID = trainState.Id.ToString(),
+                        TrainNumber = trainState.TrainNumber,
+                        DiaNumber = trainState.DiaNumber.ToString(),
+                        FromStationID = trainState.FromStationId.ToString(),
+                        ToStationID = trainState.ToStationId.ToString(),
+                        Delay = trainState.Delay.ToString(),
+                        DriverID = trainState.DriverId?.ToString() ?? string.Empty,
+                    });
+                }
+
+                _dataManager.TrainStateDataGridViewSettingList = trainStateDataGridViewList;
+                OnTrainStateDataGridViewUpdated(trainStateDataGridViewList);
+
+                // DiaDataGridView設定リストデータを作成
+                var diaDataGridViewList = new SortableBindingList<DiaDataGridViewSetting>();
+                foreach (var dia in _dataManager.DataFromServer.TrainDiagramDataList)
+                {
+                    diaDataGridViewList.Add(new DiaDataGridViewSetting
+                    {
+                        TrainNumber = dia.TrainNumber.ToString(),
+                        TypeId = dia.TrainTypeId.ToString(),
+                        TrainType = dia.TrainType?.Name,
+                        FromStationId = dia.FromStationId.ToString(),
+                        ToStationId = dia.ToStationId.ToString(),
+                        DiaId = dia.DiaId.ToString(),
+                    });
+                }
+
+                _dataManager.DiaDataGridViewSettingList = diaDataGridViewList;
+                OnDiaDataGridViewUpdated(diaDataGridViewList);
+
+                // 運転告知器リストデータを更新
+                lock (_dataManager.OperationNotificationDataList)
+                {
+                    _dataManager.OperationNotificationDataList =
+                        _dataManager.DataFromServer.OperationNotificationDataList;
+                }
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("ProcessReceivedDataAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendConstantDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
             catch (Exception ex)
             {
-                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", ex);
-                Debug.WriteLine($"Failed to send constant data to server: {ex.Message}");
+                Debug.WriteLine($"Error processing received data: {ex.Message}");
             }
         }
 
@@ -545,8 +608,18 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTroubleData", troubleData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendTroubleEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
@@ -564,8 +637,18 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendOperationNotificationData", operationNotificationData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendOperationNotificationDataRequestToServer: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
@@ -583,8 +666,18 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTrackCircuitData", trackCircuitData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendTrackCircuitEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
@@ -602,8 +695,18 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrain", trainName);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SendDeleteTrainRequestToServerAsync: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
@@ -621,8 +724,19 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation", operationInformationData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("AddOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
             }
             catch (Exception exception)
             {
@@ -641,27 +755,19 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation", operationInformationData);
             }
-            catch (Exception exception)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
             {
-                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
-                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                Debug.WriteLine("UpdateOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// サーバーから全ての運行情報を取得
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<OperationInformationData>> GetAllOperationInformations()
-        {
-            try
-            {
-                // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<List<OperationInformationData>>("GetAllOperationInformations");
             }
             catch (Exception exception)
             {
@@ -680,13 +786,263 @@ namespace TatehamaCommanderTable.Communications
         {
             try
             {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteOperationInformation", id);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("DeleteOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
             catch (Exception exception)
             {
                 CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
                 Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ防護無線情報の追加をリクエスト
+        /// </summary>
+        /// <param name="protectionRadioData"></param>
+        /// <returns></returns>
+        public async Task<ProtectionRadioData> AddProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState", protectionRadioData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("AddProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ防護無線情報の更新をリクエスト
+        /// </summary>
+        /// <param name="protectionRadioData"></param>
+        /// <returns></returns>
+        public async Task<ProtectionRadioData> UpdateProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState", protectionRadioData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("UpdateProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーから全ての防護無線情報を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ProtectionRadioData>> GetAllProtectionZones()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return new();
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetProtectionZoneStates");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("GetAllProtectionZones: キャンセルされました。正常終了です。");
+                return new();
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ防護無線情報の削除をリクエスト
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteProtectionRadioEventDataRequestToServerAsync(long id)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("DeleteProtectionZoneState", id);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("DeleteProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ列車情報の更新をリクエスト
+        /// </summary>
+        /// <param name="trainStateData"></param>
+        /// <returns></returns>
+        public async Task<TrainStateData> UpdateTrainStateEventDataRequestToServerAsync(TrainStateData trainStateData)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<TrainStateData>("UpdateTrainStateData", trainStateData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("UpdateTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ列車情報の削除をリクエスト
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteTrainStateEventDataRequestToServerAsync(long id)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("DeleteTrainState", id);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("DeleteTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ定時処理をリクエスト
+        /// </summary>
+        /// <param name="serverMode"></param>
+        /// <returns></returns>
+        public async Task SetServerModeEventDataRequestToServerAsync(ServerMode serverMode)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("SetServerMode", serverMode);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SetServerModeEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーから現在の定時処理モードを取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ServerMode> GetServerMode()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return ServerMode.Off;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<ServerMode>("GetServerMode");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("GetServerMode: キャンセルされました。正常終了です。");
+                return ServerMode.Off;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return ServerMode.Off;
             }
         }
 
@@ -718,11 +1074,39 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// ProtectionRadioDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnProtectionRadioDataGridViewUpdated(SortableBindingList<ProtectionRadioDataGridViewSetting> list)
+        {
+            ProtectionRadioDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// TrainStateDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnTrainStateDataGridViewUpdated(SortableBindingList<TrainStateDataGridViewSetting> list)
+        {
+            TrainStateDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// DiaDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnDiaDataGridViewUpdated(SortableBindingList<DiaDataGridViewSetting> list)
+        {
+            DiaDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
         /// サーバー切断
         /// </summary>
         /// <returns></returns>
         public async Task DisconnectAsync()
         {
+            await _cts.CancelAsync();
             await DisposeAndStopConnectionAsync(CancellationToken.None);
             _dataManager.ServerConnected = false;
         }

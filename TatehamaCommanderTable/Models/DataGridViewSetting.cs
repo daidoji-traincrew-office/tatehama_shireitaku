@@ -92,4 +92,105 @@ namespace TatehamaCommanderTable.Models
         [DisplayName("配信終了日時")]
         public string EndTime { get; set; } = "";
     }
+
+    /// <summary>
+    /// ProtectionRadioDataGridView設定クラス
+    /// </summary>
+    public class ProtectionRadioDataGridViewSetting
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        [DisplayName("ID")]
+        public string ID { get; set; } = "";
+        /// <summary>
+        /// 保護区間
+        /// </summary>
+        [DisplayName("防護ゾーン")]
+        public string ProtectionZone { get; set; } = "";
+        /// <summary>
+        /// 列車番号
+        /// </summary>
+        [DisplayName("列車番号")]
+        public string TrainNumber { get; set; } = "";
+    }
+
+    /// <summary>
+    /// TrainStateDataGridView設定クラス
+    /// </summary>
+    public class TrainStateDataGridViewSetting
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        [DisplayName("ID")]
+        public string ID { get; set; } = "";
+        /// <summary>
+        /// 列車番号
+        /// </summary>
+        [DisplayName("列車番号")]
+        public string TrainNumber { get; set; } = "";
+        /// <summary>
+        /// ダイヤ番号
+        /// </summary>
+        [DisplayName("ダイヤ番号")]
+        public string DiaNumber { get; set; } = "";
+        /// <summary>
+        /// 始発駅ID
+        /// </summary>
+        [DisplayName("始発駅ID")]
+        public string FromStationID { get; set; } = "";
+        /// <summary>
+        /// 行先駅ID
+        /// </summary>
+        [DisplayName("行先駅ID")]
+        public string ToStationID { get; set; } = "";
+        /// <summary>
+        /// 遅延
+        /// </summary>
+        [DisplayName("遅延")]
+        public string Delay { get; set; } = "";
+        /// <summary>
+        /// 運転士ID
+        /// </summary>
+        [DisplayName("運転士ID")]
+        public string DriverID { get; set; } = "";
+    }
+
+    /// <summary>
+    /// DiaDataGridView設定クラス
+    /// </summary>
+    public class DiaDataGridViewSetting
+    {
+        /// <summary>
+        /// 列車番号
+        /// </summary>
+        [DisplayName("列車番号")]
+        public string TrainNumber { get; set; } = "";
+        /// <summary>
+        /// 種別ID
+        /// </summary>
+        [DisplayName("種別ID")]
+        public string TypeId { get; set; } = "";
+        /// <summary>
+        /// 列車種別
+        /// </summary>
+        [DisplayName("列車種別")]
+        public string TrainType { get; set; } = "";
+        /// <summary>
+        /// 始発駅ID
+        /// </summary>
+        [DisplayName("始発駅ID")]
+        public string FromStationId { get; set; } = "";
+        /// <summary>
+        /// 行先駅ID
+        /// </summary>
+        [DisplayName("行先駅ID")]
+        public string ToStationId { get; set; } = "";
+        /// <summary>
+        /// ダイヤID
+        /// </summary>
+        [DisplayName("ダイヤID")]
+        public string DiaId { get; set; } = "";
+    }
 }

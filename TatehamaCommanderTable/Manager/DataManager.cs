@@ -16,6 +16,11 @@ namespace TatehamaCommanderTable.Manager
         /// </summary>
         public bool ServerConnected { get; set; }
 
+        /// <summary>
+        /// 防護無線受報データ数
+        /// </summary>
+        public int ProtectionRadioDataCount { get; set; }
+
         private DatabaseOperational.DataFromServer _dataFromServer;
         /// <summary>
         /// サーバー受信データ
@@ -50,6 +55,21 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<MessageDataGridViewSetting> MessageDataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// ProtectionRadioDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<ProtectionRadioDataGridViewSetting> ProtectionRadioDataGridViewSettingList { get; set; }
+
+        /// <summary>
+        /// TrainStateDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<TrainStateDataGridViewSetting> TrainStateDataGridViewSettingList { get; set; }
+
+        /// <summary>
+        /// DiaDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<DiaDataGridViewSetting> DiaDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// 運転告知器リストデータ
         /// </summary>
         public List<OperationNotificationData> OperationNotificationDataList { get; set; }
@@ -60,6 +80,7 @@ namespace TatehamaCommanderTable.Manager
         private DataManager()
         {
             ServerConnected = false;
+            ProtectionRadioDataCount = 0;
             DataFromServer = new();
             DataFromServer.TroubleDataList = new();
             DataFromServer.OperationNotificationDataList = new();
@@ -69,6 +90,9 @@ namespace TatehamaCommanderTable.Manager
             TrackCircuitDataGridViewSettingList = new();
             TroubleDataGridViewSettingList = new();
             MessageDataGridViewSettingList = new();
+            ProtectionRadioDataGridViewSettingList = new();
+            TrainStateDataGridViewSettingList = new();
+            DiaDataGridViewSettingList = new();
             OperationNotificationDataList = new();
         }
     }
