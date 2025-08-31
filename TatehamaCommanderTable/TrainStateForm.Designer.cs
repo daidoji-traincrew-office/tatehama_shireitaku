@@ -338,7 +338,7 @@
             // 
             TrainState_TextBox_DriverID.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrainState_TextBox_DriverID.Location = new System.Drawing.Point(532, 424);
-            TrainState_TextBox_DriverID.MaxLength = 7;
+            TrainState_TextBox_DriverID.MaxLength = 20;
             TrainState_TextBox_DriverID.Name = "TrainState_TextBox_DriverID";
             TrainState_TextBox_DriverID.Size = new System.Drawing.Size(340, 34);
             TrainState_TextBox_DriverID.TabIndex = 47;
