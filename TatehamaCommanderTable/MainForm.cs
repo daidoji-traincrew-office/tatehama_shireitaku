@@ -27,6 +27,7 @@ namespace TatehamaCommanderTable
         private DiaForm _diaForm;
         private ProtectionRadioForm _protectionRadioForm;
         private TrainStateForm _trainStateForm;
+        private SchedulerForm _schedulerForm;
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
@@ -55,6 +56,7 @@ namespace TatehamaCommanderTable
             _diaForm = new DiaForm(serverCommunication);
             _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
             _trainStateForm = new TrainStateForm(serverCommunication);
+            _schedulerForm = new SchedulerForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -219,6 +221,16 @@ namespace TatehamaCommanderTable
                                 _trainStateForm = new TrainStateForm(_serverCommunication);
                             }
                             _trainStateForm.Show();
+                        }
+                        break;
+                    // スケジューラー
+                    case "Button_Select_Scheduler":
+                        {
+                            if (_schedulerForm.IsDisposed)
+                            {
+                                _schedulerForm = new SchedulerForm(_serverCommunication);
+                            }
+                            _schedulerForm.Show();
                         }
                         break;
                     default:

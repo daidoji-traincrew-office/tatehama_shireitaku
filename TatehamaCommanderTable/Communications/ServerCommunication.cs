@@ -16,6 +16,7 @@ using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
 
+
 namespace TatehamaCommanderTable.Communications
 {
     /// <summary>
@@ -35,34 +36,42 @@ namespace TatehamaCommanderTable.Communications
         private DateTimeOffset _tokenExpiration = DateTimeOffset.MinValue;
         private bool _eventHandlersSet = false;
         private const int ReconnectIntervalMs = 500;
+
         /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<TrackCircuitDataGridViewSetting>> TrackCircuitDataGridViewUpdated;
+
         /// <summary>
         /// TroubleDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<TroubleDataGridViewSetting>> TroubleDataGridViewUpdated;
+
         /// <summary>
         /// MessageDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<MessageDataGridViewSetting>> MessageDataGridViewUpdated;
+
         /// <summary>
         /// ProtectionRadioDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<ProtectionRadioDataGridViewSetting>> ProtectionRadioDataGridViewUpdated;
+
         /// <summary>
         /// TrainStateDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<TrainStateDataGridViewSetting>> TrainStateDataGridViewUpdated;
+
         /// <summary>
         /// DiaDataGridView更新通知イベント
         /// </summary>
         public event Action<SortableBindingList<DiaDataGridViewSetting>> DiaDataGridViewUpdated;
+
         /// <summary>
         /// DataFromServer受信イベント
         /// </summary>
         public event Action<DatabaseOperational.DataFromServer> ReceiveData;
+
         /// <summary>
         /// ServerMode受信イベント
         /// </summary>
@@ -76,7 +85,6 @@ namespace TatehamaCommanderTable.Communications
         {
             _openIddictClientService = openIddictClientService;
             _dataManager = DataManager.Instance;
-
         }
 
         /// <summary>
@@ -151,16 +159,20 @@ namespace TatehamaCommanderTable.Communications
                 _refreshToken = resultAuth.RefreshToken;
                 return true;
             }
-            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.AccessDenied)
+            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error ==
+                                                                           OpenIddictConstants.Errors.AccessDenied)
             {
                 // ログインしたユーザーがサーバーにいないか、入鋏ロールがついてない
-                CustomMessage.Show("認証が拒否されました。\n司令主任に連絡してください。", "認証拒否", exception, MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessage.Show("認証が拒否されました。\n司令主任に連絡してください。", "認証拒否", exception, MessageBoxButton.OK,
+                    MessageBoxImage.Error);
                 return false;
             }
-            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error == OpenIddictConstants.Errors.ServerError)
+            catch (OpenIddictExceptions.ProtocolException exception) when (exception.Error ==
+                                                                           OpenIddictConstants.Errors.ServerError)
             {
                 // サーバーでトラブル発生
-                CustomMessage.Show("認証時にサーバーでエラーが発生しました。", "サーバーエラー", exception, MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessage.Show("認証時にサーバーでエラーが発生しました。", "サーバーエラー", exception, MessageBoxButton.OK,
+                    MessageBoxImage.Error);
                 return false;
             }
             catch (Exception exception)
@@ -223,19 +235,17 @@ namespace TatehamaCommanderTable.Communications
                 {
                     Debug.WriteLine($"Connection Error!! {exception.Message}");
                     _dataManager.ServerConnected = false;
-
+                    /*
                     var result = CustomMessage.Show("接続に失敗しました。\n再接続しますか？", "接続失敗", exception, MessageBoxButton.YesNo,
                         MessageBoxImage.Error);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        continue;
-                    }
-                    else
+                    if (result != MessageBoxResult.Yes)
                     {
                         break;
                     }
+                    */
                 }
             }
+
             return false;
         }
 
@@ -248,6 +258,7 @@ namespace TatehamaCommanderTable.Communications
             {
                 throw new InvalidOperationException("_connection is not initialized.");
             }
+
             if (_eventHandlersSet)
             {
                 return; // イベントハンドラは一度だけ設定する
@@ -280,10 +291,7 @@ namespace TatehamaCommanderTable.Communications
             });
 
             // サーバーからのServerMode受信イベントハンドラ
-            _connection.On<ServerMode>("ReceiveServerMode", (serverMode) =>
-            {
-                ReceiveServerMode?.Invoke(serverMode);
-            });
+            _connection.On<ServerMode>("ReceiveServerMode", (serverMode) => { ReceiveServerMode?.Invoke(serverMode); });
 
             _eventHandlersSet = true;
         }
@@ -337,6 +345,7 @@ namespace TatehamaCommanderTable.Communications
                     Debug.WriteLine("Action needed after reconnect.");
                     return true;
                 }
+
                 SetEventHandlers();
                 Debug.WriteLine("Reconnected with current token.");
                 return false;
@@ -355,6 +364,7 @@ namespace TatehamaCommanderTable.Communications
                     Debug.WriteLine("Action needed after reconnect.");
                     return true;
                 }
+
                 SetEventHandlers();
                 Debug.WriteLine("Reconnected with refreshed token.");
                 return false;
@@ -585,11 +595,13 @@ namespace TatehamaCommanderTable.Communications
                         _dataManager.DataFromServer.OperationNotificationDataList;
                 }
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("ProcessReceivedDataAsync: キャンセルされました。正常終了です。");
             }
-            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SendConstantDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -617,7 +629,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTroubleData", troubleData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SendTroubleEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -633,7 +646,8 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationNotificationData"></param>
         /// <returns></returns>
-        public async Task SendOperationNotificationDataRequestToServer(OperationNotificationData operationNotificationData)
+        public async Task SendOperationNotificationDataRequestToServer(
+            OperationNotificationData operationNotificationData)
         {
             try
             {
@@ -646,7 +660,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendOperationNotificationData", operationNotificationData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SendOperationNotificationDataRequestToServer: キャンセルされました。正常終了です。");
             }
@@ -675,7 +690,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SendTrackCircuitData", trackCircuitData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SendTrackCircuitEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -704,7 +720,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrain", trainName);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SendDeleteTrainRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -720,7 +737,8 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationInformationData"></param>
         /// <returns></returns>
-        public async Task<OperationInformationData> AddOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        public async Task<OperationInformationData> AddOperationInformationEventDataRequestToServerAsync(
+            OperationInformationData operationInformationData)
         {
             try
             {
@@ -731,9 +749,11 @@ namespace TatehamaCommanderTable.Communications
                 }
 
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation", operationInformationData);
+                return await _connection.InvokeAsync<OperationInformationData>("AddOperationInformation",
+                    operationInformationData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("AddOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
@@ -751,7 +771,8 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="operationInformationData"></param>
         /// <returns></returns>
-        public async Task<OperationInformationData> UpdateOperationInformationEventDataRequestToServerAsync(OperationInformationData operationInformationData)
+        public async Task<OperationInformationData> UpdateOperationInformationEventDataRequestToServerAsync(
+            OperationInformationData operationInformationData)
         {
             try
             {
@@ -762,9 +783,11 @@ namespace TatehamaCommanderTable.Communications
                 }
 
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation", operationInformationData);
+                return await _connection.InvokeAsync<OperationInformationData>("UpdateOperationInformation",
+                    operationInformationData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("UpdateOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
@@ -795,7 +818,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteOperationInformation", id);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("DeleteOperationInformationEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -811,7 +835,8 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="protectionRadioData"></param>
         /// <returns></returns>
-        public async Task<ProtectionRadioData> AddProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        public async Task<ProtectionRadioData> AddProtectionRadioEventDataRequestToServerAsync(
+            ProtectionRadioData protectionRadioData)
         {
             try
             {
@@ -822,9 +847,11 @@ namespace TatehamaCommanderTable.Communications
                 }
 
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState", protectionRadioData);
+                return await _connection.InvokeAsync<ProtectionRadioData>("AddProtectionZoneState",
+                    protectionRadioData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("AddProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
@@ -842,7 +869,8 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         /// <param name="protectionRadioData"></param>
         /// <returns></returns>
-        public async Task<ProtectionRadioData> UpdateProtectionRadioEventDataRequestToServerAsync(ProtectionRadioData protectionRadioData)
+        public async Task<ProtectionRadioData> UpdateProtectionRadioEventDataRequestToServerAsync(
+            ProtectionRadioData protectionRadioData)
         {
             try
             {
@@ -853,9 +881,11 @@ namespace TatehamaCommanderTable.Communications
                 }
 
                 // サーバーメソッドの呼び出し
-                return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState", protectionRadioData);
+                return await _connection.InvokeAsync<ProtectionRadioData>("UpdateProtectionZoneState",
+                    protectionRadioData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("UpdateProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
@@ -885,7 +915,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<List<ProtectionRadioData>>("GetProtectionZoneStates");
             }
-            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("GetAllProtectionZones: キャンセルされました。正常終了です。");
                 return new();
@@ -916,7 +947,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteProtectionZoneState", id);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("DeleteProtectionRadioEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -945,7 +977,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<TrainStateData>("UpdateTrainStateData", trainStateData);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("UpdateTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
                 return null;
@@ -976,7 +1009,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("DeleteTrainState", id);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("DeleteTrainStateEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -1005,7 +1039,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 await _connection.InvokeAsync("SetServerMode", serverMode);
             }
-            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("SetServerModeEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
             }
@@ -1033,7 +1068,8 @@ namespace TatehamaCommanderTable.Communications
                 // サーバーメソッドの呼び出し
                 return await _connection.InvokeAsync<ServerMode>("GetServerMode");
             }
-            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException ||
+                                       ex is WebSocketException)
             {
                 Debug.WriteLine("GetServerMode: キャンセルされました。正常終了です。");
                 return ServerMode.Off;
@@ -1047,10 +1083,75 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーからスケジューラー一覧を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<SchedulerInfo>> GetSchedulers()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return [];
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<SchedulerInfo>>("GetSchedulers");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException ||
+                                       ex is WebSocketException)
+            {
+                Debug.WriteLine("GetSchedulers: キャンセルされました。正常終了です。");
+                return [];
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to get schedulers from server: {exception.Message}");
+                return [];
+            }
+        }
+
+        /// <summary>
+        /// サーバーへスケジューラーの切り替えをリクエスト
+        /// </summary>
+        /// <param name="schedulerName"></param>
+        /// <param name="isEnabled"></param>
+        /// <returns></returns>
+        public async Task<bool> ToggleScheduler(string schedulerName, bool isEnabled)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return false;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<bool>("ToggleScheduler", schedulerName, isEnabled);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException ||
+                                       ex is WebSocketException)
+            {
+                Debug.WriteLine("ToggleScheduler: キャンセルされました。正常終了です。");
+                return false;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to toggle scheduler on server: {exception.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
-        protected virtual void OnTrackCircuitDataGridViewUpdated(SortableBindingList<TrackCircuitDataGridViewSetting> list)
+        protected virtual void OnTrackCircuitDataGridViewUpdated(
+            SortableBindingList<TrackCircuitDataGridViewSetting> list)
         {
             TrackCircuitDataGridViewUpdated?.Invoke(list);
         }
@@ -1077,7 +1178,8 @@ namespace TatehamaCommanderTable.Communications
         /// ProtectionRadioDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
-        protected virtual void OnProtectionRadioDataGridViewUpdated(SortableBindingList<ProtectionRadioDataGridViewSetting> list)
+        protected virtual void OnProtectionRadioDataGridViewUpdated(
+            SortableBindingList<ProtectionRadioDataGridViewSetting> list)
         {
             ProtectionRadioDataGridViewUpdated?.Invoke(list);
         }

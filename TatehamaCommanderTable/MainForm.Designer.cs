@@ -38,6 +38,7 @@
             Button_Select_Dia = new System.Windows.Forms.Button();
             Button_Select_ProtectionRadio = new System.Windows.Forms.Button();
             Button_Select_TrainState = new System.Windows.Forms.Button();
+            Button_Select_Scheduler = new System.Windows.Forms.Button();
             GroupBox_Schedule = new System.Windows.Forms.GroupBox();
             RadioButton_ON_Private = new System.Windows.Forms.RadioButton();
             RadioButton_ON_Public = new System.Windows.Forms.RadioButton();
@@ -198,7 +199,24 @@
             Button_Select_TrainState.Text = "列車情報";
             Button_Select_TrainState.UseVisualStyleBackColor = false;
             Button_Select_TrainState.Click += ButtonClickEvent;
-            // 
+            //
+            // Button_Select_Scheduler
+            //
+            Button_Select_Scheduler.BackColor = System.Drawing.Color.LightBlue;
+            Button_Select_Scheduler.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            Button_Select_Scheduler.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
+            Button_Select_Scheduler.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
+            Button_Select_Scheduler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Button_Select_Scheduler.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Button_Select_Scheduler.Location = new System.Drawing.Point(292, 380);
+            Button_Select_Scheduler.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            Button_Select_Scheduler.Name = "Button_Select_Scheduler";
+            Button_Select_Scheduler.Size = new System.Drawing.Size(200, 100);
+            Button_Select_Scheduler.TabIndex = 22;
+            Button_Select_Scheduler.Text = "定時処理";
+            Button_Select_Scheduler.UseVisualStyleBackColor = false;
+            Button_Select_Scheduler.Click += ButtonClickEvent;
+            //
             // GroupBox_Schedule
             // 
             GroupBox_Schedule.Controls.Add(RadioButton_ON_Private);
@@ -347,6 +365,7 @@
             Controls.Add(Label_ServerType);
             Controls.Add(GroupBox_Schedule);
             Controls.Add(Button_Select_TrainState);
+            Controls.Add(Button_Select_Scheduler);
             Controls.Add(Button_Select_ProtectionRadio);
             Controls.Add(Button_Select_Dia);
             Controls.Add(Button_Select_Message);
@@ -380,6 +399,7 @@
         private System.Windows.Forms.Button Button_Select_Dia;
         private System.Windows.Forms.Button Button_Select_ProtectionRadio;
         private System.Windows.Forms.Button Button_Select_TrainState;
+        private System.Windows.Forms.Button Button_Select_Scheduler;
         private System.Windows.Forms.GroupBox GroupBox_Schedule;
         private System.Windows.Forms.RadioButton RadioButton_ON_Private;
         private System.Windows.Forms.RadioButton RadioButton_ON_Public;
