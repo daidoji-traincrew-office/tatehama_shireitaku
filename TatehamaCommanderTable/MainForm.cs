@@ -223,7 +223,7 @@ namespace TatehamaCommanderTable
                             _trainStateForm.Show();
                         }
                         break;
-                    // 時差情報
+                    // 時差設定
                     case "Button_Select_TimeOffset":
                         {
                             if (_timeOffsetForm.IsDisposed)
