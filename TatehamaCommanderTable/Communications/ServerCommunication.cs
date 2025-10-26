@@ -1047,6 +1047,64 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーから現在の時差を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> GetTimeOffset()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return 0;
+                }
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<int>("GetTimeOffset");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("GetTimeOffset: キャンセルされました。正常終了です。");
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ時差設定をリクエスト
+        /// </summary>
+        /// <param name="timeOffset"></param>
+        /// <returns></returns>
+        public async Task SetTimeOffset(int timeOffset)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("SetTimeOffset", timeOffset);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SetTimeOffset: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
