@@ -47,6 +47,7 @@
             Label_Volume = new System.Windows.Forms.Label();
             TrackBar_Volume = new System.Windows.Forms.TrackBar();
             Label_ProtectionRadioReceivingState = new System.Windows.Forms.Label();
+            Button_Select_TimeOffset = new System.Windows.Forms.Button();
             GroupBox_Schedule.SuspendLayout();
             GroupBox_Volume.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
@@ -336,12 +337,30 @@
             Label_ProtectionRadioReceivingState.Text = "防護";
             Label_ProtectionRadioReceivingState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Button_Select_TimeOffset
+            // 
+            Button_Select_TimeOffset.BackColor = System.Drawing.Color.LightBlue;
+            Button_Select_TimeOffset.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            Button_Select_TimeOffset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
+            Button_Select_TimeOffset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
+            Button_Select_TimeOffset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Button_Select_TimeOffset.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Button_Select_TimeOffset.Location = new System.Drawing.Point(292, 380);
+            Button_Select_TimeOffset.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            Button_Select_TimeOffset.Name = "Button_Select_TimeOffset";
+            Button_Select_TimeOffset.Size = new System.Drawing.Size(200, 100);
+            Button_Select_TimeOffset.TabIndex = 27;
+            Button_Select_TimeOffset.Text = "時差設定";
+            Button_Select_TimeOffset.UseVisualStyleBackColor = false;
+            Button_Select_TimeOffset.Click += ButtonClickEvent;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Button_Select_TimeOffset);
             Controls.Add(Label_ProtectionRadioReceivingState);
             Controls.Add(GroupBox_Volume);
             Controls.Add(Label_ServerType);
@@ -389,5 +408,6 @@
         private System.Windows.Forms.TrackBar TrackBar_Volume;
         private System.Windows.Forms.Label Label_Volume;
         private System.Windows.Forms.Label Label_ProtectionRadioReceivingState;
+        private System.Windows.Forms.Button Button_Select_TimeOffset;
     }
 }

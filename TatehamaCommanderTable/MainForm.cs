@@ -27,6 +27,7 @@ namespace TatehamaCommanderTable
         private DiaForm _diaForm;
         private ProtectionRadioForm _protectionRadioForm;
         private TrainStateForm _trainStateForm;
+        private TimeOffsetForm _timeOffsetForm;
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
@@ -55,6 +56,7 @@ namespace TatehamaCommanderTable
             _diaForm = new DiaForm(serverCommunication);
             _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
             _trainStateForm = new TrainStateForm(serverCommunication);
+            _timeOffsetForm = new TimeOffsetForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -64,7 +66,7 @@ namespace TatehamaCommanderTable
             {
                 if (InvokeRequired)
                 {
-                   Invoke(() => UpdateRadioButtonState(serverMode)); 
+                    Invoke(() => UpdateRadioButtonState(serverMode));
                 }
                 else
                 {
@@ -219,6 +221,16 @@ namespace TatehamaCommanderTable
                                 _trainStateForm = new TrainStateForm(_serverCommunication);
                             }
                             _trainStateForm.Show();
+                        }
+                        break;
+                    // 時差情報
+                    case "Button_Select_TimeOffset":
+                        {
+                            if (_timeOffsetForm.IsDisposed)
+                            {
+                                _timeOffsetForm = new TimeOffsetForm(_serverCommunication);
+                            }
+                            _timeOffsetForm.Show();
                         }
                         break;
                     default:
