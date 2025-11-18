@@ -38,7 +38,6 @@
             TimeOffset_Label_SetHour = new System.Windows.Forms.Label();
             TimeOffset_Button_SetHour = new System.Windows.Forms.Button();
             TimeOffset_Label_NowOffsetHour = new System.Windows.Forms.Label();
-            TimeOffset_Button_GetOffset = new System.Windows.Forms.Button();
             TimeOffset_GroupBox_OffsetHour.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TimeOffset_NumericUpDown_OffsetHour).BeginInit();
             TimeOffset_GroupBox_SetHour.SuspendLayout();
@@ -164,41 +163,23 @@
             TimeOffset_Button_SetHour.Click += TimeOffset_Button_Click;
             // 
             // TimeOffset_Label_NowOffsetHour
-            // 
+            //
             TimeOffset_Label_NowOffsetHour.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TimeOffset_Label_NowOffsetHour.ForeColor = System.Drawing.Color.White;
             TimeOffset_Label_NowOffsetHour.Location = new System.Drawing.Point(13, 65);
             TimeOffset_Label_NowOffsetHour.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             TimeOffset_Label_NowOffsetHour.Name = "TimeOffset_Label_NowOffsetHour";
-            TimeOffset_Label_NowOffsetHour.Size = new System.Drawing.Size(250, 35);
+            TimeOffset_Label_NowOffsetHour.Size = new System.Drawing.Size(359, 35);
             TimeOffset_Label_NowOffsetHour.TabIndex = 25;
             TimeOffset_Label_NowOffsetHour.Text = "現在時差： 0 時間";
             TimeOffset_Label_NowOffsetHour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TimeOffset_Button_GetOffset
-            // 
-            TimeOffset_Button_GetOffset.BackColor = System.Drawing.Color.Aqua;
-            TimeOffset_Button_GetOffset.FlatAppearance.BorderSize = 0;
-            TimeOffset_Button_GetOffset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            TimeOffset_Button_GetOffset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            TimeOffset_Button_GetOffset.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            TimeOffset_Button_GetOffset.ForeColor = System.Drawing.Color.Black;
-            TimeOffset_Button_GetOffset.Location = new System.Drawing.Point(272, 62);
-            TimeOffset_Button_GetOffset.Margin = new System.Windows.Forms.Padding(5);
-            TimeOffset_Button_GetOffset.Name = "TimeOffset_Button_GetOffset";
-            TimeOffset_Button_GetOffset.Size = new System.Drawing.Size(75, 40);
-            TimeOffset_Button_GetOffset.TabIndex = 33;
-            TimeOffset_Button_GetOffset.Text = "取得";
-            TimeOffset_Button_GetOffset.UseVisualStyleBackColor = false;
-            TimeOffset_Button_GetOffset.Click += TimeOffset_Button_Click;
-            // 
+            //
             // TimeOffsetForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(384, 301);
-            Controls.Add(TimeOffset_Button_GetOffset);
             Controls.Add(TimeOffset_Label_NowOffsetHour);
             Controls.Add(TimeOffset_GroupBox_SetHour);
             Controls.Add(TimeOffset_GroupBox_OffsetHour);
@@ -226,6 +207,5 @@
         private System.Windows.Forms.NumericUpDown TimeOffset_NumericUpDown_OffsetHour;
         private System.Windows.Forms.NumericUpDown TimeOffset_NumericUpDown_SetHour;
         private System.Windows.Forms.Label TimeOffset_Label_NowOffsetHour;
-        private System.Windows.Forms.Button TimeOffset_Button_GetOffset;
     }
 }

@@ -94,16 +94,6 @@ namespace TatehamaCommanderTable
 
             switch (button.Name)
             {
-                // 時差取得ボタン
-                case "TimeOffset_Button_GetOffset":
-                    {
-                        // DataFromServerから現在の時差を取得して表示
-                        if (_dataManager.DataFromServer != null)
-                        {
-                            SetNowOffsetLabel(_dataManager.DataFromServer.TimeOffset);
-                        }
-                    }
-                    break;
                 // 時差指定ボタン
                 case "TimeOffset_Button_OffsetHour":
                     {
