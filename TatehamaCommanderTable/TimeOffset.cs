@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
+using TatehamaCommanderTable.Manager;
 using TatehamaCommanderTable.Services;
 
 namespace TatehamaCommanderTable
@@ -9,6 +10,7 @@ namespace TatehamaCommanderTable
     public partial class TimeOffsetForm : Form
     {
         private readonly ServerCommunication _serverCommunication;
+        private readonly DataManager _dataManager;
 
         public TimeOffsetForm(ServerCommunication serverCommunication)
         {
@@ -16,10 +18,12 @@ namespace TatehamaCommanderTable
 
             // インスタンス取得
             _serverCommunication = serverCommunication;
+            _dataManager = DataManager.Instance;
 
             // イベント設定
             Load += TimeOffsetForm_Load;
             FormClosing += TimeOffsetForm_FormClosing;
+            _serverCommunication.ReceiveData += OnReceiveData;
         }
 
         /// <summary>
@@ -58,6 +62,18 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// データ受信イベント
+        /// </summary>
+        /// <param name="data"></param>
+        private void OnReceiveData(Models.DatabaseOperational.DataFromServer data)
+        {
+            if (data != null && this.IsHandleCreated)
+            {
+                this.Invoke(() => SetNowOffsetLabel(data.TimeOffset));
+            }
+        }
+
+        /// <summary>
         /// 最前面表示切替イベント
         /// </summary>
         /// <param name="sender"></param>
@@ -81,21 +97,11 @@ namespace TatehamaCommanderTable
                 // 時差取得ボタン
                 case "TimeOffset_Button_GetOffset":
                     {
-                        await _serverCommunication.GetTimeOffset().ContinueWith(t =>
+                        // DataFromServerから現在の時差を取得して表示
+                        if (_dataManager.DataFromServer != null)
                         {
-                            if (t.IsCompletedSuccessfully)
-                            {
-                                int currentOffset = t.Result;
-                                this.Invoke(() => SetNowOffsetLabel(currentOffset));
-                            }
-                            else if (t.IsFaulted)
-                            {
-                                this.Invoke(() =>
-                                {
-                                    CustomMessage.Show($"時差の取得に失敗しました: {t.Exception?.GetBaseException().Message}", "エラー");
-                                });
-                            }
-                        });
+                            SetNowOffsetLabel(_dataManager.DataFromServer.TimeOffset);
+                        }
                     }
                     break;
                 // 時差指定ボタン

@@ -49,6 +49,11 @@ namespace TatehamaCommanderTable.Models
             /// ダイヤデータリスト
             /// </summary>
             public List<TrainDiagramData> TrainDiagramDataList { get; set; } = new();
+
+            /// <summary>
+            /// TST時差
+            /// </summary>
+            public int TimeOffset { get; set; } = 0;
         }
     }
 }
