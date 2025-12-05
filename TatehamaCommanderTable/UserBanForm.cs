@@ -176,7 +176,6 @@ namespace TatehamaCommanderTable
                         try
                         {
                             await _serverCommunication.BanUserAsync((ulong)UserBan_NumericUpDown_UserId.Value);
-                            CustomMessage.Show($"ユーザーID {(ulong)UserBan_NumericUpDown_UserId.Value} をBANしました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                         }
                         catch (Exception ex)
                         {
@@ -203,7 +202,6 @@ namespace TatehamaCommanderTable
                         try
                         {
                             await _serverCommunication.UnbanUserAsync((ulong)UserBan_NumericUpDown_UserId.Value);
-                            CustomMessage.Show($"ユーザーID {(ulong)UserBan_NumericUpDown_UserId.Value} のBANを解除しました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                         }
                         catch (Exception ex)
                         {
