@@ -54,6 +54,11 @@ namespace TatehamaCommanderTable.Models
             /// TST時差
             /// </summary>
             public int TimeOffset { get; set; } = 0;
+
+            /// <summary>
+            /// BANされたユーザーIDリスト
+            /// </summary>
+            public List<ulong> BannedUserIdList { get; set; } = new();
         }
     }
 }

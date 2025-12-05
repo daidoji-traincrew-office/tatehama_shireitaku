@@ -28,6 +28,7 @@ namespace TatehamaCommanderTable
         private ProtectionRadioForm _protectionRadioForm;
         private TrainStateForm _trainStateForm;
         private TimeOffsetForm _timeOffsetForm;
+        private UserBanForm _userBanForm;
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
@@ -57,6 +58,7 @@ namespace TatehamaCommanderTable
             _protectionRadioForm = new ProtectionRadioForm(serverCommunication);
             _trainStateForm = new TrainStateForm(serverCommunication);
             _timeOffsetForm = new TimeOffsetForm(serverCommunication);
+            _userBanForm = new UserBanForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -231,6 +233,16 @@ namespace TatehamaCommanderTable
                                 _timeOffsetForm = new TimeOffsetForm(_serverCommunication);
                             }
                             _timeOffsetForm.Show();
+                        }
+                        break;
+                    // ユーザーBAN管理
+                    case "Button_Select_UserBan":
+                        {
+                            if (_userBanForm.IsDisposed)
+                            {
+                                _userBanForm = new UserBanForm(_serverCommunication);
+                            }
+                            _userBanForm.Show();
                         }
                         break;
                     default:

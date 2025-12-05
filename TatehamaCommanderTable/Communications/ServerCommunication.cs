@@ -1105,6 +1105,64 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへユーザーのBAN処理をリクエスト
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task BanUserAsync(ulong userId)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("BanUser", userId);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("BanUserAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーへユーザーのBAN解除処理をリクエスト
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task UnbanUserAsync(ulong userId)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("UnbanUser", userId);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("UnbanUserAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
