@@ -75,6 +75,11 @@ namespace TatehamaCommanderTable.Manager
         public List<OperationNotificationData> OperationNotificationDataList { get; set; }
 
         /// <summary>
+        /// BannedUserDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<BannedUserDataGridViewSetting> BannedUserDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         private DataManager()
@@ -94,6 +99,7 @@ namespace TatehamaCommanderTable.Manager
             TrainStateDataGridViewSettingList = new();
             DiaDataGridViewSettingList = new();
             OperationNotificationDataList = new();
+            BannedUserDataGridViewSettingList = new();
         }
     }
 }

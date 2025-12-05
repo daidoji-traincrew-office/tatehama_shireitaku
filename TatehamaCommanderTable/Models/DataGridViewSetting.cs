@@ -193,4 +193,16 @@ namespace TatehamaCommanderTable.Models
         [DisplayName("ダイヤID")]
         public string DiaId { get; set; } = "";
     }
+
+    /// <summary>
+    /// BannedUserDataGridView設定クラス
+    /// </summary>
+    public class BannedUserDataGridViewSetting
+    {
+        /// <summary>
+        /// ユーザーID
+        /// </summary>
+        [DisplayName("ユーザーID")]
+        public string UserId { get; set; } = "";
+    }
 }

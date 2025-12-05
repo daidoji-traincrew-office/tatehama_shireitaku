@@ -1,9 +1,10 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
+using TatehamaCommanderTable.Models;
 using TatehamaCommanderTable.Services;
 
 namespace TatehamaCommanderTable
@@ -12,6 +13,7 @@ namespace TatehamaCommanderTable
     {
         private readonly ServerCommunication _serverCommunication;
         private readonly DataManager _dataManager;
+        private bool _isScrolling = false;
 
         public UserBanForm(ServerCommunication serverCommunication)
         {
@@ -24,7 +26,6 @@ namespace TatehamaCommanderTable
             // イベント設定
             Load += UserBanForm_Load;
             FormClosing += UserBanForm_FormClosing;
-            _serverCommunication.ReceiveData += OnReceiveData;
         }
 
         /// <summary>
@@ -34,9 +35,19 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void UserBanForm_Load(object sender, EventArgs e)
         {
+            // イベントハンドラ設定
+            _serverCommunication.ReceiveData += OnReceiveData;
+            UserBan_DataGridView_BannedUsers.CellClick += DataGridView_BannedUsers_CellClick;
+            UserBan_DataGridView_BannedUsers.Scroll += DataGridView_BannedUsers_Scroll;
+
+            // DataGridViewのデータバインド
+            UserBan_BindingSource.DataSource = _dataManager.BannedUserDataGridViewSettingList;
+
+            // DataGridViewの設定
+            SetupDataGridView();
+
             // NumericUpDownの初期値設定
             UserBan_NumericUpDown_UserId.Value = 0;
-            UpdateBannedUserList();
         }
 
         /// <summary>
@@ -58,8 +69,71 @@ namespace TatehamaCommanderTable
         {
             if (data != null && this.IsHandleCreated)
             {
-                this.Invoke(() => UpdateBannedUserList(data.BannedUserIdList));
+                this.Invoke(() => UpdateDataSource(data.BannedUserIdList));
             }
+        }
+
+        /// <summary>
+        /// DataGridViewのデータソース更新
+        /// </summary>
+        /// <param name="bannedUserIds"></param>
+        private void UpdateDataSource(System.Collections.Generic.List<ulong> bannedUserIds)
+        {
+            if (_isScrolling) return;
+
+            var bindingList = new SortableBindingList<BannedUserDataGridViewSetting>();
+            if (bannedUserIds != null)
+            {
+                foreach (var userId in bannedUserIds)
+                {
+                    bindingList.Add(new BannedUserDataGridViewSetting { UserId = userId.ToString() });
+                }
+            }
+
+            _dataManager.BannedUserDataGridViewSettingList = bindingList;
+            UserBan_BindingSource.DataSource = bindingList;
+        }
+
+        /// <summary>
+        /// DataGridViewの設定
+        /// </summary>
+        private void SetupDataGridView()
+        {
+            UserBan_DataGridView_BannedUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            UserBan_DataGridView_BannedUsers.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.Navy;
+            UserBan_DataGridView_BannedUsers.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            UserBan_DataGridView_BannedUsers.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Bold);
+            UserBan_DataGridView_BannedUsers.EnableHeadersVisualStyles = false;
+        }
+
+        /// <summary>
+        /// DataGridViewセルクリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_BannedUsers_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = UserBan_DataGridView_BannedUsers.Rows[e.RowIndex];
+            if (row.DataBoundItem is BannedUserDataGridViewSetting data)
+            {
+                if (ulong.TryParse(data.UserId, out var userId))
+                {
+                    UserBan_NumericUpDown_UserId.Value = userId;
+                }
+            }
+        }
+
+        /// <summary>
+        /// DataGridViewスクロールイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridView_BannedUsers_Scroll(object sender, ScrollEventArgs e)
+        {
+            _isScrolling = true;
+            System.Threading.Tasks.Task.Delay(500).ContinueWith(_ => _isScrolling = false);
         }
 
         /// <summary>
@@ -86,73 +160,57 @@ namespace TatehamaCommanderTable
                 // Banボタン
                 case "UserBan_Button_Ban":
                     {
-                        if (TryGetULongWithinRange(UserBan_NumericUpDown_UserId, out ulong userId))
+                        // 入力チェック
+                        StringBuilder errorMessage = new();
+                        if (string.IsNullOrWhiteSpace(UserBan_NumericUpDown_UserId.Text) ||
+                            !ulong.TryParse(UserBan_NumericUpDown_UserId.Text, out var userId))
                         {
-                            try
-                            {
-                                await _serverCommunication.BanUserAsync(userId);
-                                CustomMessage.Show($"ユーザーID {userId} をBANしました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-                            }
-                            catch (Exception ex)
-                            {
-                                CustomMessage.Show($"ユーザーのBAN処理に失敗しました: {ex.Message}", "エラー");
-                            }
+                            errorMessage.AppendLine("ユーザーIDは有効な数値を入力してください。");
                         }
-                        else
+                        if (errorMessage.Length > 0)
                         {
-                            CustomMessage.Show("正の整数で最大・最小の範囲内の値を指定してください。", "入力エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
+                        try
+                        {
+                            await _serverCommunication.BanUserAsync((ulong)UserBan_NumericUpDown_UserId.Value);
+                            CustomMessage.Show($"ユーザーID {(ulong)UserBan_NumericUpDown_UserId.Value} をBANしました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            CustomMessage.Show($"ユーザーのBAN処理に失敗しました: {ex.Message}", "エラー");
                         }
                     }
                     break;
                 // Unbanボタン
                 case "UserBan_Button_Unban":
                     {
-                        if (TryGetULongWithinRange(UserBan_NumericUpDown_UserId, out ulong userId))
+                        // 入力チェック
+                        StringBuilder errorMessage = new();
+                        if (string.IsNullOrWhiteSpace(UserBan_NumericUpDown_UserId.Text) ||
+                            !ulong.TryParse(UserBan_NumericUpDown_UserId.Text, out var userId))
                         {
-                            try
-                            {
-                                await _serverCommunication.UnbanUserAsync(userId);
-                                CustomMessage.Show($"ユーザーID {userId} のBANを解除しました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-                            }
-                            catch (Exception ex)
-                            {
-                                CustomMessage.Show($"ユーザーのBAN解除処理に失敗しました: {ex.Message}", "エラー");
-                            }
+                            errorMessage.AppendLine("ユーザーIDは有効な数値を入力してください。");
                         }
-                        else
+                        if (errorMessage.Length > 0)
                         {
-                            CustomMessage.Show("正の整数で最大・最小の範囲内の値を指定してください。", "入力エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                            CustomMessage.Show(errorMessage.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+
+                        try
+                        {
+                            await _serverCommunication.UnbanUserAsync((ulong)UserBan_NumericUpDown_UserId.Value);
+                            CustomMessage.Show($"ユーザーID {(ulong)UserBan_NumericUpDown_UserId.Value} のBANを解除しました。", "完了", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            CustomMessage.Show($"ユーザーのBAN解除処理に失敗しました: {ex.Message}", "エラー");
                         }
                     }
                     break;
-            }
-        }
-
-        /// <summary>
-        /// BANされたユーザーリストを更新
-        /// </summary>
-        private void UpdateBannedUserList()
-        {
-            var data = _dataManager.DataFromServer;
-            if (data?.BannedUserIdList != null)
-            {
-                UpdateBannedUserList(data.BannedUserIdList);
-            }
-        }
-
-        /// <summary>
-        /// BANされたユーザーリストを更新
-        /// </summary>
-        /// <param name="bannedUserIds"></param>
-        private void UpdateBannedUserList(System.Collections.Generic.List<ulong> bannedUserIds)
-        {
-            if (bannedUserIds != null && bannedUserIds.Any())
-            {
-                UserBan_Label_BannedUsers.Text = $"BANユーザー: {string.Join(", ", bannedUserIds)}";
-            }
-            else
-            {
-                UserBan_Label_BannedUsers.Text = "BANユーザー: なし";
             }
         }
 
