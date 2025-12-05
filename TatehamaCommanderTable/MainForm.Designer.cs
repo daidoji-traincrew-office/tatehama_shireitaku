@@ -368,7 +368,7 @@
             Button_Select_UserBan.Name = "Button_Select_UserBan";
             Button_Select_UserBan.Size = new System.Drawing.Size(200, 100);
             Button_Select_UserBan.TabIndex = 28;
-            Button_Select_UserBan.Text = "ユーザーBAN管理";
+            Button_Select_UserBan.Text = "強制切断";
             Button_Select_UserBan.UseVisualStyleBackColor = false;
             Button_Select_UserBan.Click += ButtonClickEvent;
             //
