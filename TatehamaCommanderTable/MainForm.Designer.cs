@@ -48,6 +48,7 @@
             TrackBar_Volume = new System.Windows.Forms.TrackBar();
             Label_ProtectionRadioReceivingState = new System.Windows.Forms.Label();
             Button_Select_TimeOffset = new System.Windows.Forms.Button();
+            Button_Select_UserBan = new System.Windows.Forms.Button();
             GroupBox_Schedule.SuspendLayout();
             GroupBox_Volume.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
@@ -338,7 +339,7 @@
             Label_ProtectionRadioReceivingState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Button_Select_TimeOffset
-            // 
+            //
             Button_Select_TimeOffset.BackColor = System.Drawing.Color.LightBlue;
             Button_Select_TimeOffset.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             Button_Select_TimeOffset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
@@ -353,13 +354,31 @@
             Button_Select_TimeOffset.Text = "時差設定";
             Button_Select_TimeOffset.UseVisualStyleBackColor = false;
             Button_Select_TimeOffset.Click += ButtonClickEvent;
-            // 
+            //
+            // Button_Select_UserBan
+            //
+            Button_Select_UserBan.BackColor = System.Drawing.Color.LightBlue;
+            Button_Select_UserBan.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            Button_Select_UserBan.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
+            Button_Select_UserBan.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
+            Button_Select_UserBan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Button_Select_UserBan.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Button_Select_UserBan.Location = new System.Drawing.Point(517, 380);
+            Button_Select_UserBan.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            Button_Select_UserBan.Name = "Button_Select_UserBan";
+            Button_Select_UserBan.Size = new System.Drawing.Size(200, 100);
+            Button_Select_UserBan.TabIndex = 28;
+            Button_Select_UserBan.Text = "ユーザーBAN管理";
+            Button_Select_UserBan.UseVisualStyleBackColor = false;
+            Button_Select_UserBan.Click += ButtonClickEvent;
+            //
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Button_Select_UserBan);
             Controls.Add(Button_Select_TimeOffset);
             Controls.Add(Label_ProtectionRadioReceivingState);
             Controls.Add(GroupBox_Volume);
@@ -409,5 +428,6 @@
         private System.Windows.Forms.Label Label_Volume;
         private System.Windows.Forms.Label Label_ProtectionRadioReceivingState;
         private System.Windows.Forms.Button Button_Select_TimeOffset;
+        private System.Windows.Forms.Button Button_Select_UserBan;
     }
 }
