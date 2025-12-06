@@ -100,7 +100,7 @@ namespace TatehamaCommanderTable
             //
             UserBan_NumericUpDown_UserId.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             UserBan_NumericUpDown_UserId.Location = new System.Drawing.Point(12, 384);
-            UserBan_NumericUpDown_UserId.Maximum = new decimal(new int[] { 1316134911, 2328, 0, 0 });
+            UserBan_NumericUpDown_UserId.Maximum = new decimal(ulong.MaxValue);
             UserBan_NumericUpDown_UserId.Name = "UserBan_NumericUpDown_UserId";
             UserBan_NumericUpDown_UserId.Size = new System.Drawing.Size(180, 31);
             UserBan_NumericUpDown_UserId.TabIndex = 31;
