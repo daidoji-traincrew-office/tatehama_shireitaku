@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            EndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Message_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             Message_DataGridView_MessageData = new System.Windows.Forms.DataGridView();
             Message_BindingSource = new System.Windows.Forms.BindingSource(components);
@@ -50,54 +45,15 @@
             Message_NumericUpDown_ID = new System.Windows.Forms.NumericUpDown();
             Message_Label_ID = new System.Windows.Forms.Label();
             Message_Button_Update = new System.Windows.Forms.Button();
+            ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            StartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            EndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)Message_DataGridView_MessageData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Message_BindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Message_NumericUpDown_ID).BeginInit();
             SuspendLayout();
-            // 
-            // ID
-            // 
-            ID.DataPropertyName = "ID";
-            ID.HeaderText = "ID";
-            ID.MaxInputLength = 10;
-            ID.Name = "ID";
-            ID.ReadOnly = true;
-            ID.Width = 50;
-            // 
-            // Type
-            // 
-            Type.DataPropertyName = "Type";
-            Type.HeaderText = "情報の種類";
-            Type.MaxInputLength = 10;
-            Type.Name = "Type";
-            Type.ReadOnly = true;
-            // 
-            // Content
-            // 
-            Content.DataPropertyName = "Content";
-            Content.HeaderText = "運行メッセージ";
-            Content.MaxInputLength = 10000;
-            Content.Name = "Content";
-            Content.ReadOnly = true;
-            Content.Width = 390;
-            // 
-            // StartTime
-            // 
-            StartTime.DataPropertyName = "StartTime";
-            StartTime.HeaderText = "配信開始日時";
-            StartTime.MaxInputLength = 20;
-            StartTime.Name = "StartTime";
-            StartTime.ReadOnly = true;
-            StartTime.Width = 150;
-            // 
-            // EndTime
-            // 
-            EndTime.DataPropertyName = "EndTime";
-            EndTime.HeaderText = "配信終了日時";
-            EndTime.MaxInputLength = 20;
-            EndTime.Name = "EndTime";
-            EndTime.ReadOnly = true;
-            EndTime.Width = 150;
             // 
             // Message_CheckBox_TopMost
             // 
@@ -159,7 +115,7 @@
             Message_DateTimePicker_StartDate.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             Message_DateTimePicker_StartDate.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_DateTimePicker_StartDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            Message_DateTimePicker_StartDate.Location = new System.Drawing.Point(224, 348);
+            Message_DateTimePicker_StartDate.Location = new System.Drawing.Point(250, 348);
             Message_DateTimePicker_StartDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             Message_DateTimePicker_StartDate.Name = "Message_DateTimePicker_StartDate";
             Message_DateTimePicker_StartDate.ShowUpDown = true;
@@ -172,7 +128,7 @@
             Message_DateTimePicker_EndDate.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             Message_DateTimePicker_EndDate.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_DateTimePicker_EndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            Message_DateTimePicker_EndDate.Location = new System.Drawing.Point(566, 348);
+            Message_DateTimePicker_EndDate.Location = new System.Drawing.Point(581, 348);
             Message_DateTimePicker_EndDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             Message_DateTimePicker_EndDate.Name = "Message_DateTimePicker_EndDate";
             Message_DateTimePicker_EndDate.ShowUpDown = true;
@@ -186,7 +142,7 @@
             Message_Label_StartDate.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_Label_StartDate.ForeColor = System.Drawing.Color.White;
             Message_Label_StartDate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            Message_Label_StartDate.Location = new System.Drawing.Point(224, 314);
+            Message_Label_StartDate.Location = new System.Drawing.Point(250, 314);
             Message_Label_StartDate.Name = "Message_Label_StartDate";
             Message_Label_StartDate.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             Message_Label_StartDate.Size = new System.Drawing.Size(291, 31);
@@ -200,7 +156,7 @@
             Message_Label_EndDate.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_Label_EndDate.ForeColor = System.Drawing.Color.White;
             Message_Label_EndDate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            Message_Label_EndDate.Location = new System.Drawing.Point(566, 314);
+            Message_Label_EndDate.Location = new System.Drawing.Point(581, 314);
             Message_Label_EndDate.Name = "Message_Label_EndDate";
             Message_Label_EndDate.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             Message_Label_EndDate.Size = new System.Drawing.Size(291, 31);
@@ -214,10 +170,10 @@
             Message_Label_Hyphen.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_Label_Hyphen.ForeColor = System.Drawing.Color.White;
             Message_Label_Hyphen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            Message_Label_Hyphen.Location = new System.Drawing.Point(521, 348);
+            Message_Label_Hyphen.Location = new System.Drawing.Point(547, 348);
             Message_Label_Hyphen.Name = "Message_Label_Hyphen";
             Message_Label_Hyphen.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            Message_Label_Hyphen.Size = new System.Drawing.Size(39, 34);
+            Message_Label_Hyphen.Size = new System.Drawing.Size(28, 34);
             Message_Label_Hyphen.TabIndex = 25;
             Message_Label_Hyphen.Text = "～";
             Message_Label_Hyphen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -247,7 +203,7 @@
             Message_Button_Cansel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             Message_Button_Cansel.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
             Message_Button_Cansel.ForeColor = System.Drawing.Color.White;
-            Message_Button_Cansel.Location = new System.Drawing.Point(127, 342);
+            Message_Button_Cansel.Location = new System.Drawing.Point(162, 344);
             Message_Button_Cansel.Margin = new System.Windows.Forms.Padding(5);
             Message_Button_Cansel.Name = "Message_Button_Cansel";
             Message_Button_Cansel.Size = new System.Drawing.Size(75, 40);
@@ -270,9 +226,10 @@
             // Message_NumericUpDown_ID
             // 
             Message_NumericUpDown_ID.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            Message_NumericUpDown_ID.Location = new System.Drawing.Point(29, 348);
+            Message_NumericUpDown_ID.Location = new System.Drawing.Point(12, 348);
+            Message_NumericUpDown_ID.Maximum = new decimal(new int[] { 99999999, 0, 0, 0 });
             Message_NumericUpDown_ID.Name = "Message_NumericUpDown_ID";
-            Message_NumericUpDown_ID.Size = new System.Drawing.Size(76, 34);
+            Message_NumericUpDown_ID.Size = new System.Drawing.Size(136, 34);
             Message_NumericUpDown_ID.TabIndex = 30;
             Message_NumericUpDown_ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -282,10 +239,10 @@
             Message_Label_ID.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             Message_Label_ID.ForeColor = System.Drawing.Color.White;
             Message_Label_ID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            Message_Label_ID.Location = new System.Drawing.Point(29, 314);
+            Message_Label_ID.Location = new System.Drawing.Point(12, 314);
             Message_Label_ID.Name = "Message_Label_ID";
             Message_Label_ID.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            Message_Label_ID.Size = new System.Drawing.Size(76, 31);
+            Message_Label_ID.Size = new System.Drawing.Size(136, 31);
             Message_Label_ID.TabIndex = 31;
             Message_Label_ID.Text = "ID";
             Message_Label_ID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -306,6 +263,49 @@
             Message_Button_Update.Text = "更新";
             Message_Button_Update.UseVisualStyleBackColor = false;
             Message_Button_Update.Click += Message_Button_Click;
+            // 
+            // ID
+            // 
+            ID.DataPropertyName = "ID";
+            ID.HeaderText = "ID";
+            ID.MaxInputLength = 10;
+            ID.Name = "ID";
+            ID.ReadOnly = true;
+            // 
+            // Type
+            // 
+            Type.DataPropertyName = "Type";
+            Type.HeaderText = "情報の種類";
+            Type.MaxInputLength = 10;
+            Type.Name = "Type";
+            Type.ReadOnly = true;
+            // 
+            // Content
+            // 
+            Content.DataPropertyName = "Content";
+            Content.HeaderText = "運行メッセージ";
+            Content.MaxInputLength = 10000;
+            Content.Name = "Content";
+            Content.ReadOnly = true;
+            Content.Width = 340;
+            // 
+            // StartTime
+            // 
+            StartTime.DataPropertyName = "StartTime";
+            StartTime.HeaderText = "配信開始日時";
+            StartTime.MaxInputLength = 20;
+            StartTime.Name = "StartTime";
+            StartTime.ReadOnly = true;
+            StartTime.Width = 150;
+            // 
+            // EndTime
+            // 
+            EndTime.DataPropertyName = "EndTime";
+            EndTime.HeaderText = "配信終了日時";
+            EndTime.MaxInputLength = 20;
+            EndTime.Name = "EndTime";
+            EndTime.ReadOnly = true;
+            EndTime.Width = 150;
             // 
             // MessageForm
             // 
@@ -354,13 +354,13 @@
         private System.Windows.Forms.Button Message_Button_Cansel;
         private System.Windows.Forms.BindingSource Message_BindingSource;
         private System.Windows.Forms.ComboBox Message_ComboBox_Type;
+        private System.Windows.Forms.NumericUpDown Message_NumericUpDown_ID;
+        private System.Windows.Forms.Label Message_Label_ID;
+        private System.Windows.Forms.Button Message_Button_Update;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn Content;
         private System.Windows.Forms.DataGridViewTextBoxColumn StartTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn EndTime;
-        private System.Windows.Forms.NumericUpDown Message_NumericUpDown_ID;
-        private System.Windows.Forms.Label Message_Label_ID;
-        private System.Windows.Forms.Button Message_Button_Update;
     }
 }
