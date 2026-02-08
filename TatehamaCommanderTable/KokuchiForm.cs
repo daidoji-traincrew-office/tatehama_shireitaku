@@ -779,7 +779,10 @@ namespace TatehamaCommanderTable
             var Image = GetImageByPos(x, y, width, height);
             var controlName = _dataManager.StationSettingList.FirstOrDefault(s => s.PlatformName == name).ControlName;
             var control = Controls.Find(controlName, true).FirstOrDefault();
-            control.BackgroundImage = Image;
+            if (control is PictureBox pictureBox)
+            {
+                pictureBox.Image = Image;
+            }
         }
 
         /// <summary>
