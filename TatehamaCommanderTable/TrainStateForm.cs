@@ -139,9 +139,9 @@ namespace TatehamaCommanderTable
                             errorMessage.AppendLine("行先駅IDを入力してください。");
                         }
                         if (string.IsNullOrWhiteSpace(TrainState_NumericUpDown_Delay.Text) ||
-                            !int.TryParse(TrainState_NumericUpDown_Delay.Text, out var delay) || delay < 0)
+                            !int.TryParse(TrainState_NumericUpDown_Delay.Text, out var delay))
                         {
-                            errorMessage.AppendLine("遅延は0以上の数値を入力してください。");
+                            errorMessage.AppendLine("遅延は整数を入力してください。");
                         }
                         if (!string.IsNullOrWhiteSpace(TrainState_TextBox_DriverID.Text) &&
                             (!ulong.TryParse(TrainState_TextBox_DriverID.Text, out var driverId) || driverId < 0))

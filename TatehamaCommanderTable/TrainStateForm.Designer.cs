@@ -317,6 +317,7 @@
             TrainState_NumericUpDown_Delay.Font = new System.Drawing.Font("BIZ UDゴシック", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrainState_NumericUpDown_Delay.Location = new System.Drawing.Point(441, 424);
             TrainState_NumericUpDown_Delay.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            TrainState_NumericUpDown_Delay.Minimum = new decimal(new int[] { 9999, 0, 0, int.MinValue });
             TrainState_NumericUpDown_Delay.Name = "TrainState_NumericUpDown_Delay";
             TrainState_NumericUpDown_Delay.Size = new System.Drawing.Size(85, 34);
             TrainState_NumericUpDown_Delay.TabIndex = 45;

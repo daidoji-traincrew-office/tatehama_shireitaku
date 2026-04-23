@@ -385,3 +385,6 @@ FodyWeavers.xsd
 /exe/runtimes/win-arm64/native
 /TatehamaCommanderTable/ServerAddress.cs
 /exe/TatehamaCommanderTable.dll
+/exe/TatehamaCommanderTable.deps.json
+/exe/TatehamaCommanderTable.exe
+/exe/TatehamaCommanderTable.runtimeconfig.json
