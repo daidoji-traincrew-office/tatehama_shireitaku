@@ -59,6 +59,11 @@ namespace TatehamaCommanderTable.Models
             /// BANされたユーザーIDリスト
             /// </summary>
             public List<ulong> BannedUserIdList { get; set; } = new();
+
+            /// <summary>
+            /// ダイヤ選択データリスト
+            /// </summary>
+            public List<SelectDiagramData> SelectDiagramDataList { get; set; } = new();
         }
     }
 }
