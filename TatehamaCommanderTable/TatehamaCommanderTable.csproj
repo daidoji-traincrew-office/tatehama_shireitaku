@@ -37,6 +37,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>KokuchiResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="SelectDiaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\KokuchiResource.resx">

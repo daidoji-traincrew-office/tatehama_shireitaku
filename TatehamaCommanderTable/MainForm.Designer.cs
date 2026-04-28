@@ -49,6 +49,7 @@
             Label_ProtectionRadioReceivingState = new System.Windows.Forms.Label();
             Button_Select_TimeOffset = new System.Windows.Forms.Button();
             Button_Select_UserBan = new System.Windows.Forms.Button();
+            Button_Select_SelectDia = new System.Windows.Forms.Button();
             GroupBox_Schedule.SuspendLayout();
             GroupBox_Volume.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
@@ -79,7 +80,7 @@
             Button_Select_Kokuchi.Location = new System.Drawing.Point(66, 120);
             Button_Select_Kokuchi.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_Kokuchi.Name = "Button_Select_Kokuchi";
-            Button_Select_Kokuchi.Size = new System.Drawing.Size(200, 100);
+            Button_Select_Kokuchi.Size = new System.Drawing.Size(200, 75);
             Button_Select_Kokuchi.TabIndex = 1;
             Button_Select_Kokuchi.Text = "運転告知器";
             Button_Select_Kokuchi.UseVisualStyleBackColor = false;
@@ -96,7 +97,7 @@
             Button_Select_Accident.Location = new System.Drawing.Point(292, 120);
             Button_Select_Accident.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_Accident.Name = "Button_Select_Accident";
-            Button_Select_Accident.Size = new System.Drawing.Size(200, 100);
+            Button_Select_Accident.Size = new System.Drawing.Size(200, 75);
             Button_Select_Accident.TabIndex = 2;
             Button_Select_Accident.Text = "運転支障\r\n";
             Button_Select_Accident.UseVisualStyleBackColor = false;
@@ -113,7 +114,7 @@
             Button_Select_TrackCircuit.Location = new System.Drawing.Point(517, 120);
             Button_Select_TrackCircuit.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_TrackCircuit.Name = "Button_Select_TrackCircuit";
-            Button_Select_TrackCircuit.Size = new System.Drawing.Size(200, 100);
+            Button_Select_TrackCircuit.Size = new System.Drawing.Size(200, 75);
             Button_Select_TrackCircuit.TabIndex = 3;
             Button_Select_TrackCircuit.Text = "軌道回路";
             Button_Select_TrackCircuit.UseVisualStyleBackColor = false;
@@ -141,10 +142,10 @@
             Button_Select_Message.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_Message.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_Message.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_Message.Location = new System.Drawing.Point(66, 250);
+            Button_Select_Message.Location = new System.Drawing.Point(66, 215);
             Button_Select_Message.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_Message.Name = "Button_Select_Message";
-            Button_Select_Message.Size = new System.Drawing.Size(200, 100);
+            Button_Select_Message.Size = new System.Drawing.Size(200, 75);
             Button_Select_Message.TabIndex = 18;
             Button_Select_Message.Text = "運行メッセージ";
             Button_Select_Message.UseVisualStyleBackColor = false;
@@ -158,10 +159,10 @@
             Button_Select_Dia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_Dia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_Dia.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_Dia.Location = new System.Drawing.Point(292, 250);
+            Button_Select_Dia.Location = new System.Drawing.Point(292, 215);
             Button_Select_Dia.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_Dia.Name = "Button_Select_Dia";
-            Button_Select_Dia.Size = new System.Drawing.Size(200, 100);
+            Button_Select_Dia.Size = new System.Drawing.Size(200, 75);
             Button_Select_Dia.TabIndex = 19;
             Button_Select_Dia.Text = "日時ダイヤ行先";
             Button_Select_Dia.UseVisualStyleBackColor = false;
@@ -175,10 +176,10 @@
             Button_Select_ProtectionRadio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_ProtectionRadio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_ProtectionRadio.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_ProtectionRadio.Location = new System.Drawing.Point(517, 250);
+            Button_Select_ProtectionRadio.Location = new System.Drawing.Point(517, 215);
             Button_Select_ProtectionRadio.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_ProtectionRadio.Name = "Button_Select_ProtectionRadio";
-            Button_Select_ProtectionRadio.Size = new System.Drawing.Size(200, 100);
+            Button_Select_ProtectionRadio.Size = new System.Drawing.Size(200, 75);
             Button_Select_ProtectionRadio.TabIndex = 20;
             Button_Select_ProtectionRadio.Text = "防護無線";
             Button_Select_ProtectionRadio.UseVisualStyleBackColor = false;
@@ -192,10 +193,10 @@
             Button_Select_TrainState.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_TrainState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_TrainState.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_TrainState.Location = new System.Drawing.Point(66, 380);
+            Button_Select_TrainState.Location = new System.Drawing.Point(66, 310);
             Button_Select_TrainState.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_TrainState.Name = "Button_Select_TrainState";
-            Button_Select_TrainState.Size = new System.Drawing.Size(200, 100);
+            Button_Select_TrainState.Size = new System.Drawing.Size(200, 75);
             Button_Select_TrainState.TabIndex = 21;
             Button_Select_TrainState.Text = "列車情報";
             Button_Select_TrainState.UseVisualStyleBackColor = false;
@@ -339,45 +340,63 @@
             Label_ProtectionRadioReceivingState.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Button_Select_TimeOffset
-            //
+            // 
             Button_Select_TimeOffset.BackColor = System.Drawing.Color.LightBlue;
             Button_Select_TimeOffset.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             Button_Select_TimeOffset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
             Button_Select_TimeOffset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_TimeOffset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_TimeOffset.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_TimeOffset.Location = new System.Drawing.Point(292, 380);
+            Button_Select_TimeOffset.Location = new System.Drawing.Point(292, 310);
             Button_Select_TimeOffset.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_TimeOffset.Name = "Button_Select_TimeOffset";
-            Button_Select_TimeOffset.Size = new System.Drawing.Size(200, 100);
+            Button_Select_TimeOffset.Size = new System.Drawing.Size(200, 75);
             Button_Select_TimeOffset.TabIndex = 27;
             Button_Select_TimeOffset.Text = "時差設定";
             Button_Select_TimeOffset.UseVisualStyleBackColor = false;
             Button_Select_TimeOffset.Click += ButtonClickEvent;
-            //
+            // 
             // Button_Select_UserBan
-            //
+            // 
             Button_Select_UserBan.BackColor = System.Drawing.Color.LightBlue;
             Button_Select_UserBan.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             Button_Select_UserBan.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
             Button_Select_UserBan.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
             Button_Select_UserBan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             Button_Select_UserBan.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
-            Button_Select_UserBan.Location = new System.Drawing.Point(517, 380);
+            Button_Select_UserBan.Location = new System.Drawing.Point(517, 310);
             Button_Select_UserBan.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             Button_Select_UserBan.Name = "Button_Select_UserBan";
-            Button_Select_UserBan.Size = new System.Drawing.Size(200, 100);
+            Button_Select_UserBan.Size = new System.Drawing.Size(200, 75);
             Button_Select_UserBan.TabIndex = 28;
             Button_Select_UserBan.Text = "強制切断";
             Button_Select_UserBan.UseVisualStyleBackColor = false;
             Button_Select_UserBan.Click += ButtonClickEvent;
-            //
+            // 
+            // Button_Select_SelectDia
+            // 
+            Button_Select_SelectDia.BackColor = System.Drawing.Color.LightBlue;
+            Button_Select_SelectDia.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            Button_Select_SelectDia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkKhaki;
+            Button_Select_SelectDia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Khaki;
+            Button_Select_SelectDia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            Button_Select_SelectDia.Font = new System.Drawing.Font("BIZ UDゴシック", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            Button_Select_SelectDia.Location = new System.Drawing.Point(66, 405);
+            Button_Select_SelectDia.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            Button_Select_SelectDia.Name = "Button_Select_SelectDia";
+            Button_Select_SelectDia.Size = new System.Drawing.Size(200, 75);
+            Button_Select_SelectDia.TabIndex = 29;
+            Button_Select_SelectDia.Text = "ダイヤ選択";
+            Button_Select_SelectDia.UseVisualStyleBackColor = false;
+            Button_Select_SelectDia.Click += ButtonClickEvent;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Button_Select_SelectDia);
             Controls.Add(Button_Select_UserBan);
             Controls.Add(Button_Select_TimeOffset);
             Controls.Add(Label_ProtectionRadioReceivingState);
@@ -429,5 +448,6 @@
         private System.Windows.Forms.Label Label_ProtectionRadioReceivingState;
         private System.Windows.Forms.Button Button_Select_TimeOffset;
         private System.Windows.Forms.Button Button_Select_UserBan;
+        private System.Windows.Forms.Button Button_Select_SelectDia;
     }
 }

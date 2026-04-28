@@ -29,6 +29,7 @@ namespace TatehamaCommanderTable
         private TrainStateForm _trainStateForm;
         private TimeOffsetForm _timeOffsetForm;
         private UserBanForm _userBanForm;
+        private SelectDiaForm _selectDiaForm;
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
@@ -59,6 +60,7 @@ namespace TatehamaCommanderTable
             _trainStateForm = new TrainStateForm(serverCommunication);
             _timeOffsetForm = new TimeOffsetForm(serverCommunication);
             _userBanForm = new UserBanForm(serverCommunication);
+            _selectDiaForm = new SelectDiaForm(serverCommunication);
 
             // イベント設定
             Load += MainForm_Load;
@@ -243,6 +245,16 @@ namespace TatehamaCommanderTable
                                 _userBanForm = new UserBanForm(_serverCommunication);
                             }
                             _userBanForm.Show();
+                        }
+                        break;
+                    // ダイヤ選択
+                    case "Button_Select_SelectDia":
+                        {
+                            if (_selectDiaForm.IsDisposed)
+                            {
+                                _selectDiaForm = new SelectDiaForm(_serverCommunication);
+                            }
+                            _selectDiaForm.Show();
                         }
                         break;
                     default:

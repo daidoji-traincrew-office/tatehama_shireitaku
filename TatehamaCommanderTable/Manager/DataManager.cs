@@ -80,6 +80,11 @@ namespace TatehamaCommanderTable.Manager
         public SortableBindingList<BannedUserDataGridViewSetting> BannedUserDataGridViewSettingList { get; set; }
 
         /// <summary>
+        /// SelectDiaDataGridView設定リストデータ
+        /// </summary>
+        public SortableBindingList<SelectDiaDataGridViewSetting> SelectDiaDataGridViewSettingList { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         private DataManager()
@@ -100,6 +105,7 @@ namespace TatehamaCommanderTable.Manager
             DiaDataGridViewSettingList = new();
             OperationNotificationDataList = new();
             BannedUserDataGridViewSettingList = new();
+            SelectDiaDataGridViewSettingList = new();
         }
     }
 }

@@ -205,4 +205,25 @@ namespace TatehamaCommanderTable.Models
         [DisplayName("ユーザーID")]
         public string UserId { get; set; } = "";
     }
+
+    /// <summary>
+    /// SelectDiaDataGridView設定クラス
+    /// </summary>
+    public class SelectDiaDataGridViewSetting
+    {
+        /// <summary>
+        /// ダイヤID
+        /// </summary>
+        public string Id { get; set; } = "";
+        /// <summary>
+        /// ダイヤ名称
+        /// </summary>
+        [DisplayName("ダイヤ名")]
+        public string DiaName { get; set; } = "";
+        /// <summary>
+        /// バージョン
+        /// </summary>
+        [DisplayName("バージョン")]
+        public string Version { get; set; } = "";
+    }
 }

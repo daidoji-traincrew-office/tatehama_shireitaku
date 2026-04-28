@@ -60,6 +60,10 @@ namespace TatehamaCommanderTable.Communications
         /// </summary>
         public event Action<SortableBindingList<DiaDataGridViewSetting>> DiaDataGridViewUpdated;
         /// <summary>
+        /// SelectDiaDataGridView更新通知イベント
+        /// </summary>
+        public event Action<SortableBindingList<SelectDiaDataGridViewSetting>> SelectDiaDataGridViewUpdated;
+        /// <summary>
         /// DataFromServer受信イベント
         /// </summary>
         public event Action<DatabaseOperational.DataFromServer> ReceiveData;
@@ -575,8 +579,20 @@ namespace TatehamaCommanderTable.Communications
                     });
                 }
 
-                _dataManager.DiaDataGridViewSettingList = diaDataGridViewList;
-                OnDiaDataGridViewUpdated(diaDataGridViewList);
+                // SelectDiaDataGridView設定リストデータを作成
+                var selectDiaDataGridViewList = new SortableBindingList<SelectDiaDataGridViewSetting>();
+                foreach (var dia in _dataManager.DataFromServer.SelectDiagramDataList)
+                {
+                    selectDiaDataGridViewList.Add(new SelectDiaDataGridViewSetting
+                    {
+                        Id = dia.Id.ToString(),
+                        DiaName = dia.DiaName,
+                        Version = dia.Version,
+                    });
+                }
+
+                _dataManager.SelectDiaDataGridViewSettingList = selectDiaDataGridViewList;
+                OnSelectDiaDataGridViewUpdated(selectDiaDataGridViewList);
 
                 // 運転告知器リストデータを更新
                 lock (_dataManager.OperationNotificationDataList)
@@ -1163,6 +1179,125 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーへダイヤ選択の設定をリクエスト
+        /// </summary>
+        /// <param name="selectDiagramData"></param>
+        /// <returns></returns>
+        public async Task<SelectDiagramData> SetSelectDiaEventDataRequestToServerAsync(SelectDiagramData selectDiagramData)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return null;
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<SelectDiagramData>("SetSelectDiaEventData", selectDiagramData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SetSelectDiaEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+                return null;
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サーバーへダイヤ選択の解除をリクエスト
+        /// </summary>
+        /// <param name="selectDiagramData"></param>
+        /// <returns></returns>
+        public async Task CancelSelectDiaEventDataRequestToServerAsync(SelectDiagramData selectDiagramData)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("CancelSelectDia", selectDiagramData);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("CancelSelectDiaEventDataRequestToServerAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to send event data to server: {exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// サーバーからダイヤグラム一覧を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DiagramData>> GetDiagramsAsync()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return [];
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<DiagramData>>("GetDiagrams");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("GetDiagramsAsync: キャンセルされました。正常終了です。");
+                return [];
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to get diagrams: {exception.Message}");
+                return [];
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ選択ダイヤIDを設定（nullで解除）
+        /// </summary>
+        /// <param name="diaId"></param>
+        /// <returns></returns>
+        public async Task SetSelectedDiagramIdAsync(ulong? diaId)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("SetSelectedDiagramId", diaId);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SetSelectedDiagramIdAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to set selected diagram id: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
@@ -1214,6 +1349,15 @@ namespace TatehamaCommanderTable.Communications
         protected virtual void OnDiaDataGridViewUpdated(SortableBindingList<DiaDataGridViewSetting> list)
         {
             DiaDataGridViewUpdated?.Invoke(list);
+        }
+
+        /// <summary>
+        /// SelectDiaDataGridView更新通知イベント
+        /// </summary>
+        /// <param name="list"></param>
+        protected virtual void OnSelectDiaDataGridViewUpdated(SortableBindingList<SelectDiaDataGridViewSetting> list)
+        {
+            SelectDiaDataGridViewUpdated?.Invoke(list);
         }
 
         /// <summary>
