@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TatehamaCommanderTable.Communications;
 using TatehamaCommanderTable.Manager;
@@ -12,6 +14,7 @@ namespace TatehamaCommanderTable
         private readonly ServerCommunication _serverCommunication;
         private readonly DataManager _dataManager;
         private bool _isScrolling = false;
+        private ulong? _selectedDiagramId;
 
         public SelectDiaForm(ServerCommunication serverCommunication)
         {
@@ -31,18 +34,18 @@ namespace TatehamaCommanderTable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectDiaForm_Load(object sender, EventArgs e)
+        private async void SelectDiaForm_Load(object sender, EventArgs e)
         {
             // イベントハンドラ設定
-            _serverCommunication.SelectDiaDataGridViewUpdated += (newDataSource) => UpdateDataSource(newDataSource);
+            _serverCommunication.ReceiveData += OnReceiveData;
             SelectDia_DataGridView_SelectDiaData.CellClick += DataGridView_SelectDia_CellClick;
             SelectDia_DataGridView_SelectDiaData.Scroll += DataGridView_SelectDia_Scroll;
 
-            // DataGridViewのデータバインド
-            SelectDia_BindingSource.DataSource = _dataManager.SelectDiaDataGridViewSettingList;
-
             // DataGridViewの設定
             SetupDataGridView();
+
+            // ダイヤ一覧を取得
+            await LoadDiagramsAsync();
         }
 
         /// <summary>
@@ -52,8 +55,17 @@ namespace TatehamaCommanderTable
         /// <param name="e"></param>
         private void SelectDiaForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _serverCommunication.ReceiveData -= OnReceiveData;
             Hide();
             e.Cancel = true;
+        }
+
+        private void OnReceiveData(DatabaseOperational.DataFromServer _)
+        {
+            if (this.InvokeRequired)
+                this.Invoke(HighlightSelectedRow);
+            else
+                HighlightSelectedRow();
         }
 
         /// <summary>
@@ -77,8 +89,46 @@ namespace TatehamaCommanderTable
 
             switch (button.Name)
             {
-
+                case "SelectDia_Button_Set":
+                    if (_selectedDiagramId.HasValue)
+                    {
+                        await _serverCommunication.SetSelectedDiagramIdAsync(_selectedDiagramId.Value);
+                        if (_dataManager.DataFromServer != null)
+                            _dataManager.DataFromServer.SelectedDiagramId = _selectedDiagramId.Value;
+                        HighlightSelectedRow();
+                    }
+                    break;
+                case "SelectDia_Button_Cancel":
+                    await _serverCommunication.SetSelectedDiagramIdAsync(null);
+                    if (_dataManager.DataFromServer != null)
+                        _dataManager.DataFromServer.SelectedDiagramId = null;
+                    HighlightSelectedRow();
+                    break;
+                case "SelectDia_Button_Reload":
+                    await LoadDiagramsAsync();
+                    break;
             }
+        }
+
+        /// <summary>
+        /// サーバーからダイヤ一覧を取得してDataGridViewを更新
+        /// </summary>
+        private async Task LoadDiagramsAsync()
+        {
+            var diagrams = await _serverCommunication.GetDiagramsAsync();
+            var list = new SortableBindingList<SelectDiaDataGridViewSetting>();
+            foreach (var d in diagrams)
+            {
+                list.Add(new SelectDiaDataGridViewSetting
+                {
+                    Id = d.Id.ToString(),
+                    DiaName = d.Name,
+                    Version = d.Version,
+                });
+            }
+            _dataManager.SelectDiaDataGridViewSettingList = list;
+            UpdateDataSource(list);
+            HighlightSelectedRow();
         }
 
         /// <summary>
@@ -152,12 +202,9 @@ namespace TatehamaCommanderTable
         {
             if (e.RowIndex >= 0)
             {
-                var selectedRow = SelectDia_DataGridView_SelectDiaData.Rows[e.RowIndex];
-                string diaName = selectedRow.Cells["DiaName"].Value.ToString();
-                string version = selectedRow.Cells["Version"].Value.ToString();
-
-                // 各コントロールに設定
-                SelectDia_TextBox_DiaName.Text = diaName;
+                var item = (SelectDiaDataGridViewSetting)SelectDia_BindingSource[e.RowIndex];
+                SelectDia_TextBox_DiaName.Text = item.DiaName;
+                _selectedDiagramId = ulong.TryParse(item.Id, out var id) ? id : null;
             }
         }
 
@@ -175,6 +222,22 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// 選択中ダイヤの行をハイライト
+        /// </summary>
+        private void HighlightSelectedRow()
+        {
+            var activeId = _dataManager.DataFromServer?.SelectedDiagramId;
+            foreach (DataGridViewRow row in SelectDia_DataGridView_SelectDiaData.Rows)
+            {
+                var item = row.DataBoundItem as SelectDiaDataGridViewSetting;
+                bool isSelected = item != null && ulong.TryParse(item.Id, out var rowId) && rowId == activeId;
+                row.Cells["Selected"].Value = isSelected ? "O" : "";
+                row.DefaultCellStyle.BackColor = isSelected ? Color.Lime : Color.Empty;
+                row.DefaultCellStyle.ForeColor = isSelected ? Color.Black : Color.Empty;
+            }
+        }
+
+        /// <summary>
         /// DataGridViewの設定
         /// </summary>
         private void SetupDataGridView()
@@ -184,6 +247,7 @@ namespace TatehamaCommanderTable
             SelectDia_DataGridView_SelectDiaData.AutoGenerateColumns = false;
 
             // 中央揃え
+            SelectDia_DataGridView_SelectDiaData.Columns["Selected"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             SelectDia_DataGridView_SelectDiaData.Columns["DiaName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             SelectDia_DataGridView_SelectDiaData.Columns["Version"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }

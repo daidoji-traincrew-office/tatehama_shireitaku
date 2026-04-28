@@ -64,6 +64,11 @@ namespace TatehamaCommanderTable.Models
             /// ダイヤ選択データリスト
             /// </summary>
             public List<SelectDiagramData> SelectDiagramDataList { get; set; } = new();
+
+            /// <summary>
+            /// 選択中ダイヤID
+            /// </summary>
+            public ulong? SelectedDiagramId { get; set; }
         }
     }
 }

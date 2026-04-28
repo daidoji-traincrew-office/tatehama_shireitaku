@@ -30,7 +30,9 @@
         {
             components = new System.ComponentModel.Container();
             SelectDia_CheckBox_TopMost = new System.Windows.Forms.CheckBox();
+            SelectDia_Button_Reload = new System.Windows.Forms.Button();
             SelectDia_DataGridView_SelectDiaData = new System.Windows.Forms.DataGridView();
+            Selected = new System.Windows.Forms.DataGridViewTextBoxColumn();
             DiaName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             SelectDia_Button_Set = new System.Windows.Forms.Button();
@@ -41,9 +43,25 @@
             ((System.ComponentModel.ISupportInitialize)SelectDia_DataGridView_SelectDiaData).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SelectDia_BindingSource).BeginInit();
             SuspendLayout();
-            // 
+            //
+            // SelectDia_Button_Reload
+            //
+            SelectDia_Button_Reload.BackColor = System.Drawing.Color.Aqua;
+            SelectDia_Button_Reload.FlatAppearance.BorderSize = 0;
+            SelectDia_Button_Reload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            SelectDia_Button_Reload.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            SelectDia_Button_Reload.Font = new System.Drawing.Font("BIZ UDゴシック", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 128);
+            SelectDia_Button_Reload.ForeColor = System.Drawing.Color.Black;
+            SelectDia_Button_Reload.Location = new System.Drawing.Point(12, 9);
+            SelectDia_Button_Reload.Name = "SelectDia_Button_Reload";
+            SelectDia_Button_Reload.Size = new System.Drawing.Size(100, 25);
+            SelectDia_Button_Reload.TabIndex = 45;
+            SelectDia_Button_Reload.Text = "再読み込み";
+            SelectDia_Button_Reload.UseVisualStyleBackColor = false;
+            SelectDia_Button_Reload.Click += SelectDia_Button_Click;
+            //
             // SelectDia_CheckBox_TopMost
-            // 
+            //
             SelectDia_CheckBox_TopMost.AutoSize = true;
             SelectDia_CheckBox_TopMost.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             SelectDia_CheckBox_TopMost.ForeColor = System.Drawing.Color.White;
@@ -61,26 +79,37 @@
             SelectDia_DataGridView_SelectDiaData.AllowUserToResizeColumns = false;
             SelectDia_DataGridView_SelectDiaData.AllowUserToResizeRows = false;
             SelectDia_DataGridView_SelectDiaData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SelectDia_DataGridView_SelectDiaData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { DiaName, Version });
+            SelectDia_DataGridView_SelectDiaData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Selected, DiaName, Version });
             SelectDia_DataGridView_SelectDiaData.Location = new System.Drawing.Point(12, 37);
             SelectDia_DataGridView_SelectDiaData.Name = "SelectDia_DataGridView_SelectDiaData";
             SelectDia_DataGridView_SelectDiaData.ReadOnly = true;
             SelectDia_DataGridView_SelectDiaData.RowHeadersVisible = false;
             SelectDia_DataGridView_SelectDiaData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            SelectDia_DataGridView_SelectDiaData.DataSource = SelectDia_BindingSource;
             SelectDia_DataGridView_SelectDiaData.Size = new System.Drawing.Size(360, 205);
             SelectDia_DataGridView_SelectDiaData.TabIndex = 22;
-            // 
+            //
+            // Selected
+            //
+            Selected.HeaderText = "選択";
+            Selected.Name = "Selected";
+            Selected.ReadOnly = true;
+            Selected.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            Selected.Width = 40;
+            //
             // DiaName
-            // 
+            //
+            DiaName.DataPropertyName = "DiaName";
             DiaName.HeaderText = "ダイヤ名";
             DiaName.MaxInputLength = 100;
             DiaName.Name = "DiaName";
             DiaName.ReadOnly = true;
             DiaName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            DiaName.Width = 200;
-            // 
+            DiaName.Width = 180;
+            //
             // Version
-            // 
+            //
+            Version.DataPropertyName = "Version";
             Version.HeaderText = "バージョン";
             Version.MaxInputLength = 100;
             Version.Name = "Version";
@@ -155,6 +184,7 @@
             Controls.Add(SelectDia_Button_Cancel);
             Controls.Add(SelectDia_Button_Set);
             Controls.Add(SelectDia_DataGridView_SelectDiaData);
+            Controls.Add(SelectDia_Button_Reload);
             Controls.Add(SelectDia_CheckBox_TopMost);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Name = "SelectDiaForm";
@@ -168,7 +198,9 @@
         #endregion
 
         private System.Windows.Forms.CheckBox SelectDia_CheckBox_TopMost;
+        private System.Windows.Forms.Button SelectDia_Button_Reload;
         private System.Windows.Forms.DataGridView SelectDia_DataGridView_SelectDiaData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Selected;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiaName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.Button SelectDia_Button_Set;

@@ -1239,6 +1239,65 @@ namespace TatehamaCommanderTable.Communications
         }
 
         /// <summary>
+        /// サーバーからダイヤグラム一覧を取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DiagramData>> GetDiagramsAsync()
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return [];
+                }
+
+                // サーバーメソッドの呼び出し
+                return await _connection.InvokeAsync<List<DiagramData>>("GetDiagrams");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("GetDiagramsAsync: キャンセルされました。正常終了です。");
+                return [];
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to get diagrams: {exception.Message}");
+                return [];
+            }
+        }
+
+        /// <summary>
+        /// サーバーへ選択ダイヤIDを設定（nullで解除）
+        /// </summary>
+        /// <param name="diaId"></param>
+        /// <returns></returns>
+        public async Task SetSelectedDiagramIdAsync(ulong? diaId)
+        {
+            try
+            {
+                if (_connection is not { State: HubConnectionState.Connected })
+                {
+                    Debug.WriteLine("Connection is not established.");
+                    return;
+                }
+
+                // サーバーメソッドの呼び出し
+                await _connection.InvokeAsync("SetSelectedDiagramId", diaId);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or TaskCanceledException || ex is WebSocketException)
+            {
+                Debug.WriteLine("SetSelectedDiagramIdAsync: キャンセルされました。正常終了です。");
+            }
+            catch (Exception exception)
+            {
+                CustomMessage.Show("サーバーへのデータ送信に失敗しました。", "データ送信失敗", exception);
+                Debug.WriteLine($"Failed to set selected diagram id: {exception.Message}");
+            }
+        }
+
+        /// <summary>
         /// TrackCircuitDataGridView更新通知イベント
         /// </summary>
         /// <param name="list"></param>
