@@ -50,6 +50,7 @@
             Button_Select_TimeOffset = new System.Windows.Forms.Button();
             Button_Select_UserBan = new System.Windows.Forms.Button();
             Button_Select_SelectDia = new System.Windows.Forms.Button();
+            Main_CheckBox_Silent = new System.Windows.Forms.CheckBox();
             GroupBox_Schedule.SuspendLayout();
             GroupBox_Volume.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TrackBar_Volume).BeginInit();
@@ -390,12 +391,26 @@
             Button_Select_SelectDia.UseVisualStyleBackColor = false;
             Button_Select_SelectDia.Click += ButtonClickEvent;
             // 
+            // Main_CheckBox_Silent
+            // 
+            Main_CheckBox_Silent.AutoSize = true;
+            Main_CheckBox_Silent.Font = new System.Drawing.Font("BIZ UDゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            Main_CheckBox_Silent.ForeColor = System.Drawing.Color.White;
+            Main_CheckBox_Silent.Location = new System.Drawing.Point(671, 78);
+            Main_CheckBox_Silent.Name = "Main_CheckBox_Silent";
+            Main_CheckBox_Silent.Size = new System.Drawing.Size(101, 19);
+            Main_CheckBox_Silent.TabIndex = 30;
+            Main_CheckBox_Silent.Text = "サイレント";
+            Main_CheckBox_Silent.UseVisualStyleBackColor = true;
+            Main_CheckBox_Silent.CheckedChanged += Main_CheckBox_Silent_CheckedChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(76, 102, 102);
             ClientSize = new System.Drawing.Size(784, 561);
+            Controls.Add(Main_CheckBox_Silent);
             Controls.Add(Button_Select_SelectDia);
             Controls.Add(Button_Select_UserBan);
             Controls.Add(Button_Select_TimeOffset);
@@ -449,5 +464,6 @@
         private System.Windows.Forms.Button Button_Select_TimeOffset;
         private System.Windows.Forms.Button Button_Select_UserBan;
         private System.Windows.Forms.Button Button_Select_SelectDia;
+        private System.Windows.Forms.CheckBox Main_CheckBox_Silent;
     }
 }

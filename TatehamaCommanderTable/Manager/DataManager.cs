@@ -21,6 +21,11 @@ namespace TatehamaCommanderTable.Manager
         /// </summary>
         public int ProtectionRadioDataCount { get; set; }
 
+        /// <summary>
+        /// サイレントモード
+        /// </summary>
+        public bool IsSilentMode { get; set; }
+
         private DatabaseOperational.DataFromServer _dataFromServer;
         /// <summary>
         /// サーバー受信データ
@@ -91,6 +96,7 @@ namespace TatehamaCommanderTable.Manager
         {
             ServerConnected = false;
             ProtectionRadioDataCount = 0;
+            IsSilentMode = false;
             DataFromServer = new();
             DataFromServer.TroubleDataList = new();
             DataFromServer.OperationNotificationDataList = new();
