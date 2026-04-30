@@ -26,6 +26,7 @@ namespace TatehamaCommanderTable.Communications
         private readonly TimeSpan _renewMargin = TimeSpan.FromMinutes(1);
         private readonly OpenIddictClientService _openIddictClientService;
         private readonly DataManager _dataManager;
+        private readonly Sound _sound;
         private static HubConnection _connection;
         private const string HubConnectionName = "commander_table";
 
@@ -80,7 +81,7 @@ namespace TatehamaCommanderTable.Communications
         {
             _openIddictClientService = openIddictClientService;
             _dataManager = DataManager.Instance;
-
+            _sound = Sound.Instance;
         }
 
         /// <summary>
@@ -271,6 +272,20 @@ namespace TatehamaCommanderTable.Communications
 
                 // 例外が発生した場合はログに出力し再接続
                 Debug.WriteLine($"Exception: {exception.Message}\nStackTrace: {exception.StackTrace}");
+
+                // サイレントモードでない場合はエラーメッセージを表示、サイレントモードの場合は警告音を鳴らす
+                if (!_dataManager.IsSilentMode)
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        CustomMessage.Show("接続が切れました。\n再接続しています。", "接続切断", exception,
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
+                }
+                else
+                {
+                    _sound.SoundPlay("warning", false);
+                }
 
                 // 再接続処理を開始
                 await TryReconnectAsync();

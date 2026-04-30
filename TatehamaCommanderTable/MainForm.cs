@@ -143,6 +143,10 @@ namespace TatehamaCommanderTable
         private void Main_CheckBox_Silent_CheckedChanged(object sender, EventArgs e)
         {
             _dataManager.IsSilentMode = Main_CheckBox_Silent.Checked;
+            if (_dataManager.IsSilentMode)
+            {
+                _sound.SoundPlay("warning", false);
+            }
         }
 
         /// <summary>
