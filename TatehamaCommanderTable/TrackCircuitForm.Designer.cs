@@ -148,7 +148,7 @@
             // 
             TrackCircuit_TextBox_TrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_TrainNumber.Location = new System.Drawing.Point(91, 49);
-            TrackCircuit_TextBox_TrainNumber.MaxLength = 7;
+            TrackCircuit_TextBox_TrainNumber.MaxLength = 9;
             TrackCircuit_TextBox_TrainNumber.Name = "TrackCircuit_TextBox_TrainNumber";
             TrackCircuit_TextBox_TrainNumber.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_TrainNumber.TabIndex = 4;
@@ -317,7 +317,7 @@
             // 
             TrackCircuit_TextBox_DeleteTrainNumber.Font = new System.Drawing.Font("BIZ UDゴシック", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             TrackCircuit_TextBox_DeleteTrainNumber.Location = new System.Drawing.Point(91, 15);
-            TrackCircuit_TextBox_DeleteTrainNumber.MaxLength = 7;
+            TrackCircuit_TextBox_DeleteTrainNumber.MaxLength = 9;
             TrackCircuit_TextBox_DeleteTrainNumber.Name = "TrackCircuit_TextBox_DeleteTrainNumber";
             TrackCircuit_TextBox_DeleteTrainNumber.Size = new System.Drawing.Size(220, 28);
             TrackCircuit_TextBox_DeleteTrainNumber.TabIndex = 4;
