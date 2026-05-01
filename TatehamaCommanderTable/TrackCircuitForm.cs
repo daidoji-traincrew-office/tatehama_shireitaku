@@ -82,7 +82,7 @@ namespace TatehamaCommanderTable
             Button button = sender as Button;
 
             // 正規表現パターンの定義
-            var pattern = @"^([回試臨]?)([0-9]{0,4})(A|B|C|K|X|Y|Z|AX|BX|CX|KX|AY|BY|CY|KY|AZ|BZ|CZ|KZ)?$";
+            var pattern = @"^(回|臨|臨回|検|試)?([0-9]{3,4})([TS]?[ABCDK]?[XYZ]?)?$";
 
             switch (button.Name)
             {
@@ -95,7 +95,7 @@ namespace TatehamaCommanderTable
                 // サーバー送信ボタン
                 case "TrackCircuit_Button_SendServer":
                     {
-                        var retsuban = TrackCircuit_TextBox_DeleteTrainNumber.Text;
+                        var retsuban = TrackCircuit_TextBox_TrainNumber.Text;
                         var match = Regex.IsMatch(retsuban, pattern);
                         var retsubanCheck = TrackCircuit_RadioButton_ShortCircuit_ON.Checked;
 
