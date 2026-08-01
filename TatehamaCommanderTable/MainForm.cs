@@ -79,7 +79,7 @@ namespace TatehamaCommanderTable
             };
 
             // コントロール設定
-            Label_ServerType.Text = ServerAddress.SignalAddress.Contains("dev") ? "Dev" : "Prod";
+            Label_ServerType.Text = Config.EnvironmentDefinition.Current.ShortName;
             TrackBar_Volume.Value = 10;
             Label_Volume.Text = "100%";
             Label_ProtectionRadioReceivingState.ForeColor = ColorTranslator.FromHtml("#FF888888");
