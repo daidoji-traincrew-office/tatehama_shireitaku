@@ -52,13 +52,23 @@ public partial class EnvironmentSelectForm : Form
             {
                 Text = env.DisplayName,  // URLではなく環境名のみ表示
                 Tag = env.Type,
+                Appearance = Appearance.Button,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                Font = new Font("BIZ UDゴシック", 12F, FontStyle.Bold, GraphicsUnit.Point, 128),
+                TextAlign = ContentAlignment.MiddleCenter,
                 Location = new Point(30, yPosition),
-                AutoSize = true,
+                Size = new Size(340, 36),
                 Checked = (yPosition == 60)  // 最初の環境をデフォルト選択
             };
+            radioButton.FlatAppearance.CheckedBackColor = Color.Gold;
+            radioButton.FlatAppearance.MouseOverBackColor = Color.Khaki;
+            radioButton.FlatAppearance.MouseDownBackColor = Color.DarkKhaki;
+            radioButton.FlatAppearance.BorderColor = Color.Black;
             radioButton.CheckedChanged += RadioButton_CheckedChanged;
             this.Controls.Add(radioButton);
-            yPosition += 35;
+            yPosition += 44;
 
             if (radioButton.Checked)
             {
@@ -73,6 +83,8 @@ public partial class EnvironmentSelectForm : Form
         _localUrlLabel = new Label
         {
             Text = "ローカルURL:",
+            Font = new Font("BIZ UDゴシック", 10F, FontStyle.Regular, GraphicsUnit.Point, 128),
+            ForeColor = Color.White,
             Location = new Point(30, 165),
             AutoSize = true,
             Visible = false
@@ -81,8 +93,9 @@ public partial class EnvironmentSelectForm : Form
 
         _localUrlTextBox = new TextBox
         {
-            Location = new Point(30, 185),
+            Location = new Point(30, 188),
             Size = new Size(340, 23),
+            Font = new Font("BIZ UDゴシック", 10F, FontStyle.Regular, GraphicsUnit.Point, 128),
             Text = ServerAddress.LocalUrl,
             Visible = false
         };
