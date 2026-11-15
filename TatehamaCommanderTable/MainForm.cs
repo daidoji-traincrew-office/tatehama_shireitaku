@@ -33,6 +33,7 @@ namespace TatehamaCommanderTable
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
+        private DateTime _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
 
         /// <summary>
         /// コンストラクタ
@@ -309,6 +310,13 @@ namespace TatehamaCommanderTable
         {
             try
             {
+                // 音声デバイスの初期化に失敗している場合は5秒間隔で再試行する
+                if (!_sound.IsAvailable && DateTime.UtcNow >= _nextSoundRetryUtc)
+                {
+                    _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
+                    _sound.TryInitialize();
+                }
+
                 // サーバー接続状態の表示を更新
                 UpdateServerConnectionState();
 
@@ -376,21 +384,22 @@ namespace TatehamaCommanderTable
         /// </summary>
         private void UpdateProtectionRadioSound(int dataCount)
         {
+            // 初期化失敗時や音声ファイルがない場合は音声処理を行わない
+            if (!_sound.IsAvailable) return;
+
+            var fileName = _sound.LoopSoundList.FirstOrDefault();
+            if (fileName == null) return;
+
             try
             {
-                if (dataCount > 0)
-                {
-                    // 音量設定
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 1.0f);
-                }
-                else
-                {
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 0.0f);
-                }
+                _sound.SetVolume(fileName, dataCount > 0 ? 1.0f : 0.0f);
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                // 実行中の音声デバイス障害も次回の再初期化で復旧させる
+                Debug.WriteLine($"防護無線音声更新失敗: {ex}");
+                _sound.Dispose();
+                _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
             }
         }
 
@@ -434,9 +443,8 @@ namespace TatehamaCommanderTable
 
             // タイマー停止
             _mainTimer.Stop();
-            // 音声停止
-            Sound.Instance.SoundAllStop();
-            Sound.Instance.Dispose();
+            // 音声停止とリソース解放
+            _sound.Dispose();
 
             return true;
         }
