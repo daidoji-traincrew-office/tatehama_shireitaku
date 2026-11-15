@@ -27,20 +27,72 @@ namespace TatehamaCommanderTable.Services
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Sound()
+        private Sound()
         {
+            TryInitialize();
+        }
+
+        /// <summary>
+        /// 音声デバイスが利用可能かを取得する。
+        /// </summary>
+        public bool IsAvailable => xAudio2 != null && masteringVoice != null;
+
+        /// <summary>
+        /// 音声デバイスを初期化する。失敗しても再試行できる状態に戻す。
+        /// </summary>
+        /// <returns>初期化に成功した場合はtrue</returns>
+        public bool TryInitialize()
+        {
+            if (IsAvailable) return true;
+
             try
             {
-                // XAudio2とMasteringVoiceを初期化
-                xAudio2 = new();
-                masteringVoice = new(xAudio2);
+                xAudio2 = new XAudio2();
+                masteringVoice = new MasteringVoice(xAudio2);
                 LoadSoundFiles();
                 CreateLoopSoundList();
                 PlayAllSounds();
+                return true;
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"音声初期化失敗: {ex}");
+                ReleaseAudioResources();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 音声関連リソースを安全に解放する。
+        /// </summary>
+        private void ReleaseAudioResources()
+        {
+            ClearSoundData();
+
+            try
+            {
+                masteringVoice?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"音声出力の解放失敗: {ex}");
+            }
+            finally
+            {
+                masteringVoice = null;
+            }
+
+            try
+            {
+                xAudio2?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"音声エンジンの解放失敗: {ex}");
+            }
+            finally
+            {
+                xAudio2 = null;
             }
         }
 
@@ -81,8 +133,17 @@ namespace TatehamaCommanderTable.Services
                             Flags = BufferFlags.EndOfStream
                         };
 
-                        // SourceVoiceを作成
-                        var sourceVoice = new SourceVoice(xAudio2, waveFormat, VoiceFlags.None, maxFrequencyRatio: 4.0f);
+                        // SourceVoiceの作成に失敗した場合はバッファも解放する
+                        SourceVoice sourceVoice;
+                        try
+                        {
+                            sourceVoice = new SourceVoice(xAudio2, waveFormat, VoiceFlags.None, maxFrequencyRatio: 4.0f);
+                        }
+                        catch
+                        {
+                            buffer.Stream?.Dispose();
+                            throw;
+                        }
 
                         // ファイル名をキーとしてSourceVoiceとAudioBufferを辞書に追加
                         var fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -93,7 +154,8 @@ namespace TatehamaCommanderTable.Services
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"音声ファイル読み込み失敗: {ex}");
+                throw;
             }
         }
 
@@ -102,17 +164,42 @@ namespace TatehamaCommanderTable.Services
         /// </summary>
         public void ClearSoundData()
         {
-            // すべてのSourceVoiceを停止して解放
+            // 音声デバイス切断後でも、残りのリソース解放を続行する
             foreach (var voice in SoundSource.Values)
             {
-                if (voice != null)
+                try
                 {
-                    voice.Stop();
-                    voice.DestroyVoice();
+                    voice?.Stop();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声停止失敗: {ex}");
+                }
+
+                try
+                {
+                    voice?.DestroyVoice();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声ソース解放失敗: {ex}");
                 }
             }
             SoundSource.Clear();
+
+            foreach (var buffer in SoundBuffer.Values)
+            {
+                try
+                {
+                    buffer.Stream?.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声バッファ解放失敗: {ex}");
+                }
+            }
             SoundBuffer.Clear();
+            LoopSoundList.Clear();
         }
 
         /// <summary>
@@ -239,12 +326,7 @@ namespace TatehamaCommanderTable.Services
         /// </summary>
         public void Dispose()
         {
-            // 既存の音声データをクリア
-            ClearSoundData();
-
-            // リソースを解放
-            masteringVoice.Dispose();
-            xAudio2.Dispose();
+            ReleaseAudioResources();
         }
 
         /// <summary>
