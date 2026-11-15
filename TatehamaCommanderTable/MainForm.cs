@@ -34,6 +34,7 @@ namespace TatehamaCommanderTable
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
         private DateTime _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
+        private AudioErrorForm _audioErrorForm;
 
         /// <summary>
         /// コンストラクタ
@@ -310,12 +311,8 @@ namespace TatehamaCommanderTable
         {
             try
             {
-                // 音声デバイスの初期化に失敗している場合は5秒間隔で再試行する
-                if (!_sound.IsAvailable && DateTime.UtcNow >= _nextSoundRetryUtc)
-                {
-                    _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
-                    _sound.TryInitialize();
-                }
+                // 音声の正常性を確認し、異常時は再試行と警告表示を行う
+                UpdateAudioDeviceState();
 
                 // サーバー接続状態の表示を更新
                 UpdateServerConnectionState();
@@ -330,6 +327,47 @@ namespace TatehamaCommanderTable
             catch (Exception ex)
             {
                 Debug.WriteLine($"MainTimer_Tick Error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 音声の状態を検査し、異常時は警告を一つだけ表示して再初期化を試行する。
+        /// </summary>
+        private void UpdateAudioDeviceState()
+        {
+            if (!_sound.CheckPlayback())
+            {
+                // 異常状態のエンジンは再生成前に解放する
+                if (_sound.HasResources)
+                {
+                    _sound.Dispose();
+                }
+
+                if (DateTime.UtcNow >= _nextSoundRetryUtc)
+                {
+                    _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
+                    _sound.TryInitialize();
+                }
+            }
+
+            if (_sound.IsAvailable)
+            {
+                // 正常なループ音声の準備と再生待機を確認できた場合だけ閉じる
+                if (_audioErrorForm != null)
+                {
+                    _audioErrorForm.CloseAfterRecovery();
+                    _audioErrorForm.Dispose();
+                    _audioErrorForm = null;
+                }
+                return;
+            }
+
+            // モーダルダイアログを繰り返し出さず、一つの警告を表示し続ける
+            _audioErrorForm ??= new AudioErrorForm();
+            _audioErrorForm.UpdateError(_sound.LastErrorCode, _sound.LastErrorMessage);
+            if (!_audioErrorForm.Visible)
+            {
+                _audioErrorForm.Show(this);
             }
         }
 
@@ -396,8 +434,8 @@ namespace TatehamaCommanderTable
             }
             catch (Exception ex)
             {
-                // 実行中の音声デバイス障害も次回の再初期化で復旧させる
-                Debug.WriteLine($"防護無線音声更新失敗: {ex}");
+                // 実行中の異常を記録し、警告表示と再初期化の対象とする
+                _sound.ReportPlaybackFailure(ex);
                 _sound.Dispose();
                 _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
             }
