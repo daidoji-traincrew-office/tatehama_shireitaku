@@ -10,6 +10,7 @@ namespace TatehamaCommanderTable
     internal sealed class AudioErrorForm : Form
     {
         private readonly Label _messageLabel;
+        private bool _allowClose;
 
         /// <summary>
         /// エラーウィンドウを初期化する。
@@ -94,11 +95,20 @@ namespace TatehamaCommanderTable
         }
 
         /// <summary>
+        /// 音声出力が復旧した場合に警告ウィンドウを閉じる。
+        /// </summary>
+        public void CloseAfterRecovery()
+        {
+            _allowClose = true;
+            Close();
+        }
+
+        /// <summary>
         /// 音声異常中にユーザー操作で警告を閉じることを防ぐ。
         /// </summary>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if (!_allowClose && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 return;
