@@ -68,7 +68,7 @@ namespace TatehamaCommanderTable.Services
         /// <summary>
         /// XAudio2の重大な障害を受信し、UI側での復旧処理を要求する。
         /// </summary>
-        private void OnCriticalError(object sender, ErrorEventArgs e)
+        private void OnCriticalError(object sender, SharpDX.XAudio2.ErrorEventArgs e)
         {
             // 音声処理スレッドではリソース解放や画面操作を行わない
             Volatile.Write(ref _criticalErrorCode, e.ErrorCode.Code);
