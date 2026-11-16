@@ -33,6 +33,8 @@ namespace TatehamaCommanderTable
 
         private readonly Timer _mainTimer;
         private bool _onReceivingServerMode = false;
+        private DateTime _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
+        private AudioErrorForm _audioErrorForm;
 
         /// <summary>
         /// コンストラクタ
@@ -309,6 +311,9 @@ namespace TatehamaCommanderTable
         {
             try
             {
+                // 音声の正常性を確認し、異常時は再試行と警告表示を行う
+                UpdateAudioDeviceState();
+
                 // サーバー接続状態の表示を更新
                 UpdateServerConnectionState();
 
@@ -322,6 +327,47 @@ namespace TatehamaCommanderTable
             catch (Exception ex)
             {
                 Debug.WriteLine($"MainTimer_Tick Error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 音声の状態を検査し、異常時は警告を一つだけ表示して再初期化を試行する。
+        /// </summary>
+        private void UpdateAudioDeviceState()
+        {
+            if (!_sound.CheckPlayback())
+            {
+                // 異常状態のエンジンは再生成前に解放する
+                if (_sound.HasResources)
+                {
+                    _sound.Dispose();
+                }
+
+                if (DateTime.UtcNow >= _nextSoundRetryUtc)
+                {
+                    _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
+                    _sound.TryInitialize();
+                }
+            }
+
+            if (_sound.IsAvailable)
+            {
+                // 正常なループ音声の準備と再生待機を確認できた場合だけ閉じる
+                if (_audioErrorForm != null)
+                {
+                    _audioErrorForm.CloseAfterRecovery();
+                    _audioErrorForm.Dispose();
+                    _audioErrorForm = null;
+                }
+                return;
+            }
+
+            // モーダルダイアログを繰り返し出さず、一つの警告を表示し続ける
+            _audioErrorForm ??= new AudioErrorForm();
+            _audioErrorForm.UpdateError(_sound.LastErrorCode, _sound.LastErrorMessage);
+            if (!_audioErrorForm.Visible)
+            {
+                _audioErrorForm.Show(this);
             }
         }
 
@@ -376,21 +422,22 @@ namespace TatehamaCommanderTable
         /// </summary>
         private void UpdateProtectionRadioSound(int dataCount)
         {
+            // 初期化失敗時や音声ファイルがない場合は音声処理を行わない
+            if (!_sound.IsAvailable) return;
+
+            var fileName = _sound.LoopSoundList.FirstOrDefault();
+            if (fileName == null) return;
+
             try
             {
-                if (dataCount > 0)
-                {
-                    // 音量設定
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 1.0f);
-                }
-                else
-                {
-                    _sound.SetVolume(_sound.LoopSoundList.First(), 0.0f);
-                }
+                _sound.SetVolume(fileName, dataCount > 0 ? 1.0f : 0.0f);
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                // 実行中の異常を記録し、警告表示と再初期化の対象とする
+                _sound.ReportPlaybackFailure(ex);
+                _sound.Dispose();
+                _nextSoundRetryUtc = DateTime.UtcNow.AddSeconds(5);
             }
         }
 
@@ -434,9 +481,8 @@ namespace TatehamaCommanderTable
 
             // タイマー停止
             _mainTimer.Stop();
-            // 音声停止
-            Sound.Instance.SoundAllStop();
-            Sound.Instance.Dispose();
+            // 音声停止とリソース解放
+            _sound.Dispose();
 
             return true;
         }

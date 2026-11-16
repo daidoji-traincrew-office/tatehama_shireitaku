@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace TatehamaCommanderTable.Services
 {
@@ -17,6 +18,10 @@ namespace TatehamaCommanderTable.Services
 
         private XAudio2 xAudio2;
         private MasteringVoice masteringVoice;
+        private bool _initialized;
+        private int _criticalErrorCode;
+        private int _lastErrorCode;
+        private string _lastErrorMessage = "音声出力を初期化できませんでした。";
         public Dictionary<string, SourceVoice> SoundSource = new();
         public Dictionary<string, AudioBuffer> SoundBuffer = new();
         public Dictionary<int, string> SoundData = new();
@@ -27,20 +32,176 @@ namespace TatehamaCommanderTable.Services
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Sound()
+        private Sound()
         {
+            TryInitialize();
+        }
+
+        /// <summary>
+        /// 音声デバイスが利用可能かを取得する。
+        /// </summary>
+        public bool IsAvailable => _initialized && Volatile.Read(ref _criticalErrorCode) == 0
+            && xAudio2 != null && masteringVoice != null && LoopSoundList.Count > 0;
+
+        /// <summary>
+        /// 音声リソースが残っているかを取得する。
+        /// </summary>
+        public bool HasResources => xAudio2 != null || masteringVoice != null || SoundSource.Count > 0;
+
+        /// <summary>
+        /// 直近の音声エラーコードを取得する。
+        /// </summary>
+        public int LastErrorCode
+        {
+            get
+            {
+                int criticalErrorCode = Volatile.Read(ref _criticalErrorCode);
+                return criticalErrorCode != 0 ? criticalErrorCode : _lastErrorCode;
+            }
+        }
+
+        /// <summary>
+        /// 直近の音声エラーの説明を取得する。
+        /// </summary>
+        public string LastErrorMessage => _lastErrorMessage;
+
+        /// <summary>
+        /// XAudio2の重大な障害を受信し、UI側での復旧処理を要求する。
+        /// </summary>
+        private void OnCriticalError(object sender, SharpDX.XAudio2.ErrorEventArgs e)
+        {
+            // 音声処理スレッドではリソース解放や画面操作を行わない
+            Volatile.Write(ref _criticalErrorCode, e.ErrorCode.Code);
+        }
+
+        /// <summary>
+        /// 音声出力に関する例外を記録する。
+        /// </summary>
+        /// <param name="ex">発生した例外</param>
+        public void ReportPlaybackFailure(Exception ex)
+        {
+            _lastErrorCode = ex.HResult;
+            _lastErrorMessage = ex.Message;
+            _initialized = false;
+            System.Diagnostics.Debug.WriteLine($"音声出力異常: {ex}");
+        }
+
+        /// <summary>
+        /// ループ音声の読み込み・再生状態を検査する。
+        /// </summary>
+        /// <returns>音声再生を継続できる場合はtrue</returns>
+        public bool CheckPlayback()
+        {
+            if (!IsAvailable) return false;
+
             try
             {
-                // XAudio2とMasteringVoiceを初期化
-                xAudio2 = new();
-                masteringVoice = new(xAudio2);
-                LoadSoundFiles();
-                CreateLoopSoundList();
-                PlayAllSounds();
+                foreach (var fileName in LoopSoundList)
+                {
+                    if (!SoundSource.TryGetValue(fileName, out var voice) ||
+                        !SoundBuffer.ContainsKey(fileName) || voice.State.BuffersQueued <= 0)
+                    {
+                        throw new InvalidOperationException($"防護無線の音声が再生待機状態ではありません: {fileName}");
+                    }
+                }
+                return true;
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                ReportPlaybackFailure(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 音声デバイスを初期化する。失敗しても再試行できる状態に戻す。
+        /// </summary>
+        /// <returns>初期化に成功した場合はtrue</returns>
+        public bool TryInitialize()
+        {
+            if (IsAvailable) return true;
+
+            try
+            {
+                xAudio2 = new XAudio2();
+                xAudio2.CriticalError += OnCriticalError;
+                masteringVoice = new MasteringVoice(xAudio2);
+                LoadSoundFiles();
+                CreateLoopSoundList();
+                if (LoopSoundList.Count == 0)
+                {
+                    throw new InvalidOperationException("防護無線用のループ音声ファイルが見つかりません。");
+                }
+                PlayAllSounds();
+                foreach (var fileName in LoopSoundList)
+                {
+                    if (!SoundSource.TryGetValue(fileName, out var voice) ||
+                        voice.State.BuffersQueued <= 0)
+                    {
+                        throw new InvalidOperationException($"防護無線の音声を再生待機状態にできません: {fileName}");
+                    }
+                }
+                if (Volatile.Read(ref _criticalErrorCode) != 0)
+                {
+                    throw new InvalidOperationException("音声デバイスの重大な障害を検出しました。");
+                }
+                _initialized = true;
+                _lastErrorCode = 0;
+                _lastErrorMessage = string.Empty;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ReportPlaybackFailure(ex);
+                ReleaseAudioResources();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 音声関連リソースを安全に解放する。
+        /// </summary>
+        private void ReleaseAudioResources()
+        {
+            _initialized = false;
+            int criticalErrorCode = Volatile.Read(ref _criticalErrorCode);
+            if (criticalErrorCode != 0)
+            {
+                _lastErrorCode = criticalErrorCode;
+                _lastErrorMessage = "XAudio2が重大な音声デバイス障害を検出しました。";
+            }
+
+            if (xAudio2 != null)
+            {
+                xAudio2.CriticalError -= OnCriticalError;
+            }
+            ClearSoundData();
+
+            try
+            {
+                masteringVoice?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"音声出力の解放失敗: {ex}");
+            }
+            finally
+            {
+                masteringVoice = null;
+            }
+
+            try
+            {
+                xAudio2?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"音声エンジンの解放失敗: {ex}");
+            }
+            finally
+            {
+                xAudio2 = null;
+                Volatile.Write(ref _criticalErrorCode, 0);
             }
         }
 
@@ -81,8 +242,17 @@ namespace TatehamaCommanderTable.Services
                             Flags = BufferFlags.EndOfStream
                         };
 
-                        // SourceVoiceを作成
-                        var sourceVoice = new SourceVoice(xAudio2, waveFormat, VoiceFlags.None, maxFrequencyRatio: 4.0f);
+                        // SourceVoiceの作成に失敗した場合はバッファも解放する
+                        SourceVoice sourceVoice;
+                        try
+                        {
+                            sourceVoice = new SourceVoice(xAudio2, waveFormat, VoiceFlags.None, maxFrequencyRatio: 4.0f);
+                        }
+                        catch
+                        {
+                            buffer.Stream?.Dispose();
+                            throw;
+                        }
 
                         // ファイル名をキーとしてSourceVoiceとAudioBufferを辞書に追加
                         var fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -93,7 +263,8 @@ namespace TatehamaCommanderTable.Services
             }
             catch (Exception ex)
             {
-                CustomMessage.Show(ex.ToString(), "エラー", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Diagnostics.Debug.WriteLine($"音声ファイル読み込み失敗: {ex}");
+                throw;
             }
         }
 
@@ -102,17 +273,42 @@ namespace TatehamaCommanderTable.Services
         /// </summary>
         public void ClearSoundData()
         {
-            // すべてのSourceVoiceを停止して解放
+            // 音声デバイス切断後でも、残りのリソース解放を続行する
             foreach (var voice in SoundSource.Values)
             {
-                if (voice != null)
+                try
                 {
-                    voice.Stop();
-                    voice.DestroyVoice();
+                    voice?.Stop();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声停止失敗: {ex}");
+                }
+
+                try
+                {
+                    voice?.DestroyVoice();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声ソース解放失敗: {ex}");
                 }
             }
             SoundSource.Clear();
+
+            foreach (var buffer in SoundBuffer.Values)
+            {
+                try
+                {
+                    buffer.Stream?.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"音声バッファ解放失敗: {ex}");
+                }
+            }
             SoundBuffer.Clear();
+            LoopSoundList.Clear();
         }
 
         /// <summary>
@@ -239,12 +435,7 @@ namespace TatehamaCommanderTable.Services
         /// </summary>
         public void Dispose()
         {
-            // 既存の音声データをクリア
-            ClearSoundData();
-
-            // リソースを解放
-            masteringVoice.Dispose();
-            xAudio2.Dispose();
+            ReleaseAudioResources();
         }
 
         /// <summary>
